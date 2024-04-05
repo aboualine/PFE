@@ -52,7 +52,7 @@
                         session_start();
                         $_SESSION['role'] = 'Adminstration';
                         $_SESSION['user_id'] = $userA['Id_Administration'];
-                        header('Location:Administration_dashboard.php');
+                        header('Location:Administration_dashboard copy 2.php');
                         exit();
                     }
             
