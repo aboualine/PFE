@@ -109,17 +109,27 @@
     <?php
         //autre ajout
         if(isset($_POST['submitA'])){
-            $noma = $_POST['nom'];
-            $prenom = $_POST['prenom'];
-            $depa = $_POST['depa'];
-            $posta = $_POST['posta'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
-            $motpass = $_POST['mot_de_passe'];
+  
+            if(null !==($depa = $_POST['depa'])){
+                $sqldepdep = "SELECT Nom FROM Departement WHERE Id_Departement = $depa ";
+                $resdepdep = mysqli_query($conn,$sqldepdep);
+                 $rowdepdep = mysqli_fetch_assoc($resdepdep); // key as value 
+                        $noma = $_POST['nom'];
+                        $prenom = $_POST['prenom'];
+                        // $departementname = $rowdepdep["Nom"];
+                        $postname = $_POST['posta'];
 
-            $sqla = "INSERT INTO Agent (Nom ,Prenom ,Poste ,Email ,Tel ,Mot_de_Passe) 
-                     VALUES ('$noma' ,'$prenom' ,'$depa' ,'$posta' ,'$email' ,'$tel' ,'$motpass')";
-            $resa = mysqli_query($conn,$sqla);
+                        $email = $_POST['email'];
+                        $tel = $_POST['tel'];
+                        $motpass = $_POST['mot_de_passe'];
+            
+                        $sqla = "INSERT INTO Agent (Nom ,Prenom ,Poste ,Email ,Tel ,Mot_de_Passe) 
+                                VALUES ('$noma' ,'$prenom' ,'$postname' ,'$email' ,'$tel' ,'$motpass')";
+                         
+                        $resa = mysqli_query($conn,$sqla);
+                    
+
+                }
         }
     ?>
     <h2>Departement</h2>
@@ -187,21 +197,7 @@
         </tr>
 
         <?php
-            $sqlpost = "SELECT 
-                            Agent.Id_Agent,
-                            Agent.Nom,
-                            Agent.Prenom,
-                            Departement.Nom AS Nom_Departement,
-                            Post.Nom AS Nom_Post,
-                            Agent.Email,
-                            Agent.Tel,
-                            Agent.Mot_de_Passe
-                        FROM 
-                            Agent
-                        NATURAL JOIN 
-                            Departement
-                        NATURAL JOIN 
-                            Post";
+            $sqlpost = "SELECT * FROM gestdechcomloc.agent";
             $resultpost = mysqli_query($conn,$sqlpost);
             if (mysqli_num_rows($resultpost)) {
                 while($rowa = mysqli_fetch_assoc($resultpost)) {
@@ -236,10 +232,10 @@
                     url: 'fetch.php',
                     data: {id:Stdib},
                     success: function(data){
-                        $('#postaSelect').html('');
-                        $.each(data, function(key, value) {
-                            $('#postaSelect').append('<option value="' + key + '">' + value + '</option>');
-                        });
+                        $('#postaSelect').html(data);
+                        // $.each(data, function(key, value) {
+                        //     $('#postaSelect').append('<option value="' + key + '">' + value + '</option>');
+                        // });
                     }
                 });
             });
