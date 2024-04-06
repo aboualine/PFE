@@ -304,12 +304,12 @@
     
     <?php
         if(isset($_POST['subtraithor'])){
-            $agentname = $_POST['agentnames'];
+            $agentnames = $_POST['agentnames'];
             $jour = $_POST['jour'];
             $quart = $_POST['quart'];
             $date_debut = $_POST['date_debut'];
             $date_fin = $_POST['date_fin'];        
-            $sqltraithor = "INSERT INTO Horaires_Travail (Id_Agent, Jour_semaine, Quart_de_travail, Date_debut, Date_fin) 
+            $sqltraithor = "INSERT INTO HorairesTravail (Id_Agent, Jour_semaine, Quart_de_travail, Date_debut, Date_fin) 
                             VALUES ('$agentnames', '$jour', '$quart', '$date_debut', '$date_fin')";
             
             if (mysqli_query($conn, $sqltraithor)) {
@@ -317,6 +317,283 @@
             }
         }
     ?>
+    <h4>Liste des horaires de travail :</h4>
+    <table>
+        <tr>
+            <td>Id Horaire</td>
+            <td>Id Agent</td>
+            <td>Jour de la semaine</td>
+            <td>Quart de travail</td>
+            <td>Date de début</td>
+            <td>Date de fin</td>
+        </tr>
+    <?php
+        $sqltime = "SELECT * FROM HorairesTravail";
+        $sqltimeres = mysqli_query($conn,$sqltime);
+        if(mysqli_num_rows($sqltimeres)){
+            while($lignetime = mysqli_fetch_assoc($sqltimeres)){
+                echo "<tr>";
+                echo "<td>" . $lignetime["Id_Horaire"] . "</td>";
+                echo "<td>" . $lignetime["Id_Agent"] . "</td>";
+                echo "<td>" . $lignetime["Jour_semaine"] . "</td>";
+                echo "<td>" . $lignetime["Quart_de_travail"] . "</td>";
+                echo "<td>" . $lignetime["Date_debut"] . "</td>";
+                echo "<td>" . $lignetime["Date_fin"] . "</td>";
+                echo "</tr>";
+            }
+        }
+    ?>
+    </table>
+    <fieldset>
+        <legend>Ajouter des vacances </legend>
+        <form action="" method="post">
+            <label for="holiday_name">Nom de la vacance:</label>
+            <input type="text" id="holiday_name" name="holiday_name" required><br>
+            <label for="holiday_debut">Date debut de la vacance:</label>
+            <input type="date" id="holiday_debut" name="holiday_debut" required><br>
+            <label for="holiday_fin">Date fin de la vacance:</label>
+            <input type="date" id="holiday_fin" name="holiday_fin" required><br>
+            <label for="agent_id">ID de l'agent (optionnel):</label>
+            <input type="number" id="agent_id" name="agent_id"><br>
+            <button type="submit" name="subvacance">Ajouter</button>
+        </form>
+    </fieldset>
+    
+    <?php
+        if (isset($_POST['subvacance'])) {
+            $holidayName = $_POST['holiday_name'];
+            $holidayStartDate = $_POST['holiday_debut'];
+            $holidayEndDate = $_POST['holiday_fin'];
+            $agentId = isset($_POST['agent_id']) ? $_POST['agent_id'] : null;
+            $startDate = strtotime($holidayStartDate);
+            $endDate = strtotime($holidayEndDate);
+            $duration = ($endDate - $startDate) / (60 * 60 * 24);
+            if ($duration >= 1 && $duration <= 3) {
+                $sqlvacance = "INSERT INTO Vacances (NomVacance, DateDebutVacance, DateFinVacance, Id_Agent)
+                               VALUES ('$holidayName', '$holidayStartDate', '$holidayEndDate', '$agentId')";
+                $resvacance = mysqli_query($conn,$sqlvacance);
+                if ($resvacance) {
+                    echo "La vacance a été ajoutée avec succès.";
+                }
+            }
+            else {
+                echo "La durée des vacances doit être entre 1 et 3 jours.";
+            }
+        }
+    ?>
+
+    <h4>Liste des vacances :</h4>
+
+    <table>
+        <tr>
+            <td>Id Vacance</td>
+            <td>Vacance</td>
+            <td>Duree de la vacance</td>
+            <td>Id Agent</td>
+            <td>Action</td>
+        </tr>
+        <?php
+            $sqlvacance = "SELECT * FROM Vacances";
+            $resultvacance = mysqli_query($conn,$sqlvacance);
+            if(mysqli_num_rows($resultvacance)){
+                while($lignevacance = mysqli_fetch_assoc($resultvacance)){
+                    $startDate = strtotime($lignevacance["DateDebutVacance"]);
+                    $endDate = strtotime($lignevacance["DateFinVacance"]);
+                    $duration = ($endDate - $startDate) / (60 * 60 * 24);
+                    echo "<tr>";
+                    echo "<td>" . $lignevacance["Id_Vacance"] . "</td>";
+                    echo "<td>" . $lignevacance["NomVacance"] . "</td>";
+                    echo "<td>" . $duration . " jours</td>"; 
+                    echo "<td>" . $lignevacance["Id_Agent"] . "</td>";
+                    echo "<td>";
+                    echo "<form method='post' action=''>";
+                    echo "<input type='hidden' name='idvacancehidd' value='" . $lignevacance["Id_Vacance"] . "'>";
+                    echo "<button type='submit' name='deletevacance'>Supprimer</button>";
+                    echo "<button type='submit' name='updatvacance'>Modifier</button>";
+                    echo "</form>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            }
+            if (isset($_POST['deletevacance'])) {
+                if (isset($_POST['idvacancehidd']) && !empty($_POST['idvacancehidd'])) {
+                    $idvacancedelet = mysqli_real_escape_string($conn, $_POST['idvacancehidd']);                    
+                    $sqlvacancedelet = "DELETE * FROM Vacances WHERE Id_Vacance = '$idvacancedelet'";
+                    if (mysqli_query($conn, $sqlvacancedelet)) {
+                        echo "Record deleted successfully";
+                    }
+                }
+            }
+        ?>
+    </table>
+    <fieldset>
+        <legend>Ajouter des Fêtes </legend>
+        <form action="" method="post">
+            <label for="Fete_name">Nom de Fête:</label>
+            <input type="text" id="Fete_name" name="Fete_name" required><br>
+            <label for="Fete_debut">Date debut de la Fête:</label>
+            <input type="date" id="Fete_debut" name="Fete_debut" required><br>
+            <label for="Fete_fin">Date fin de la Fête:</label>
+            <input type="date" id="Fete_fin" name="Fete_fin" required><br>
+            <button type="submit" name="subFete">Ajouter</button>
+        </form>
+    </fieldset>
+    <?php
+        if (isset($_POST['subFete'])) {
+            $feteName = $_POST['Fete_name'];
+            $feteStartDate = $_POST['Fete_debut'];
+            $feteEndDate = $_POST['Fete_fin'];
+            $sqlFete = "INSERT INTO gestdechcomloc.Fetes (NomFete, DateDebut, DateFin)
+                        VALUES ('$feteName', '$feteStartDate', '$feteEndDate')";
+            $resFete = mysqli_query($conn, $sqlFete);
+        }
+    ?>
+    <h4>Liste des Fetes :</h4>
+    <?php
+        $sqlFete = "SELECT NomFete, DATEDIFF(DateFin, DateDebut) + 1 AS NombreJours FROM gestdechcomloc.Fetes";
+        $resultFete = mysqli_query($conn, $sqlFete);
+        if (mysqli_num_rows($resultFete) > 0) {
+            echo "<table>
+                    <tr>
+                        <th>Fête</th>
+                        <th>Nombre des jours</th>
+                    </tr>";
+            while ($rowFete = mysqli_fetch_assoc($resultFete)) {
+                echo "<tr>";
+                echo "<td>" . $rowFete["NomFete"] . "</td>";
+                echo "<td>" . $rowFete["NombreJours"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    ?>
+    <fieldset>
+        <legend>Ajouter des Equipements </legend>
+        <form action="" method="post">
+            <label for="NomEquipement">Nom d'equipement:</label>
+            <input type="text" id="NomEquipement" name="NomEquipement" required><br>
+            <label for="Descriptionnequip">Descriptionn (optionnel):</label>
+            <input type="text" id="Descriptionnequip" name="Descriptionnequip"><br>
+            <button type="submit" name="subEquipement">Ajouter</button>
+        </form>
+    </fieldset>
+    <?php
+        if (isset($_POST['subEquipement'])) {
+            $NomEquipement = $_POST['NomEquipement'];
+            $Descriptionnequip = isset($_POST['Descriptionnequip']) ? $_POST['Descriptionnequip'] : null;;
+            $sqlAjoutEquip = "INSERT INTO Equipement (Nom, Descriptionn)
+                              VALUES ('$NomEquipement', '$Descriptionnequip')";
+            $resAjoutEquip = mysqli_query($conn, $sqlAjoutEquip);
+        }
+    ?>
+    <h4>Liste des Equipements :</h4>
+    <?php
+        $sqlfetchequip = "SELECT Id_equipement, Nom , Descriptionn FROM Equipement";
+        $resultfetchequip = mysqli_query($conn, $sqlfetchequip);
+        if (mysqli_num_rows($resultfetchequip)) {
+            echo "<table>
+                    <tr>
+                        <th>Id equipement</th>
+                        <th>Nom d'equipement</th>
+                        <th>Description</th>
+                    </tr>";
+            while ($rowfetchequip = mysqli_fetch_assoc($resultfetchequip)) {
+                echo "<tr>";
+                echo "<td>" . $rowfetchequip["Id_equipement"] . "</td>";
+                echo "<td>" . $rowfetchequip["Nom"] . "</td>";
+                echo "<td>" . $rowfetchequip["Descriptionn"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    ?>
+
+    <fieldset>
+        <legend>Ajoutes les ramaceurs a des equipment </legend>
+        <form method="post" action="">
+            <label for="agentfullname">Agent:</label>
+            <select name="agentfullname" id="agentfullname">
+                <option value="">Selectionner un Agent</option>
+                <?php
+                    $sqlfullagent = "SELECT Id_Agent, CONCAT(Nom, ' ', Prenom) AS AgentFullName FROM Agent WHERE Poste = 'Agent de nettoyage'";
+                    $resultfullagent = mysqli_query($conn, $sqlfullagent);
+                    if(mysqli_num_rows($resultfullagent)){
+                        while ($rowfull = mysqli_fetch_assoc($resultfullagent)) {
+                            echo "<option value='{$rowfull['Id_Agent']}'>{$rowfull['AgentFullName']}</option>";
+                        }
+                    }
+                ?>
+            </select><br>
+            <label for="equipment">Selectionner un Equipment:</label>
+            <select name="equipment" id="equipment">
+            <option value="">Selectionner une Equip</option>
+                <?php
+                    $sqlequipement = "SELECT Id_equipement, Nom FROM Equipement";
+                    $resultequipement = mysqli_query($conn,$sqlequipement);
+                    while ($rowequipement = mysqli_fetch_assoc($resultequipement)) {
+                        echo "<option value='{$rowequipement['Id_equipement']}'>{$rowequipement['Nom']}</option>";
+                    }
+                ?>
+            </select><br>
+            <input type="submit" name="subagenttoequi" value="Assign Agent to Equipment">
+        </form>
+    </fieldset>
+    <?php
+        if (isset($_POST['subagenttoequi'])) {
+            $agentId = $_POST['agentfullname'];
+            $equipmentId = $_POST['equipment'];
+
+            $sqlfullagent = "SELECT Id_Agent, CONCAT(Nom, ' ', Prenom) AS AgentFullName FROM Agent WHERE Poste = 'Agent de nettoyage'";
+            $resultfullagent = mysqli_query($conn, $sqlfullagent);
+            $rowfull = mysqli_fetch_assoc($resultfullagent);
+
+            $nomagentequip = $rowfull['AgentFullName'];
+
+            $sqlCheckExisting = "SELECT Id_Equipement FROM Agent_Equipement WHERE Id_Agent = $agentId";
+            $resultCheckExisting = mysqli_query($conn, $sqlCheckExisting);
+            if (mysqli_num_rows($resultCheckExisting)) {
+                echo "L'agent est déjà associé à un équipement. Veuillez le retirer de l'équipement existant avant de le réaffecter.";
+            }
+            else{
+            $sqlAjoutagentEquip = "INSERT INTO Agent_Equipement (Id_Agent, Id_Equipement, Agent_Name)
+                                   VALUES ('$agentId', '$equipmentId', '$nomagentequip')";
+            
+            $resAjoutagentEquip = mysqli_query($conn, $sqlAjoutagentEquip);
+            if ($resAjoutagentEquip) {
+                echo "L'agent' a été ajoutée a l'equipement avec succès.";
+            }
+            }
+        }
+    ?>
+        <h4>Liste des Agents existe sur les equipements :</h4>
+    <?php
+        $sqlfetchequipmentsagents = "SELECT Equipement.Nom AS Equipement_Nom, Agent_Equipement.Agent_Name 
+                                     FROM Equipement 
+                                     INNER JOIN Agent_Equipement ON Equipement.Id_equipement = Agent_Equipement.Id_Equipement";
+        $resultfetchequipmentsagents = mysqli_query($conn, $sqlfetchequipmentsagents);
+        $rowspanCounts = array();
+        $prevEquipementNom = null;
+        if (mysqli_num_rows($resultfetchequipmentsagents)) {
+            echo "<table>";
+            while ($rowfetchresultfetchequipmentsagents = mysqli_fetch_assoc($resultfetchequipmentsagents)) {
+                if ($rowfetchresultfetchequipmentsagents["Equipement_Nom"] != $prevEquipementNom) {
+                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] = 1;
+                    $prevEquipementNom = $rowfetchresultfetchequipmentsagents["Equipement_Nom"];
+                } else {
+                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]]++;
+                }
+                echo "<tr>";
+                if ($rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] > 0) {
+                    echo "<td rowspan='" . $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] . "'>" . $rowfetchresultfetchequipmentsagents["Equipement_Nom"] . "</td>";
+                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] = 0;
+                }
+                echo "<td>" . $rowfetchresultfetchequipmentsagents["Agent_Name"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    ?>
+    
 
 
     <script>
@@ -324,16 +601,12 @@
             var departement = document.getElementById("depaSelect");
             $(departement).change(function(){
                 var Stdib = $('#depaSelect').val();
-                // alert(Stdib);
                 $.ajax({
                     type: 'POST',
                     url: 'fetch.php',
                     data: {id:Stdib},
                     success: function(data){
                         $('#postaSelect').html(data);
-                        // $.each(data, function(key, value) {
-                        //     $('#postaSelect').append('<option value="' + key + '">' + value + '</option>');
-                        // });
                     }
                 });
             });
