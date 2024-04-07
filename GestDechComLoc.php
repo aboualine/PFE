@@ -10,6 +10,13 @@
     <title>Gestion des Déchets pour les Communes Locales</title>
 </head>
 <body>
+    <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "0689102695mohamedaboualinedimaraja";
+        $database = "gestdechcomloc";
+        $conn = new mysqli($servername, $username, $password, $database);
+    ?>
     <header>
         <div id="nmr">
             <i class="fa-solid fa-phone"></i>
@@ -112,8 +119,35 @@
 
     </section>
     <section class="contact-page">
+        <fieldset>
+            <legend> Passe ane Reclamation </legend>
+            <form action="" method="post">
+                <label for="titre">Titre :</label><br>
+                <input type="text" id="titre" name="titre" required><br>
+                
+                <label for="description">Description :</label><br>
+                <textarea id="description" name="description" rows="4" required></textarea><br>
+                
+                <input type="submit" name="submit_reclamation" value="Soumettre">
+            </form>
+        </fieldset>
+        <?php
+            if (isset($_POST['submit_reclamation'])) {
+                $titre = $_POST['titre'];
+                $description = $_POST['description'];
+                $date_publication = date('Y-m-d'); 
+
+                $sql = "INSERT INTO Reclamation (Titre, Descriptionn, Date_de_Publication) 
+                        VALUES ('$titre', '$description', '$date_publication')";
+                mysqli_query($conn, $sql);
+
+                echo "Votre réclamation a été soumise avec succès.";
+            }
+        ?>
+        <a href="path_to_generated_pdf.pdf" download="generated_pdf.pdf" class="btn btn-primary">Download PDF</a>
 
     </section>
+
     <footer>
 
     </footer>

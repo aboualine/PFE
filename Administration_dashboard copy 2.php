@@ -21,6 +21,27 @@
 </head>
 <body>
     <?php
+            ob_start();
+            require('./fpdf186/fpdf.php');
+
+            function generatePDF($response, $companyName, $logoPath) {
+                $pdf = new FPDF();
+                $pdf->AddPage();
+            
+                $pdf->Image($logoPath, 10, 10, 30);
+                $pdf->SetFont('Arial','B',16);
+                $pdf->Cell(0,10,$companyName,0,1,'C');
+            
+                $pdf->SetFont('Arial','',12);
+                $pdf->Ln(20); 
+                $pdf->Cell(0,10,'Admin Response:',0,1); 
+                $pdf->MultiCell(0,10,$response); 
+                
+                ob_end_flush();
+                $pdf->Output();
+            }
+    ?>
+    <?php
         $servername = "localhost";
         $username = "root";
         $password = "0689102695mohamedaboualinedimaraja";
@@ -261,42 +282,25 @@
     <fieldset>
         <legend>gestion des horaires</legend>
         <form action="" method="post">
-            <label for="agentname">Agent:</label>
-            <select name="agentnames" id="agentname">
+            <label for="equipementname">Equipe :</label>
+            <select name="equipementname" id="equipementname">
                 <?php
-                    $sqlag = "SELECT Id_Agent, Nom FROM Agent";
-                    $resag = mysqli_query($conn,$sqlag);
-                    if(mysqli_num_rows($resag)){
-                        while($ligneagent = mysqli_fetch_assoc($resag)){
-                            echo "<option value='".$ligneagent['Id_Agent']."'>".$ligneagent['Nom']."</option>";
+                    $sqleq = "SELECT Id_equipement, Nom FROM Equipement";
+                    $reseq = mysqli_query($conn, $sqleq);
+                    if(mysqli_num_rows($reseq)){
+                        while($ligneequipement = mysqli_fetch_assoc($reseq)){
+                            echo "<option value='".$ligneequipement['Id_equipement']."'>".$ligneequipement['Nom']."</option>";
                         }
                     }
                 ?>
             </select><br>
 
-            <label for="jour">Jour de la semaine:</label>
-            <select name="jour" id="jour">
-                <option value="lundi">Lundi</option>
-                <option value="mardi">Mardi</option>
-                <option value="Mercredi">Mercredi</option>
-                <option value="Jeudi">Jeudi</option>
-                <option value="Vendredi">Vendredi</option>
-                <option value="Samedi">Samedi</option>
-                <option value="Dimanche">Dimanche</option>
-            </select><br>
-
             <label for="quart">Quart de travail:</label>
             <select name="quart" id="quart">
-                <option value="matin">Matin</option>
-                <option value="apres-midi">Après-midi</option>
-                <option value="soir">Soir</option>
+                <option value="matin">matin</option>
+                <option value="apres-midi">soir</option>
+                <option value="soir">nuit</option>
             </select><br>
-
-            <label for="date_debut">Date de début:</label>
-            <input type="date" id="date_debut" name="date_debut"><br>
-
-            <label for="date_fin">Date de fin:</label>
-            <input type="date" id="date_fin" name="date_fin"><br>
 
             <input type="submit" name="subtraithor" value="Valider">
         </form>
@@ -304,13 +308,26 @@
     
     <?php
         if(isset($_POST['subtraithor'])){
-            $agentnames = $_POST['agentnames'];
-            $jour = $_POST['jour'];
+            $equipementname = $_POST['equipementname'];
             $quart = $_POST['quart'];
-            $date_debut = $_POST['date_debut'];
-            $date_fin = $_POST['date_fin'];        
-            $sqltraithor = "INSERT INTO HorairesTravail (Id_Agent, Jour_semaine, Quart_de_travail, Date_debut, Date_fin) 
-                            VALUES ('$agentnames', '$jour', '$quart', '$date_debut', '$date_fin')";
+            switch($quart) {
+                case "matin":
+                    $heure_travail = "08:00 - 12:00";
+                    $pause = "12:00 - 13:00";
+                    break;
+                case "soir":
+                    $heure_travail = "13:00 - 17:00";
+                    $pause = "17:00 - 18:00";
+                    break;
+                case "nuit":
+                    $heure_travail = "18:00 - 22:00";
+                    $pause = "22:00 - 23:00";
+                    break;
+                default:
+                    break;
+            }
+            $sqltraithor = "INSERT INTO HorairesTravail (Id_Equipement, Quart_de_travail, Heure_travail, Pausee) 
+                            VALUES ('$equipementname', '$quart', '$heure_travail', '$pause')";
             
             if (mysqli_query($conn, $sqltraithor)) {
                 echo "Horaire de travail ajouté avec succès.";
@@ -321,29 +338,28 @@
     <table>
         <tr>
             <td>Id Horaire</td>
-            <td>Id Agent</td>
-            <td>Jour de la semaine</td>
+            <td>Id Equipement</td>
             <td>Quart de travail</td>
-            <td>Date de début</td>
-            <td>Date de fin</td>
+            <td>Heure de travail</td>
+            <td>Pause</td>
         </tr>
-    <?php
-        $sqltime = "SELECT * FROM HorairesTravail";
-        $sqltimeres = mysqli_query($conn,$sqltime);
-        if(mysqli_num_rows($sqltimeres)){
-            while($lignetime = mysqli_fetch_assoc($sqltimeres)){
-                echo "<tr>";
-                echo "<td>" . $lignetime["Id_Horaire"] . "</td>";
-                echo "<td>" . $lignetime["Id_Agent"] . "</td>";
-                echo "<td>" . $lignetime["Jour_semaine"] . "</td>";
-                echo "<td>" . $lignetime["Quart_de_travail"] . "</td>";
-                echo "<td>" . $lignetime["Date_debut"] . "</td>";
-                echo "<td>" . $lignetime["Date_fin"] . "</td>";
-                echo "</tr>";
-            }
-        }
-    ?>
+            <?php
+                $sqltime = "SELECT * FROM HorairesTravail";
+                $sqltimeres = mysqli_query($conn, $sqltime);
+                if (mysqli_num_rows($sqltimeres)) {
+                    while ($lignetime = mysqli_fetch_assoc($sqltimeres)) {
+                        echo "<tr>";
+                        echo "<td>" . $lignetime["Id_Horaire"] . "</td>";
+                        echo "<td>" . $lignetime["Id_Equipement"] . "</td>";
+                        echo "<td>" . $lignetime["Quart_de_travail"] . "</td>";
+                        echo "<td>" . $lignetime["Heure_travail"] . "</td>";
+                        echo "<td>" . $lignetime["Pausee"] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+            ?>
     </table>
+
     <fieldset>
         <legend>Ajouter des vacances </legend>
         <form action="" method="post">
@@ -593,7 +609,418 @@
             echo "</table>";
         }
     ?>
+    <h4>Ajouter un véhicule </h4>
+
+    <fieldset>
+        <legend>véhicules</legend>
+        <form action="" method="post">
+            <label for="marque">Marque :</label><br>
+            <input type="text" id="marque" name="marque" required><br>
+            
+            <label for="modele">Modèle :</label><br>
+            <input type="text" id="modele" name="modele" required><br>
+            
+            <label for="annee">Année :</label><br>
+            <input type="date" id="annee" name="annee"><br>
+            
+            <label for="statut">Statut :</label><br>
+            <select id="statut" name="statut">
+                <option value="1">Actif</option>
+                <option value="0">Inactif</option>
+            </select><br>
+            
+            <input type="submit" name="ajoutervehicule" value="Soumettre">
+        </form>
+    </fieldset>
+    <?php
+        if(isset($_POST['ajoutervehicule'])) {
+            // Récupérer les valeurs du formulaire
+            $marque = $_POST['marque'];
+            $modele = $_POST['modele'];
+            $annee = $_POST['annee'];
+            $statut = $_POST['statut'];
+        
+            // Préparer la requête SQL d'insertion
+            $sqlvehicule = "INSERT INTO Vehicule (Marque, Modele, Annee, Statut) 
+                    VALUES ('$marque', '$modele', '$annee', '$statut')";
+            $resvehicule = mysqli_query($conn, $sqlvehicule);
+            if ($resvehicule) {
+                echo "Véhicule ajouté avec succès.";
+            }
+        }
+
+        $sqlListeVehicules = "SELECT * FROM Vehicule";
+        $resultatListeVehicules = mysqli_query($conn, $sqlListeVehicules);
+
+        if (mysqli_num_rows($resultatListeVehicules) > 0) {
+            echo "<h2>Liste des véhicules</h2>";
+            echo "<table>";
+            echo "<tr><th>ID Véhicule</th><th>Marque</th><th>Modèle</th><th>Année</th><th>Statut</th></tr>";
+            while ($ligne = mysqli_fetch_assoc($resultatListeVehicules)) {
+                echo "<tr>";
+                echo "<td>" . $ligne["Id_Vehicule"] . "</td>";
+                echo "<td>" . $ligne["Marque"] . "</td>";
+                echo "<td>" . $ligne["Modele"] . "</td>";
+                echo "<td>" . $ligne["Annee"] . "</td>";
+                echo "<td>" . ($ligne["Statut"] ? "Actif" : "Inactif") . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "Aucun véhicule trouvé.";
+        }
+    ?>
+    <fieldset>
+    <legend>Ajouter Trajectoire</legend>
+        <form action="" method="post">
+            <label for="debut">Début :</label><br>
+            <input type="text" id="debut" name="debut" required><br>
+            
+            <label for="fin">Fin :</label><br>
+            <input type="text" id="fin" name="fin" required><br>
+            
+            <label for="description">Description :</label><br>
+            <input type="text" id="description" name="description"><br>
+            
+            <input type="submit" name="ajouter_trajectoire" value="Ajouter Trajectoire">
+        </form>
+    </fieldset>
+
+    <?php
+        if(isset($_POST['ajouter_trajectoire'])) {
+            // Récupérer les valeurs du formulaire
+            $debut = $_POST['debut'];
+            $fin = $_POST['fin'];
+            $description = $_POST['description'];
+        
+            // Préparer la requête SQL d'insertion
+            $sqltrajectoire = "INSERT INTO Trajectoire (Debut, Fin, Descriptionn) 
+                    VALUES ('$debut', '$fin', '$description')";
+            $restrajectoire = mysqli_query($conn ,$sqltrajectoire);
+            if ($restrajectoire) {
+                echo "Trajectoire ajoutée avec succès.";
+            }
+        }
+    ?>
+    <h4>Liste des Trajectoires</h4>
+    <?php
+        $sqlfetchtraj = "SELECT * FROM Trajectoire";
+        $resultfetchtraj = mysqli_query($conn, $sqlfetchtraj);
+
+        if (mysqli_num_rows($resultfetchtraj)) {
+            echo "<table>";
+            echo "<tr><th>ID Trajectoire</th><th>Début</th><th>Fin</th><th>Description</th></tr>";
+            while ($row = mysqli_fetch_assoc($resultfetchtraj)) {
+                echo "<tr>";
+                echo "<td>" . $row["Id_Trajectoire"] . "</td>";
+                echo "<td>" . $row["Debut"] . "</td>";
+                echo "<td>" . $row["Fin"] . "</td>";
+                echo "<td>" . $row["Descriptionn"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "Aucune trajectoire trouvée.";
+        }
+    ?>
+
+    <fieldset>
+    <legend>Ajouter Point de Collecte</legend>
+        <form action="" method="post">
+            <label for="emplacement">Emplacement :</label><br>
+            <input type="text" id="emplacement" name="emplacement" required><br>
+            
+            <label for="typepoint">Type :</label><br>
+            <select name="typepoint" id="typepoint">
+                <option value="Petite">Petite</option>
+                <option value="Moyenne">Moyenne</option>
+                <option value="Grande">Grande</option>
+                <option value="Non ordinaire">Non ordinaire</option>
+            </select><br>
+            
+            <label for="capacite">Capacité :</label><br>
+            <input type="number" id="capacite" name="capacite" required><br>
+            
+            <label for="id_trajectoire">ID Trajectoire :</label><br>
+            <input type="number" id="id_trajectoire" name="id_trajectoire" required><br>
+            
+            <input type="submit" name="ajouter_point_collecte" value="Ajouter Point de Collecte">
+        </form>
+    </fieldset>
+
+    <?php
+        if(isset($_POST['ajouter_point_collecte'])) {
+            $emplacement = $_POST['emplacement'];
+            $type = $_POST['typepoint'];
+            $capacite = $_POST['capacite'];
+            $id_trajectoire = $_POST['id_trajectoire'];
+        
+            $sqlpoint = "INSERT INTO PointCollecte (Emplacement, Typee, Capacite, Id_Trajectoire) 
+                    VALUES ('$emplacement', '$type', '$capacite', '$id_trajectoire')";
+        
+            $respoint = mysqli_query($conn ,$sqlpoint);
+            if ($respoint) {
+                echo "Point de collecte ajouté avec succès.";
+            }
+        }
+    ?>
+    <h4>Liste des Points de Collecte</h4>
+    <?php
+        $sqlfetchpoints = "SELECT * FROM PointCollecte";
+        $resultfetchpoints = mysqli_query($conn, $sqlfetchpoints);
+
+        if (mysqli_num_rows($resultfetchpoints)) {
+            echo "<table>";
+            echo "<tr><th>ID PointCollecte</th><th>Emplacement</th><th>Type</th><th>Capacité</th><th>ID Trajectoire</th></tr>";
+            while ($row = mysqli_fetch_assoc($resultfetchpoints)) {
+                echo "<tr>";
+                echo "<td>" . $row["Id_PointCollecte"] . "</td>";
+                echo "<td>" . $row["Emplacement"] . "</td>";
+                echo "<td>" . $row["Typee"] . "</td>";
+                echo "<td>" . $row["Capacite"] . "</td>";
+                echo "<td>" . $row["Id_Trajectoire"] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "Aucun point de collecte trouvé.";
+        }
+    ?>
+
+    <fieldset>
+        <legend>Ajouter Calendrier de Travail</legend>
+        <form action="" method="post">
+            <label for="equipementchoix">Équipement :</label><br>
+            <select id="equipementchoix" name="equipementchoix" required>
+                <?php
+                $sql_equipement = "SELECT Id_equipement, Nom FROM Equipement";
+                $result_equipement = mysqli_query($conn, $sql_equipement);
+
+                while ($row_equipement = mysqli_fetch_assoc($result_equipement)) {
+                    echo "<option value='" . $row_equipement['Id_equipement'] . "'>" . $row_equipement['Nom'] . "</option>";
+                }
+                ?>
+            </select><br>
+
+            <label for="vehiculechoix">Véhicule associé :</label><br>
+            <select id="vehiculechoix" name="vehiculechoix" required>
+                <?php
+                $sql_vehicle = "SELECT Id_Vehicule, CONCAT(Marque, ' ', Modele) AS VehiculeName FROM Vehicule";
+                $result_vehicle = mysqli_query($conn, $sql_vehicle);
+
+                while ($row_vehicle = mysqli_fetch_assoc($result_vehicle)) {
+                    echo "<option value='" . $row_vehicle['Id_Vehicule'] . "'>" . $row_vehicle['VehiculeName'] . "</option>";
+                }
+                ?>
+            </select><br>
+
+            <label for="trajectoirechoix">Trajectoire associée :</label><br>
+            <select id="trajectoirechoix" name="trajectoirechoix" required>
+                <?php
+                $sql_trajectory = "SELECT Id_Trajectoire, CONCAT(Debut, ' - ', Fin) AS TrajectoireName FROM Trajectoire";
+                $result_trajectory = mysqli_query($conn, $sql_trajectory);
+
+                while ($row_trajectory = mysqli_fetch_assoc($result_trajectory)) {
+                    echo "<option value='" . $row_trajectory['Id_Trajectoire'] . "'>" . $row_trajectory['TrajectoireName'] . "</option>";
+                }
+                ?>
+            </select><br>
+
+            <label for="horaireschoix">Horaires de Travail :</label><br>
+            <select id="horaireschoix" name="horaireschoix" required>
+                <?php
+                $sql_horaires = "SELECT Id_Horaire, CONCAT(Quart_de_travail, ' - ', Heure_travail) AS HoraireName FROM HorairesTravail";
+                $result_horaires = mysqli_query($conn, $sql_horaires);
+
+                while ($row_horaires = mysqli_fetch_assoc($result_horaires)) {
+                    echo "<option value='" . $row_horaires['Id_Horaire'] . "'>" . $row_horaires['HoraireName'] . "</option>";
+                }
+                ?>
+            </select><br>
+
+            <label for="date_debut">Date de début :</label><br>
+            <input type="date" id="date_debut" name="date_debut" required><br>
+
+            <input type="submit" name="ajouter_calendrier" value="Ajouter Calendrier">
+        </form>
+    </fieldset>
     
+    <?php
+        if(isset($_POST['ajouter_calendrier'])) {
+            $equipement_id = $_POST['equipementchoix'];
+            $vehicule_id = $_POST['vehiculechoix']; 
+            $trajectoire_id = $_POST['trajectoirechoix']; 
+            $horaire_id = $_POST['horaireschoix']; 
+            $date_debut = $_POST['date_debut']; 
+
+            $equipement_nom = "";
+            $vehicule_marque = "";
+            $vehicule_modele = "";
+            $quart_de_travail = "";
+
+            // Retrieve the names from the database based on IDs
+            $sql_equipement = "SELECT Nom FROM Equipement WHERE Id_equipement = $equipement_id";
+            $result_equipement = mysqli_query($conn, $sql_equipement);
+            if ($result_equipement && mysqli_num_rows($result_equipement) > 0) {
+                $row_equipement = mysqli_fetch_assoc($result_equipement);
+                $equipement_nom = $row_equipement['Nom'];
+            }
+
+            $sql_vehicule = "SELECT Marque, Modele FROM Vehicule WHERE Id_Vehicule = $vehicule_id";
+            $result_vehicule = mysqli_query($conn, $sql_vehicule);
+            if ($result_vehicule && mysqli_num_rows($result_vehicule) > 0) {
+                $row_vehicule = mysqli_fetch_assoc($result_vehicule);
+                $vehicule_marque = $row_vehicule['Marque'];
+                $vehicule_modele = $row_vehicule['Modele'];
+            }
+
+            $sql_horaires = "SELECT Quart_de_travail FROM HorairesTravail WHERE Id_Horaire = $horaire_id";
+            $result_horaires = mysqli_query($conn, $sql_horaires);
+            if ($result_horaires && mysqli_num_rows($result_horaires) > 0) {
+                $row_horaires = mysqli_fetch_assoc($result_horaires);
+                $quart_de_travail = $row_horaires['Quart_de_travail'];
+            }
+
+            $sql = "INSERT INTO CalendrieDeTravail (Equipement_Nom, Vehicule_Marque, Vehicule_Modele, Quart_de_travail, Id_Equipement, Id_Vehicule, Id_Trajectoire, Id_Horaire, Date_debut) 
+                    VALUES ('$equipement_nom', '$vehicule_marque', '$vehicule_modele', '$quart_de_travail', '$equipement_id', '$vehicule_id', '$trajectoire_id', '$horaire_id', '$date_debut')";
+            
+            if (mysqli_query($conn, $sql)) {
+                echo "Les données ont été insérées avec succès.";
+            } else {
+                echo "Erreur: " . mysqli_error($conn);
+            }
+        }
+    ?>
+    <h4>Calendrier de Travail</h4>
+    <table>
+        <tr>
+            <th>Equipement</th>
+            <th>Véhicule</th>
+            <th>Trajectoire</th>
+            <th>Quart de travail</th>
+            <th>Date de début</th>
+        </tr>
+        <?php
+            $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, c.Quart_de_travail, c.Date_debut
+                            FROM CalendrieDeTravail c
+                            INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire";
+            $result_calendrier = mysqli_query($conn, $sql_calendrier);
+
+            if (mysqli_num_rows($result_calendrier) > 0) {
+                while ($row_calendrier = mysqli_fetch_assoc($result_calendrier)) {
+                    echo "<tr>";
+                    echo "<td>" . $row_calendrier['Equipement_Nom'] . "</td>";
+                    echo "<td>" . $row_calendrier['Vehicule_Marque'] . " " . $row_calendrier['Vehicule_Modele'] . "</td>";
+                    echo "<td>" . $row_calendrier['Trajectoire_Debut'] . " - " . $row_calendrier['Trajectoire_Fin'] . "</td>";
+                    echo "<td>" . $row_calendrier['Quart_de_travail'] . "</td>";
+                    echo "<td>" . $row_calendrier['Date_debut'] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>Aucune donnée disponible</td></tr>";
+            }
+        ?>
+    </table>
+
+    <h4>Liste des Problèmes Signalés</lh4>
+        <table>
+            <tr>
+                <td>ID Problème</td>
+                <td>Description du Problème</td>
+                <td>Date de Signalement</td>
+                <td>Statut</td>
+            </tr>
+            <?php
+                $sql_problemes = "SELECT Id_Probleme, Descriptionn, Date_de_Signal, Statut
+                FROM Probleme";
+
+                $result_problemes = mysqli_query($conn, $sql_problemes);
+
+                if ($result_problemes && mysqli_num_rows($result_problemes) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_problemes)) {
+                        echo "<tr>";
+                        echo "<td>" . $row['Id_Probleme'] . "</td>";
+                        echo "<td>" . $row['Descriptionn'] . "</td>";
+                        echo "<td>" . $row['Date_de_Signal'] . "</td>";
+                        echo "<td>" . $row['Statut'] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                echo "Aucun Probleme Signaler.";
+                }
+            ?>
+        </table>
+        <h4> Liste de reclamations </h4>
+        <?php
+            $sql_complaints = "SELECT * FROM Reclamation";
+            $result_complaints = mysqli_query($conn, $sql_complaints);
+
+            if (mysqli_num_rows($result_complaints) ) {
+                echo "<table>
+                        <tr>
+                            <th>ID Reclamation</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Date de Publication</th>
+                        </tr>";
+
+                while ($row = mysqli_fetch_assoc($result_complaints)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['Id_Reclamation'] . "</td>";
+                    echo "<td>" . $row['Titre'] . "</td>";
+                    echo "<td>" . $row['Descriptionn'] . "</td>";
+                    echo "<td>" . $row['Date_de_Publication'] . "</td>";
+                    echo "</tr>";
+                }
+
+                echo "</table>";
+            } else {
+                echo "Aucune réclamation n'a été signalée.";
+            }
+        ?>
+
+        <h4>Admin Reponse </h4>
+        <fieldset>
+            <legend>reclamation reponse</legend>
+            <form action="" method="post">
+                <label for="titrereponse">Titre :</label><br>
+                <input type="text" name="titrereponse">
+                <label for="admin_response">Description :</label><br>
+                <textarea id="admin_response" name="admin_response" rows="4" required></textarea><br>
+
+                <input type="hidden" name="agent_id" value="<?php echo $agent_id; ?>">
+
+                <input type="submit" name="submit_response" value="Submit Response">
+            </form>
+        </fieldset>
+        <?php
+            if(isset($_POST['submit_response'])) {
+                $titre = $_POST['titrereponse'];
+                $response = $_POST['admin_response'];
+                $annonce_date = date('Y-m-d');
+                $agent_id = "5";
+            
+                $sqlreprec = "INSERT INTO Annonce (Titre, Descriptionn, Date_de_Publication, Id_Agent) 
+                              VALUES ('$titre', '$response', '$annonce_date', $agent_id)";
+                $resreprec = mysqli_query($conn, $sqlreprec);
+                if($resreprec) {
+                    echo "Response added successfully.";
+                }
+            
+                $companyName = 'MedNiss';
+                $logoPath = 'images/logofinal.png'; 
+            
+                generatePDF($response, $companyName, $logoPath);
+            }
+        ?>
+
+
+
+
+
+
+
+
 
 
     <script>
