@@ -4,78 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration dashboard</title> 
-    <link rel="stylesheet" href="css/styleadmin.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ionicons@5.0.0/dist/ionicons/css/ionicons.min.css" />
 </head>
 <body>
-    <!-- Navbar -->
-    <nav id="navbar">
-        <ul class="navbar-items flexbox-col">
-            <li class="navbar-logo flexbox-left">
-            <a class="navbar-item-inner flexbox">
-                <img src="images/logofinal.png" alt="">
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <span class="link-text">Search</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-house"></i>
-                </div>
-                <span class="link-text">Home</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-folder-open"></i>
-                </div>
-                <span class="link-text">Enregistrements</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-chart-simple"></i>
-                </div>
-                <span class="link-text">Statistics</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-user"></i>
-                </div>
-                <span class="link-text">Team</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-comments"></i>
-                </div>
-                <span class="link-text">Contact</span>
-            </a>
-            </li>
-            <li class="navbar-item flexbox-left">
-            <a class="navbar-item-inner flexbox-left">
-                <div class="navbar-item-inner-icon-wrapper flexbox">
-                <i class="fa-solid fa-gear"></i>
-                </div>
-                <span class="link-text">Settings</span>
-            </a>
-            </li>
-        </ul>
-    </nav>
+    
     <?php
             ob_start();
             require('./fpdf186/fpdf.php');
@@ -104,34 +36,7 @@
         $database = "gestdechcomloc";
         $conn = new mysqli($servername, $username, $password, $database);
     ?>
-    <?php
-        session_name("admin");
-        session_start();
-        $sqlname = "SELECT Nom FROM Adminstration
-            WHERE Id_Administration = '{$_SESSION['user_id']}'";
-        $resname = mysqli_query($conn, $sqlname);
-        $row = mysqli_fetch_assoc($resname);
-        if ($row) {
-            echo $adminName = $row['Nom'];
-            $adminName = $row['Nom'];
-            echo "<h1>HELLO $adminName</h1>";
-        } else {
-            echo "<h1>HELLO ADMIN</h1>";
-        }
-    ?>
-    <section>
-        <div class="firstlanding">
-            <div id="textlanding">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus suscipit id repellat omnis deleniti aliquam excepturi deserunt dolorum autem ex voluptatum aliquid nostrum corrupti voluptates, ipsam perferendis ullam quod explicabo accusamus quidem. Id enim commodi voluptates porro, voluptas quisquam doloribus reiciendis minus, voluptate sint, eius accusamus dolore amet voluptatem veniam? Odit nesciunt ipsum velit provident quam mollitia officia atque temporibus eos, cupiditate vitae, voluptatum nemo aliquid minima aperiam corporis quas, exercitationem quidem quod quis? Ratione voluptatem id hic repellendus mollitia a aspernatur, aperiam vero fugit voluptatibus! Aliquam sapiente beatae ab esse! Enim id voluptatibus earum unde provident quidem accusamus praesentium!</p>
-                <button class="button-36" role="button">allez</button>
-            </div>
-            <div id="imageslanding">
-                <img src="images/MK.jpeg" id="image1" alt="">
-                <img src="images/logo4.jpg" id="image2" alt="">
-            </div>
-        </div>
-        
-    </section>
+    <h1>HELLO ADMIN</h1>
     <fieldset>
         <legend>Departement</legend>
         <form action="" method="post">

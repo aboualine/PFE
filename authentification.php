@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
-    <!-- l jadkahjdk -->
+    <link rel="stylesheet" href="css/authentstyle.css">
 </head>
 <body>
     <?php
@@ -14,12 +14,15 @@
         $database = "gestdechcomloc";
         $conn = new mysqli($servername, $username, $password, $database);
     ?>
-
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
     <form action="" method="post">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" name="email" placeholder="entrer votr email..." required><br><br>
         <label for="password">Mot de Passe:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password"  placeholder="entrer votr mot de passe..." required><br><br>
         <input type="submit" name="submit" value="Se connecter">
     </form>
     <?php
