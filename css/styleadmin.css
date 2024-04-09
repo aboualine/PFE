@@ -450,9 +450,6 @@ ul, ol {
 *
 *
 */
-.firstlanding{
-
-}
 #image2{
     height: 400px;
     width: 300px;
@@ -478,4 +475,62 @@ ul, ol {
     position: absolute;
     right: 200px;
     top:200px;
+}
+/* ===============
+    secondlanding
+   =============== */
+    
+/* ==============
+    secondlanding
+   ============== */
+
+#secondlanding{
+    margin-top: 100px;
+    height: 600px;
+    width: 100%;
+    background-color: rgb(137, 47, 255);
+    z-index: 200;
+    position: relative;
+    overflow: hidden;
+}
+.containerimages {
+    height: 400px;
+    width: 50%;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.items-passing {
+    display: flex;
+    overflow-x: hidden; /* Hide horizontal overflow */
+    animation: slideLeft 10s linear infinite; /* Adjusted to move all images */
+}
+
+.item {
+    flex-shrink: 0;
+    width: calc(33.33% - 10px); /* Adjusted width for three images with reduced spacing */
+    margin-right: 10px; /* Adjusted spacing */
+}
+
+.item img {
+    display: block;
+    width: auto;
+    max-width: 300px; /* Limit maximum width to 300px */
+    height: 100%; /* Make images fill container height */
+    border-radius: 10px;
+}
+
+/* Hide scrollbar */
+.containerimages::-webkit-scrollbar {
+    display: none;
+}
+
+/* Keyframes for animation */
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-100% - 10px)); /* Adjusted to move all images */
+    }
 }

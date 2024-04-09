@@ -1,0 +1,12 @@
+#secondlanding{
+    height: 500px;
+    width: 100%;
+    background-color: rgb(137, 47, 255);
+    z-index: 200;
+
+}
+.containerimages{
+    height: 300px;
+    width: 50%;
+    overflow: hidden;
+}

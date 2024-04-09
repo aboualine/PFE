@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/styleagent.css">
     <style>
         h1{
             font-size: 200px;
@@ -19,6 +20,23 @@
         $database = "gestdechcomloc";
         $conn = new mysqli($servername, $username, $password, $database);
     ?>
+    <section>
+    <div id="secondlanding">
+            <div class="containerimages"> 
+            <!-- jhfjhhfjkdfkjhghj     -->
+            
+                <!-- <img src="images/logo6.jpg" alt=""> -->
+
+            <!-- kndnfknfndnfjk -->
+            </div>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </section>
     <h1>HELLO AGENT</h1>
     <fieldset>
     <legend>Signaler un Problème</legend>
