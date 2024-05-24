@@ -29,11 +29,11 @@
         if(isset($_POST['submit'])){
             $em = $_POST['email'];
             $pass = $_POST['password'];
-            $queryC = "SELECT * FROM Citoyens WHERE Email = '$em'"; 
+            $queryC = "SELECT * FROM Citoyens WHERE Email = '$em' AND Mot_de_Passe ='$pass'"; 
             $resultC = mysqli_query($conn, $queryC);
-            $queryA = "SELECT * FROM Adminstration WHERE Email = '$em'";
+            $queryA = "SELECT * FROM Adminstration WHERE Email = '$em' AND Mot_de_Passe ='$pass'";
             $resultA = mysqli_query($conn, $queryA);
-            $queryJ = "SELECT * FROM Agent WHERE Email = '$em'";
+            $queryJ = "SELECT * FROM Agent WHERE Email = '$em' AND Mot_de_Passe ='$pass'";
             $resultJ = mysqli_query($conn, $queryJ);
             if (mysqli_num_rows($resultC)) {
                 $userC = mysqli_fetch_assoc($resultC);

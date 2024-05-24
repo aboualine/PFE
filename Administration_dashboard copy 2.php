@@ -1,3 +1,12 @@
+<?php
+        session_name("admin");
+        session_start();
+        $servername = "localhost";
+        $username = "root";
+        $password = "0689102695mohamedaboualinedimaraja";
+        $database = "gestdechcomloc";
+        $conn = new mysqli($servername, $username, $password, $database);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +16,114 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styleadmin.css">
+    <style>
+        .secondlanding {
+            display: flex;
+            position: relative;
+            left: 200px;
+            top: 200px;
+        }
+
+        #seclanimgs {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+
+        .imgplace {
+            box-shadow: 10px 10px 8px rgba(0, 0, 0, 0.2);
+            height: 400px;
+            overflow: hidden;
+            border-radius: 40px;
+            position: relative;
+        }
+
+        #imgplace1 {
+            width: 100px;
+        }
+
+        #imgplace2 {
+            width: 400px;
+        }
+
+        #imgplace3 {
+            width: 100px;
+        }
+
+        .imgplace img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            /* transition: transform 2s ease, opacity 2s ease; */
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        #seclantext{
+            position:relative;
+            left:50px;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            max-width:450px;
+        }
+
+        #texteventchanging {
+            font-size: 18px;
+            font-weight: bold;
+            color: blue;
+            min-height:300px;
+            max-height:300px;
+            margin-top:20px;
+        }
+
+        #btneventvue {
+            margin-right:300px;
+            background-image: linear-gradient(92.88deg, #1d1f1e 9.16%, #232524 43.89%, #282928 64.72%);
+            border-radius: 8px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-family: var(--font-main);
+            font-size: xx-large;
+            font-weight: 500;
+            height: 3rem;
+            padding: 0 1.6rem;
+            text-align: center;
+            text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+            transition: all .5s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        #btneventvue:hover {
+            box-shadow: rgb(44, 156, 24) 0 1px 30px;
+            transition-duration: .1s;
+        }
+
+        @media (min-width: 768px) {
+            #btneventvue {
+                padding: 0 2.6rem;
+            }
+        }
+
+        #backcolor{
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 100%;
+            height: 95%;
+            background-color: purple; 
+            z-index: -1; 
+            border-radius: 40px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -97,25 +214,21 @@
             // }
     ?>
     <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "0689102695mohamedaboualinedimaraja";
-        $database = "gestdechcomloc";
-        $conn = new mysqli($servername, $username, $password, $database);
-    ?>
-    <?php
-        session_name("admin");
-        session_start();
-        $sqlname = "SELECT Nom FROM Adminstration
-            WHERE Id_Administration = '{$_SESSION['user_id']}'";
-        $resname = mysqli_query($conn, $sqlname);
-        $row = mysqli_fetch_assoc($resname);
-        if ($row) {
-            echo $adminName = $row['Nom'];
-            $adminName = $row['Nom'];
-            echo "<h1>HELLO $adminName</h1>";
-        } else {
-            echo "<h1>HELLO ADMIN</h1>";
+        if(isset($_SESSION['user_id'])){
+            $sqlname = "SELECT Nom FROM Adminstration
+                        WHERE Id_Administration = '{$_SESSION['user_id']}'";
+            $resname = mysqli_query($conn, $sqlname);
+            $row = mysqli_fetch_assoc($resname);
+            if ($row) {
+                $_SESSION['role'] = 'Adminstration';
+                $adminName = $row['Nom'];
+                echo "<h1>HELLO $adminName</h1>";
+            } else {
+                header("Location: authentification.php");
+            }
+        }
+        else {
+            header("Location: authentification.php");
         }
     ?>
     <section>
@@ -129,49 +242,66 @@
                 <img src="images/logo4.jpg" id="image2" alt="">
             </div>
         </div>
-        <div id="secondlanding">
-            <div class="containerimages"> 
-            <!-- jhfjhhfjkdfkjhghj     -->
-                <div class="items-passing">
-                    <div class="item">
-                        <img src="images/logo6.jpg" alt="">
-                        <div class="text">
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="images/logo5.jpg" alt="">
-                        <div class="text">
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="images/logo7.jpg" alt="">
-                        <div class="text">
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="images/logo3.jpg" alt="">
-                        <div class="text">
-
-                        </div>
-                    </div>
-
-                </div>
-            
-
-            <!-- kndnfknfndnfjk -->
+        
+        <div class="secondlanding">
+            <div id="seclanimgs">
+                <div id="imgplace1" class="imgplace"></div>
+                <div id="imgplace2" class="imgplace"></div>
+                <div id="imgplace3" class="imgplace"></div>
+                <div id="backcolor"></div>
             </div>
-            <div>
-
-            </div>
-            <div>
-
+            <div id="seclantext">
+                <div id="texteventchanging"></div>
+                <button id="btneventvue">voir</button>
             </div>
         </div>
-        
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <!-- <fieldset>
         <legend>Departement</legend>
         <form action="" method="post">
@@ -1161,25 +1291,6 @@
             });
         });
     </script> -->
-    <script>
-        const items = document.querySelectorAll('.item');
-
-        let currentIndex = 0;
-
-        function moveCarousel() {
-            currentIndex = (currentIndex + 1) % items.length;
-            const leftIndex = (currentIndex + items.length - 1) % items.length;
-
-            // Apply animation to left image
-            items[leftIndex].style.animation = 'slideLeft 1s forwards';
-
-            // Reset animation for middle and right images
-            items[currentIndex].style.animation = '';
-        }
-
-        setInterval(moveCarousel, 5000); // Move carousel every 5 seconds
-
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

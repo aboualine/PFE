@@ -1001,7 +1001,11 @@
                 generatePDF($response, $companyName, $logoPath);
             }
         ?>
-
+        <div>
+            <map name="chichaoua">
+                
+            </map>
+        </div>
 
 
 
