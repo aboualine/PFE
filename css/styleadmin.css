@@ -40,6 +40,7 @@ td{
 *, *::before, *::after {
     box-sizing: inherit;
 }
+
 body {
     margin: 0;
     width: 100%;
@@ -49,6 +50,8 @@ body {
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
     box-sizing: border-box;
+    padding:0;
+    overflow-x:hidden;
 }
 
 /* ============
@@ -483,19 +486,26 @@ ul, ol {
 /* ==============
     secondlanding
    ============== */
-.secondlanding {
+
+   .secondlanding {
+    display: flex;
     position: relative;
-    left: 100px;
-    top: 200px;
+    top:120px;
+    left:200px;
+    background-color:red;
+    height:600px;
+    padding:50px 0 0 0;
+    z-index: -2;
 }
 
 #seclanimgs {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     position: relative;
 }
 
 .imgplace {
+    box-shadow: 10px 10px 8px rgba(0, 0, 0, 0.2);
     height: 400px;
     overflow: hidden;
     border-radius: 40px;
@@ -519,9 +529,122 @@ ul, ol {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    transition: transform 2s ease, opacity 2s ease;
+    /* transition: transform 2s ease, opacity 2s ease; */
 }
 
 .hidden {
     opacity: 0;
+}
+
+#seclantext{
+    position:relative;
+    left:50px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    max-width:450px;
+}
+
+#texteventchanging {
+    font-size: 18px;
+    font-family:Arial;
+    min-height:300px;
+    max-height:300px;
+    margin-top:20px;
+}
+
+#btneventvue {
+    margin-right:300px;
+    background-image: linear-gradient(92.88deg, #1d1f1e 9.16%, #232524 43.89%, #282928 64.72%);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: var(--font-main);
+    font-size: xx-large;
+    font-weight: 500;
+    height: 3rem;
+    padding: 0 1.6rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#btneventvue:hover {
+    box-shadow: rgb(44, 156, 24) 0 1px 30px;
+    transition-duration: .1s;
+}
+
+@media (min-width: 768px) {
+    #btneventvue {
+        padding: 0 2.6rem;
+    }
+}
+
+#backcolor{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 100%;
+    height: 400px;
+    background-color: purple; 
+    z-index: -1; 
+    border-radius: 40px;
+}
+
+#seclaninfs{
+    position: absolute;
+    bottom: -50px;
+    background-color: blue;
+    border-radius: 30px;
+    height: 150px;
+    width:80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.infslan{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.infslan i{
+    font-size: xx-large;
+    color: #FFFFFF;
+}
+
+#inf1{
+    border: 0px 2px 0px 0px;
+    border-color: #FFFFFF;
+}
+#inf2{
+    border: 0px 2px 0px 0px;
+    border-color: #FFFFFF;
+}
+
+.whitebar{
+    height: 100px;
+    width: 2px;
+    border-radius: 1px;
+    background-color: #FFFFFF;
+}
+
+#seclanstats{
+    position: absolute;
+    bottom: -250px;
+    height: 200px;
+    width: 80%;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 10;
 }

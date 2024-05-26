@@ -1,42 +1,10 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     const imgPlace1 = document.querySelector("#imgplace1");
-//     const imgPlace2 = document.querySelector("#imgplace2");
-//     const imgPlace3 = document.querySelector("#imgplace3");
-
-//     const images = [
-//         "images/MK Logo.jpeg",
-//         "images/logo7.jpg",
-//         "images/adil.jpg",
-//         // Add more image paths here
-//     ];
-
-//     let currentIndex = 0;
-
-//     function updateImages() {
-//         imgPlace1.innerHTML = `<img src="${images[(currentIndex + 0) % images.length]}" alt="">`;
-//         imgPlace2.innerHTML = `<img src="${images[(currentIndex + 1) % images.length]}" alt="">`;
-//         imgPlace3.innerHTML = `<img src="${images[(currentIndex + 2) % images.length]}" alt="">`;
-
-//         imgPlace1.querySelector("img").classList.add("hidden");
-//         imgPlace2.querySelector("img").classList.add("hidden");
-//         imgPlace3.querySelector("img").classList.add("hidden");
-
-//         setTimeout(() => {
-//             imgPlace1.querySelector("img").classList.remove("hidden");
-//             imgPlace2.querySelector("img").classList.remove("hidden");
-//             imgPlace3.querySelector("img").classList.remove("hidden");
-//         }, 20); // Small timeout to trigger transition
-//     }
-
-//     function swapImages() {
-//         currentIndex = (currentIndex + 1) % images.length;
-//         updateImages();
-//     }
-
-//     setInterval(swapImages, 4000); // Adjust the timing as needed
-
-//     updateImages(); // Initial load
-// });
+// ilages and text animation in the first section
+/* 
+.
+.
+.
+.
+*/
 document.addEventListener("DOMContentLoaded", function() {
     const imgPlace1 = document.querySelector("#imgplace1");
     const imgPlace2 = document.querySelector("#imgplace2");
@@ -87,4 +55,38 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(swapImages, 4000); // Adjust the timing as needed
 
     updateImages(); // Initial load
+});
+
+// website statistics bar in the first section again
+/* 
+.
+.
+.
+.
+*/
+
+document.addEventListener('DOMContentLoaded', () => {
+    const counts = document.querySelectorAll('.count');
+    const duration = 2000; // Duration of the animation in milliseconds
+
+    counts.forEach((counter) => {
+        const target = +counter.getAttribute('data-target');
+        let startTime = null;
+
+        function updateCounter(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const current = Math.min(progress / duration * target, target);
+
+            counter.innerText = Math.floor(current);
+
+            if (current < target) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.innerText = target;
+            }
+        }
+
+        requestAnimationFrame(updateCounter);
+    });
 });
