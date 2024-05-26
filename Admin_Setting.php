@@ -17,7 +17,9 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav id="navbar">
+
+
+    <!-- <nav id="navbar">
         <ul class="navbar-items flexbox-col">
             <li class="navbar-logo flexbox-left">
             <a class="navbar-item-inner flexbox">
@@ -81,7 +83,9 @@
             </a>
             </li>
         </ul>
-    </nav>
+    </nav> -->
+
+
 
     <fieldset>
         <legend>Departement</legend>
@@ -273,7 +277,7 @@
 
     <fieldset>
         <legend>Ajouter des Fêtes </legend>
-        <form action="" method="post">
+        <form action="" method="post" enctype="Multipart/form-data">
             <label for="Fete_name">Nom de Fête:</label>
             <input type="text" id="Fete_name" name="Fete_name" required><br>
             <label for="Fete_debut">Date debut de la Fête:</label>
@@ -288,8 +292,9 @@
             $feteName = $_POST['Fete_name'];
             $feteStartDate = $_POST['Fete_debut'];
             $feteEndDate = $_POST['Fete_fin'];
+            $feteImg = $_POST['Fete_img'];
             $sqlFete = "INSERT INTO gestdechcomloc.Fetes (NomFete, DateDebut, DateFin)
-                        VALUES ('$feteName', '$feteStartDate', '$feteEndDate')";
+                        VALUES ('$feteName', '$feteStartDate', '$feteEndDate','$feteImg')";
             $resFete = mysqli_query($conn, $sqlFete);
         }
     ?>
@@ -595,7 +600,7 @@
             <textarea id="admin_response" name="admin_response" rows="4" required></textarea><br>
 
             <input type="hidden" name="agent_id" value="<?php echo $agent_id; ?>">
-
+            <input type="file" accept="image/*" id="Annonce_img" name="Annonce_img" required><br>
             <input type="submit" name="submit_response" value="Submit Response">
         </form>
     </fieldset>
@@ -605,8 +610,9 @@
             $response = $_POST['admin_response'];
             $annonce_date = date('Y-m-d');
             $agent_id = "5";
+            $annonce_img = $_POST['Annonce_img'];
             $sqlreprec = "INSERT INTO Annonce (Titre, Descriptionn, Date_de_Publication, Id_Agent) 
-                          VALUES ('$titre', '$response', '$annonce_date', $agent_id)";
+                          VALUES ('$titre', '$response', '$annonce_date', $agent_id ,'$annonce_img')";
             $resreprec = mysqli_query($conn, $sqlreprec);
             if($resreprec) {
                 echo "Response added successfully.";
