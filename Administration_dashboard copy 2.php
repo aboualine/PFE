@@ -278,16 +278,78 @@
                 <div class="horizline"></div> 
             </div>
             <div class="footdivcont">
-
+                <ul class="navbar-items flexbox-col">
+                    <li class="navbar-item flexbox-left">
+                    <a href="Administration_dashboard copy 2.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Home 
+                        </div>
+                    </a>
+                    </li>
+                    <li class="navbar-item flexbox-left">
+                    <a href="Admin_Enregistrements.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Enregistrements
+                        </div>
+                    </a>
+                    </li>
+                    <li class="navbar-item flexbox-left">
+                    <a href="Admin_Statisics.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Statistics
+                        </div>
+                    </a>
+                    </li>
+                    <li class="navbar-item flexbox-left">
+                    <a href="Admin_Team.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Team
+                        </div>
+                    </a>
+                    </li>
+                    <li class="navbar-item flexbox-left">
+                    <a href="Admin_Contact.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Contact
+                        </div>
+                    </a>
+                    </li>
+                    <li class="navbar-item flexbox-left">
+                    <a href="Admin_Setting.php" class="navbar-item-inner flexbox-left">
+                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                        Settings
+                        </div>
+                    </a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="footdivs">
             <div>
-                <div class="foottitle">Title</div>
+                <div class="foottitle">Have a Questions?</div>
                 <div class="horizline"></div>
             </div>
             <div class="footdivcont">
-
+                    <?php
+                        $sqladmin = "SELECT * FROM Adminstration 
+                                     WHERE Id_Administration = '{$_SESSION['user_id']}' ";
+                        $resadmin = mysqli_query($conn,$sqladmin);
+                        if(mysqli_num_rows($resadmin)){
+                            $rowadmin = mysqli_fetch_assoc($resadmin);
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div><a href='#'>".$rowadmin['Email']."</a></div>";
+                            echo "</div>";
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div><a href='#'>".$rowadmin['Tel']."</a></div>";
+                            echo "</div>";
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div>".$rowadmin['Adresse']."</div>";                            
+                            echo "</div>";
+                        }
+                    ?>
             </div>
         </div>
     </footer>
