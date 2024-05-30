@@ -5,7 +5,7 @@
         $username = "root";
         $password = "0689102695mohamedaboualinedimaraja";
         $database = "gestdechcomloc";
-        $conn = new mysqli($servername, $username, $password, $database);
+        $conn = mysqli_connect($servername, $username, $password, $database);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -207,6 +207,142 @@
         </div>
     </section>
 
+    <section class="services-page">
+        <h1 id="titreservices">why we need MEDNISS</h1>
+        <div class="row pt-lg-5">
+            <div class="col-lg-6 col-12">
+            <div class="services-thumb">
+                <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                <h3 class="mb-0">Websites</h3>
+
+                <div class="services-price-wrap ms-auto">
+                    <p class="services-price-text mb-0">$2,400</p>
+                    <div class="services-price-overlay"></div>
+                </div>
+                </div>
+
+                <p>You may want to explore Too CSS for great collection of free HTML CSS templates.</p>
+
+                <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
+
+                <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-user" id="services-icon"></i>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+            <div class="services-thumb services-thumb-up">
+                <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                <h3 class="mb-0">Branding</h3>
+
+                <div class="services-price-wrap ms-auto">
+                    <p class="services-price-text mb-0">$1,200</p>
+                    <div class="services-price-overlay"></div>
+                </div>
+                </div>
+
+                <p>You can explore more CSS templates on TemplateMo website by browsing through different tags.</p>
+
+                <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
+
+                <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-user" id="services-icon"></i>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-lg-6 col-12" id="rdcarddiv">
+            <div class="services-thumb">
+                <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                <h3 class="mb-0">Ecommerce</h3>
+
+                <div class="services-price-wrap ms-auto">
+                    <p class="services-price-text mb-0">$3,600</p>
+                    <div class="services-price-overlay"></div>
+                </div>
+                </div>
+
+                <p>If you need a customized ecommerce website for your business, feel free to discuss with me.</p>
+
+                <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
+
+                <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-user" id="services-icon"></i>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+            <div class="services-thumb services-thumb-up">
+                <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                <h3 class="mb-0">SEO</h3>
+
+                <div class="services-price-wrap ms-auto">
+                    <p class="services-price-text mb-0">$1,450</p>
+                    <div class="services-price-overlay"></div>
+                </div>
+                </div>
+
+                <p>To list your website first on any search engine, we will work together. First Portfolio is one-page CSS Template for free download.</p>
+
+                <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
+
+                <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-user" id="services-icon"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="latestevents">
+        <h1>Latest Events</h1>
+        <div class="eventscards">
+            <div class="eventscardsimgs">
+                <img src="images/MK.jpeg" alt="">
+            </div>
+            <div class="eventscardstext">
+                <div id="eventstitle">Name</div>
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius culpa dolorum dolores explicabo animi incidunt libero ex excepturi facere enim!</div>
+                <div id="eventdate">Date12345</div>
+            </div>
+        </div>
+        <div class="eventscards ecr">
+            <div class="eventscardsimgs">
+                <img src="images/MK.jpeg" alt="">
+            </div>
+            <div class="eventscardstext">
+                <div id="eventstitle">Name</div>
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius culpa dolorum dolores explicabo animi incidunt libero ex excepturi facere enim!</div>
+                <div id="eventdate">Date12345</div>
+            </div>
+        </div>
+        <div class="eventscards">
+            <div class="eventscardsimgs">
+                <img src="images/MK.jpeg" alt="">
+            </div>
+            <div class="eventscardstext">
+                <div id="eventstitle">Name</div>
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius culpa dolorum dolores explicabo animi incidunt libero ex excepturi facere enim!</div>
+                <div id="eventdate">Date12345</div>
+            </div>
+        </div>
+        <div class="eventscards ecr">
+            <div class="eventscardsimgs">
+                <img src="images/MK.jpeg" alt="">
+            </div>
+            <div class="eventscardstext">
+                <div id="eventstitle">Name</div>
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius culpa dolorum dolores explicabo animi incidunt libero ex excepturi facere enim!</div>
+                <div id="eventdate">Date12345</div>
+            </div>
+        </div>
+    </section>
+
+
+
+
 
     <footer>
         <div class="footdivs">
@@ -233,7 +369,7 @@
             <div class="footdivcont">
                 <div class="footevent">
                     <?php
-                        $sqlannonce = "SELECT Annonce.Image, Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                        $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
                                         FROM 
                                             Annonce
                                         JOIN 
@@ -245,14 +381,13 @@
                             $rowannonce = mysqli_fetch_assoc($resannonce);
                         }
                     
-                    echo "<img src='".$rowannonce['Image']."' alt='' class='footeventimg'>";
                     echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
                     echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
                 echo "</div>";
                 ?>
                 <div class="footevent">
                     <?php
-                            $sqlannonce = "SELECT Annonce.Image, Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                            $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
                                             FROM 
                                                 Annonce
                                             JOIN 
@@ -264,7 +399,6 @@
                                 $rowannonce = mysqli_fetch_assoc($resannonce);
                             }
                         
-                        echo "<img src='".$rowannonce['Image']."' alt='' class='footeventimg'>";
                         echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
                         echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
                     echo "</div>";

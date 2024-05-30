@@ -492,7 +492,7 @@ ul, ol {
     position: relative;
     top:120px;
     left:200px;
-    background-color:red;
+    /* background-color:red; */
     height:600px;
     padding:50px 0 0 0;
     z-index: -2;
@@ -592,7 +592,7 @@ ul, ol {
     left: 40px;
     width: 100%;
     height: 400px;
-    background-color: purple; 
+    background-color: #b7d4cc; 
     z-index: -1; 
     border-radius: 40px;
 }
@@ -600,7 +600,7 @@ ul, ol {
 #seclaninfs{
     position: absolute;
     bottom: -50px;
-    background-color: blue;
+    background-color: #b7d4cc;
     border-radius: 30px;
     height: 150px;
     width:80%;
@@ -641,7 +641,7 @@ ul, ol {
     bottom: -250px;
     height: 200px;
     width: 80%;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -649,8 +649,218 @@ ul, ol {
     z-index: 10;
 }
 
+/*---------------------------------------
+  SERVICES              
+-----------------------------------------*/
+.services-page{
+  /* background: #f9f9f9; */
+  /* border-top: 1px solid #e9eaeb; */
+  /* border-bottom: 1px solid #e9eaeb; */
+  position: relative;
+  top: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-evenly; */
+  justify-content: center;
+  padding: 0 200px;
+}
+
+.services-page .row{
+    position: relative;
+    top: 200px;
+    left: 100px;
+}
+
+.row > .col-lg-6{
+    flex: 1 1 30%;
+    box-sizing: border-box;
+}
+
+.row.pt-lg-5 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-left: -10px; 
+}
+
+.col-lg-6 {
+    flex: 1 1 50%;
+    box-sizing: border-box;
+}
+
+
+#titreservices{
+    position: absolute;
+}
+
+.services-thumb {
+  background: #ffffff;
+  height: 500px;
+  width: 500px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding: 40px 40px 240px 40px;
+  transition: all 0.5s;
+}
+
+.services-thumb-up {
+  position: relative;
+  bottom: 50px;
+  margin-bottom: -50px;
+}
+
+.services-thumb:hover {
+  border: 2px solid #14B789;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+.services-thumb:hover .services-icon-wrap {
+  background: #14B789;
+  border-color: #14B789;
+  color: #ffffff;
+}
+
+.services-icon-wrap {
+  border: 1px solid #e9eaeb;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 55%;
+  transform: rotate(-35deg) translateY(55px);
+  transition: all ease 0.5s;
+}
+
+#services-icon {
+  font-size: 90px;
+  position: relative;
+  bottom: 15px;
+}
+
+.services-thumb:hover .services-price-wrap {
+  background: #14B789;
+}
+
+.services-thumb:hover .services-price-overlay {
+  background: #535da1;
+}
+
+.services-price-wrap {
+  background: #535da1;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  padding: 6px 20px 6px 15px;
+  transition: all ease 0.5s;
+}
+
+.services-price-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.services-price-overlay {
+  background: #14B789;
+  border-bottom-left-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+/*
+*
+*
+*
+*
+*
+*
+*/
+
+/*---------------------------------------
+  EVENTS             
+-----------------------------------------*/
+
+.latestevents{
+    position: relative;
+    top: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    justify-content: center;
+    row-gap: 50px;
+    padding: 200px;
+}
+
+.eventscards{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+    margin-left: 160px;
+}
+
+.eventscards img{
+    border-radius: 10px;
+    height: 300px;
+    width: 300px;
+}
+
+.eventscardstext{
+    background: #ffffff;
+    height: 200px;
+    width: 730px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    position: relative;
+    top:50px;
+    overflow: hidden;
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 50px;
+}
+
+.eventscardstext:hover {
+    border: 2px solid #14B789;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  }
+
+#eventstitle{
+    font-size: x-large;
+    font-weight: bold;
+    color:#14B789;
+}
+
+#eventdate{
+    font-size: large;
+    font-weight: bolder;
+    color:#14B789;
+}
+
+.ecr {
+    flex-direction: row-reverse;
+}
+
+/*
+*
+*
+*
+*
+*
+*
+*/
+
 footer{
-    background-color: darkblue;
+    background-color: greenyellow;
     height: 740px;
     width: 100%;
     overflow-x: hidden;
