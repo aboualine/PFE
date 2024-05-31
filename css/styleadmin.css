@@ -407,6 +407,61 @@ ul, ol {
 
 }
 
+/*---------------------------------------
+  Overlay styles              
+-----------------------------------------*/
+
+.search-overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); 
+    backdrop-filter: blur(10px);
+    z-index: 1000; 
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease; 
+    opacity: 0;
+}
+
+.search-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Input box styles */
+.search-box {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+
+
+
+/*
+*
+*
+*
+*
+*
+*
+*
+*
+*/
 
 /*button allez
 *
@@ -1033,7 +1088,7 @@ ul, ol {
 */
 
 footer{
-    background-color: rgb(161, 166, 252);
+    background-color: #0d1824;
     height: 740px;
     width: 100%;
     overflow-x: hidden;
@@ -1042,33 +1097,120 @@ footer{
     z-index: -1;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
-    padding: 50px;
+    align-items: flex-start;
+    padding:200px 0px 0px 100px;
 }
 
 .footdivs{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 400px;
-    max-width: 400px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 300px;
+    max-width: 300px;
 }
 .foottitle{
     font-size: large;
     color: #FFFFFF;
     font-weight: bold;
+    text-align: left;
 }
 .horizline{
-    background-color: #FFFFFF;
+    background-color: rgb(161, 166, 252);
     height: 2px;
-    width: 50%;
+    width: 50px;
     border-radius: 1px;
+    margin-bottom: 10px;
 }
 .footdivcont{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     max-width: 200px;
+    color: #ffffff;
+    text-align: left;
+    line-height: 1.5;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+.fdwl{
+    line-height: 1.5;
+}
+#footcopyright{
+    position: absolute;
+    bottom: 80px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-between;
+}
+#footcopyline{
+    background-color: rgb(161, 166, 252);
+    height: 2px;
+    width: 80%;
+    border-radius: 1px;
+    position: relative;
+    bottom: 20px;
+}
+.textbold{
+    font-size: larger;
+    font-weight: bold;
+    color: rgb(161, 166, 252);
+    transition: all .5s;
+}
+.textbold:hover{
+    color: rgb(161, 166, 252);
+    cursor: pointer;
+    text-shadow: 0 1px 10px #ffffff;
+}
+
+.footcontact {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+}
+
+.footcontact i {
+    margin-right: 10px; 
+    color: #ffffff; 
+}
+
+.footcontact a, .footcontact div {
+    color: #ffffff; 
+    text-decoration: none; 
+}
+
+.footcontact a:hover, .footcontact div:hover {
+    text-shadow: 0 1px 10px #ffffff; 
+}
+
+
+/* Specific styles for Quick Links section */
+.footdivcont {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.footdivcont li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.footdivcont li a {
+    text-decoration: none;
+    color: #ffffff;
+    display: inline;
+}
+
+.footdivcont li a:hover {
+    text-shadow: 0 1px 10px #ffffff;
 }

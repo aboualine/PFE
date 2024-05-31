@@ -1,3 +1,22 @@
+// search overlay
+/* 
+.
+.
+.
+.
+*/
+document.getElementById('search-item').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('search-overlay').classList.toggle('active');
+});
+
+// Optional: Close the overlay when clicking outside the input box
+document.getElementById('search-overlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.remove('active');
+    }
+});
+
 // links color event change color
 /* 
 .
@@ -19,10 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
-
-
 // images and text animation in the first section
 /* 
 .
@@ -39,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const images = [
         { src: "images/MK Logo.jpeg", text: "Text for MK Logo noww i'm writing a text from nothing that is nothing because i just need to fill a place in my div" },
         { src: "images/logo7.jpg", text: "Text for logo7 lorem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj hghjvb jbjhvb jhvhj vjv hjfd gjh hk h hh u kjl;jl j  j jh kjh l " },
-        { src: "images/adil.jpg", text: "Text for adil jhvbsdhkl ;wjbf     Lorem ipsum dolor sit amet consectetur adipidunt dignissimos! Excepturi magni veritatis sint unde.  knkh      " },
+        { src: "images/Tom Walsh Design.jpeg", text: "Text for Tom jhvbsdhkl ;wjbf     Lorem ipsum dolor sit amet consectetur adipidunt dignissimos! Excepturi magni veritatis sint unde.  knkh      " },
         { src: "images/1.png", text: "Text for somthing else  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quidem amet ipsam incidunt saepe nemo nihil asperiores rem odit repudiandae!        " },
         { src: "images/50 Minimalist Desktop Wallpapers and Backgrounds (2022 Edition).jpg", text: "Text for slamdunk     Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, laboriosam.        " },
         { src: "images/558672d1f7df90911ba819d11cbbca29.jpg", text: "Text for kiluia zoldik     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam consectetur commodi minima non voluptate tenetur officia veritatis, porro consequuntur laborum quo, fuga tempora. Quaerat tenetur nesciunt voluptatibus? Inventore, culpa!        " },

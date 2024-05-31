@@ -27,7 +27,7 @@
                 <img src="images/logofinal.png" alt="">
             </a>
             </li>
-            <li class="navbar-item flexbox-left">
+            <li class="navbar-item flexbox-left" id="search-item">
             <a href="#" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -85,6 +85,13 @@
             </li>
         </ul>
     </nav>
+
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+        </div>
+    </div>
+    
     <?php
         if(isset($_SESSION['user_id'])){
             $sqlname = "SELECT Nom FROM Adminstration
@@ -419,7 +426,7 @@
     </section>
 
     <footer>
-        <div class="footdivs">
+        <div class="footdivs fdwl">
             <div>
                 <div class="foottitle">Title</div>
                 <div class="horizline"></div>
@@ -435,7 +442,7 @@
                 </div>
             </div>
         </div>
-        <div class="footdivs">
+        <div class="footdivs fdwl">
             <div>
                 <div class="foottitle">Latest News</div>
                 <div class="horizline"></div>
@@ -480,59 +487,59 @@
                 </div>
             </div>
         </div>
-        <div class="footdivs">
+        <div class="footdivs fdwl">
             <div>
                 <div class="foottitle">Quick Links</div>
                 <div class="horizline"></div> 
             </div>
-            <div class="footdivcont">
-                <ul class="navbar-items flexbox-col">
-                    <li class="navbar-item flexbox-left">
-                    <a href="Administration_dashboard copy 2.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+            <!-- <div class="footdivcont"> -->
+                <ul class="footdivcont">
+                    <li>
+                    <a href="Administration_dashboard copy 2.php" >
+                        <div>
                         Home 
                         </div>
                     </a>
                     </li>
-                    <li class="navbar-item flexbox-left">
-                    <a href="Admin_Enregistrements.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                    <li>
+                    <a href="Admin_Enregistrements.php">
+                        <div>
                         Enregistrements
                         </div>
                     </a>
                     </li>
-                    <li class="navbar-item flexbox-left">
-                    <a href="Admin_Statisics.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                    <li>
+                    <a href="Admin_Statisics.php">
+                        <div>
                         Statistics
                         </div>
                     </a>
                     </li>
-                    <li class="navbar-item flexbox-left">
-                    <a href="Admin_Team.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                    <li >
+                    <a href="Admin_Team.php">
+                        <div>
                         Team
                         </div>
                     </a>
                     </li>
-                    <li class="navbar-item flexbox-left">
-                    <a href="Admin_Contact.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                    <li>
+                    <a href="Admin_Contact.php">
+                        <div>
                         Contact
                         </div>
                     </a>
                     </li>
-                    <li class="navbar-item flexbox-left">
-                    <a href="Admin_Setting.php" class="navbar-item-inner flexbox-left">
-                        <div class="navbar-item-inner-icon-wrapper flexbox">
+                    <li>
+                    <a href="Admin_Setting.php">
+                        <div>
                         Settings
                         </div>
                     </a>
                     </li>
                 </ul>
-            </div>
+            <!-- </div> -->
         </div>
-        <div class="footdivs">
+        <div class="footdivs fdwl">
             <div>
                 <div class="foottitle">Have a Questions?</div>
                 <div class="horizline"></div>
@@ -559,6 +566,34 @@
                         }
                     ?>
             </div>
+        </div>
+        <div id="footcopyright">
+            <div id="footcopyline"></div>
+            <div>
+                &copy;Copyright <?php 
+                    $sql = 'SELECT Nom FROM Adminstration';
+                    $res = mysqli_query($conn, $sql);
+                    $names = [];                                                              
+                    while($row = mysqli_fetch_assoc($res)){
+                        $names[] = $row['Nom'];
+                    }
+                    
+                    $namesCount = count($names);
+                    $namesList = '';
+                    
+                    foreach ($names as $index => $name) {
+                        $namesList .= "<span class='textbold'>{$name}</span>";
+                        if ($index < $namesCount - 2) {
+                            $namesList .= ', ';
+                        } elseif ($index == $namesCount - 2) {
+                            $namesList .= ' and ';
+                        }
+                    }
+
+                    echo "<span class='textbold'>".date("Y")."</span> All rights reserved | This website is made by {$namesList}";
+                ?>
+            </div>
+
         </div>
     </footer>
     <script src="script.js"></script>
