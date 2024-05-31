@@ -94,7 +94,7 @@
             if ($row) {
                 $_SESSION['role'] = 'Adminstration';
                 $adminName = $row['Nom'];
-                echo "<h1>HELLO $adminName</h1>";
+                echo "<h1>Bonjour $adminName</h1>";
             } else {
                 header("Location: authentification.php");
             }
@@ -340,9 +340,83 @@
         </div>
     </section>
 
-
-
-
+    <section class="wrapper">
+            <div class="carousel">
+                <h1>Commentaires</h1>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">ayoublgtifi</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">whale</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">dolphin</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">fish</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">tropical fish</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">blowfish</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">shark</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">octopus</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+                <div class="carousel__item">
+                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                    <div class="carousel__item-body">
+                        <p class="title">spiral shell</p>
+                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="Unicode">Unicode: U+1F433</p>
+                    </div>
+                </div>
+            </div>
+    </section>
 
     <footer>
         <div class="footdivs">

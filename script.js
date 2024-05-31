@@ -1,4 +1,29 @@
-// ilages and text animation in the first section
+// links color event change color
+/* 
+.
+.
+.
+.
+*/
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#navbar .navbar-item-inner');
+    const originalColor = 'hsla(var(--quite-gray), 1)'; // Define the original color here
+    const newColor = 'hsla(var(--primary), 1)'; // Define the new color here
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(link => {
+                link.style.color = originalColor; // Reset all links to original color
+            });
+            this.style.color = newColor; // Set clicked link to new color
+        });
+    });
+});
+
+
+
+
+// images and text animation in the first section
 /* 
 .
 .
