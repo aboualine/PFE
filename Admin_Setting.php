@@ -630,6 +630,162 @@
         }
     ?>
 
+    <!-- jhhvhghgvhgvgvghvgvv -->
+    <div id="admininfs">
+
+    <h6>Ajouter un <strong>Admin</strong> :</h6>
+    <fieldset>
+        <legend>Admine information </legend>
+        <form action="" method="post">
+            <label for="idadmin">Id:</label><br>
+            <input type="text" id="cin" name="id"  required><br>
+
+            <label for="nom">Nom:</label><br>
+            <input type="text" id="nom" name="nom" required><br>
+
+            <label for="adresse">Adresse:</label><br>
+            <input type="text" id="prenom" name="adresse" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="tel">Tel:</label><br>
+            <input type="text" id="tel" name="tel" required><br>
+
+            <label for="git">GitHub profile :</label><br>
+            <input type="text" id="git" name="git" required><br>
+
+            <!-- <label for="date_inscription">Date Inscription:</label><br>
+            <input type="date" id="date_inscription" name="date_inscription"><br> -->
+
+            <label for="mot_de_passe">Mot de Passe:</label><br>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required><br>
+
+            <input type="submit" name="submit" id="but" value="Submit">
+        </form>
+    </fieldset>
+    <?php
+        // error_reporting(0);
+        // ini_set('display_errors', 0);
+            if(isset($_POST['submit'])){
+                $id = $_POST['idadmin'];
+                $nom = $_POST['nom'];
+                $adresse = $_POST['adresse'];
+                $email = $_POST['email'];
+                $tel = $_POST['tel'];
+                $git = $_POST['git'];
+                $mot_de_passe = $_POST['mot_de_passe'];
+                $sql = "INSERT INTO Adminstration (Id_Administration, Nom, Adresse, Email, Tel, Mot_de_Passe, GitHubURL) 
+                        VALUES ('$id', '$nom', '$adresse', '$email', '$tel', '$mot_de_passe', '$git')";
+                $res = mysqli_query($conn,$sql);
+            }
+    ?>
+
+<!-- jbdjbjfbvjdhbvjd -->
+    <?php
+        $nom = $adresse = $email = $tel = $github = $motdepasse = '';
+        $action = 'insert';
+        $id = 0;
+        
+        if (isset($_GET['action']) && isset($_GET['id'])) {
+            $action = $_GET['action'];
+            $id_encoded = $_GET['id']; // Get the id from the URL
+        
+            // Decode the id parameter
+            $id_decoded = urldecode($id_encoded);
+        
+            if ($action == 'modifier') {
+                $sql = "SELECT * FROM Adminstration WHERE Id_Administration = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $id_decoded); // 'i' indicates the id is an integer
+                $stmt->execute();
+                $result = $stmt->get_result();
+                
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $nom = $row['Nom'];
+                    $adresse = $row['Adresse'];
+                    $email = $row['Email'];
+                    $tel = $row['Tel'];
+                    $github = $row['GitHubURL'];
+                    $motdepasse = $row['Mot_de_Passe'];
+                } else {
+                    echo "No record found for the given ID.";
+                }
+                $stmt->close();
+            } elseif ($action == 'supprimer') {
+                $sql = "DELETE FROM Adminstration WHERE Id_Administration = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $id_decoded); // 'i' indicates the id is an integer
+                
+                if ($stmt->execute()) {
+                    echo "Record deleted successfully.";
+                } else {
+                    echo "Error deleting record: " . $conn->error;
+                }
+                $stmt->close();
+                $action = 'insert'; // Reset action to insert after deletion
+            }
+        }
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $id = intval($_POST['id']);
+            $nom = $_POST['nom'];
+            $adresse = $_POST['adresse'];
+            $email = $_POST['email'];
+            $tel = $_POST['tel'];
+            $github = $_POST['github'];
+            $motdepasse = $_POST['motdepasse'];
+        
+            if ($_POST['action'] == 'modifier') {
+                $sql = "UPDATE Adminstration SET Nom=?, Adresse=?, Email=?, Tel=?, GitHubURL=?, Mot_de_Passe=? WHERE Id_Administration=?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssssssi", $nom, $adresse, $email, $tel, $github, $motdepasse, $id);
+                
+                if ($stmt->execute()) {
+                    echo "Record updated successfully.";
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                }
+                $stmt->close();
+            } else {
+                $sql = "INSERT INTO Adminstration (Nom, Adresse, Email, Tel, GitHubURL, Mot_de_Passe) VALUES (?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssssss", $nom, $adresse, $email, $tel, $github, $motdepasse);
+                
+                if ($stmt->execute()) {
+                    echo "New record created successfully.";
+                } else {
+                    echo "Error creating record: " . $stmt->error;
+                }
+                $stmt->close();
+            }
+            $nom = $adresse = $email = $tel = $github = $motdepasse = ''; // Reset fields after insert/update
+        }
+        
+        echo "<div id='admininfs'>";
+        echo "<form method='POST' action=''>";
+        echo "<input type='hidden' name='id' value='" . $id . "'>";
+        echo "<input type='hidden' name='action' value='" . $action . "'>";
+        echo "<label for='nom'>Nom:</label>";
+        echo "<input type='text' id='nom' name='nom' value='" . $nom . "'><br>";
+        echo "<label for='adresse'>Adresse:</label>";
+        echo "<input type='text' id='adresse' name='adresse' value='" . $adresse . "'><br>";
+        echo "<label for='email'>Email:</label>";
+        echo "<input type='email' id='email' name='email' value='" . $email . "'><br>";
+        echo "<label for='tel'>Tel:</label>";
+        echo "<input type='text' id='tel' name='tel' value='" . $tel . "'><br>";
+        echo "<label for='github'>GitHub URL:</label>";
+        echo "<input type='text' id='github' name='github' value='" . $github . "'><br>";
+        echo "<label for='motdepasse'>Mot de Passe:</label>";
+        echo "<input type='password' id='motdepasse' name='motdepasse' value='" . $motdepasse . "'><br>";
+        echo "<input type='submit' value='Submit'>";
+        echo "</form>";
+        echo "</div>";
+    ?>
+    </div>
+<!-- gvghdgdvgdhgd -->
+
     <!-- creation d'image pour l'annonce -->
         <!-- ********************** -->
         <!-- ********************** -->
@@ -744,6 +900,117 @@
         <!-- ********************** -->
         <!-- ********************** -->
     <!-- creation d'image pour l'annonce -->
+
+    <h6>Ajouter un <strong>Admin</strong> :</h6>
+    <form action="" method="post">
+        <label for="id">Id:</label><br>
+        <input type="text" id="cin" name="id"  required><br>
+
+        <label for="nom">Nom:</label><br>
+        <input type="text" id="nom" name="nom" required><br>
+
+        <label for="adresse">Adresse:</label><br>
+        <input type="text" id="prenom" name="adresse" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="tel">Tel:</label><br>
+        <input type="text" id="tel" name="tel" required><br>
+
+        <label for="git">GitHub profile :</label><br>
+        <input type="text" id="git" name="git" required><br>
+
+        <!-- <label for="date_inscription">Date Inscription:</label><br>
+        <input type="date" id="date_inscription" name="date_inscription"><br> -->
+
+        <label for="mot_de_passe">Mot de Passe:</label><br>
+        <input type="password" id="mot_de_passe" name="mot_de_passe" required><br>
+
+        <input type="submit" name="submit" id="but" value="Submit">
+    </form>
+    <?php
+        // error_reporting(0);
+        // ini_set('display_errors', 0);
+            if(isset($_POST['submit'])){
+                $id = $_POST['id'];
+                $nom = $_POST['nom'];
+                $adresse = $_POST['adresse'];
+                $email = $_POST['email'];
+                $tel = $_POST['tel'];
+                $git = $_POST['git'];
+                $mot_de_passe = $_POST['mot_de_passe'];
+                $sql = "INSERT INTO Adminstration (Id_Administration, Nom, Adresse, Email, Tel, Mot_de_Passe, GitHubURL) 
+                        VALUES ('$id', '$nom', '$adresse', '$email', '$tel', '$mot_de_passe', '$git')";
+                $res = mysqli_query($conn,$sql);
+            }
+    ?>
+
+<!-- jbdjbjfbvjdhbvjd -->
+    <?php
+    if (isset($_GET['action']) && isset($_GET['id'])) {
+        $action = $_GET['action'];
+        $id = $_GET['id'];
+
+        if ($action == 'modifier') {
+            // Fetch existing data to pre-fill the form
+            $sql = "SELECT * FROM Adminstration WHERE Id_Administration = $id";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                ?>
+                <form method="POST" action="Admin_Setting.php">
+                    <input type="hidden" name="id" value="<?php echo $row['Id_Administration']; ?>">
+                    <label for="nom">Nom:</label>
+                    <input type="text" id="nom" name="nom" value="<?php echo $row['Nom']; ?>"><br>
+                    <label for="adresse">Adresse:</label>
+                    <input type="text" id="adresse" name="adresse" value="<?php echo $row['Adresse']; ?>"><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="<?php echo $row['Email']; ?>"><br>
+                    <label for="tel">Tel:</label>
+                    <input type="text" id="tel" name="tel" value="<?php echo $row['Tel']; ?>"><br>
+                    <label for="github">GitHub URL:</label>
+                    <input type="text" id="github" name="github" value="<?php echo $row['GitHubURL']; ?>"><br>
+                    <label for="motdepasse">Mot de Passe:</label>
+                    <input type="password" id="motdepasse" name="motdepasse" value="<?php echo $row['Mot_de_Passe']; ?>"><br>
+                    <input type="submit" name="update" value="Update">
+                </form>
+                <?php
+            } else {
+                echo "No record found.";
+            }
+        } elseif ($action == 'supprimer') {
+            // Delete the record
+            $sql = "DELETE FROM Adminstration WHERE Id_Administration = $id";
+            if ($conn->query($sql) === TRUE) {
+                echo "Record deleted successfully.";
+            } else {
+                echo "Error deleting record: " . $conn->error;
+            }
+        }
+    }
+
+    if (isset($_POST['update'])) {
+        $id = $_POST['id'];
+        $nom = $_POST['nom'];
+        $adresse = $_POST['adresse'];
+        $email = $_POST['email'];
+        $tel = $_POST['tel'];
+        $github = $_POST['github'];
+        $motdepasse = $_POST['motdepasse'];
+
+        $sql = "UPDATE Adminstration SET Nom='$nom', Adresse='$adresse', Email='$email', Tel='$tel', GitHubURL='$github', Mot_de_Passe='$motdepasse' WHERE Id_Administration=$id";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Record updated successfully.";
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+    }
+    ?>
+
+<!-- gvghdgdvgdhgd -->
+
     <footer>
         <div class="footdivs fdwl">
             <div>
@@ -932,5 +1199,6 @@
             });
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

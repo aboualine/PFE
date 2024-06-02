@@ -300,6 +300,101 @@
         }
     ?>
 
+    <h2>List des Citoyens</h2>
+    <table>
+        <tr>
+            <th>CIN</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>Tel</th>
+            <th>Date Inscription</th>
+            <th>Mot de Passe</th>
+            <th>Actions</th>
+        </tr>
+
+        <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "0689102695mohamedaboualinedimaraja";
+        $database = "gestdechcomloc";
+        $conn = new mysqli($servername, $username, $password, $database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "SELECT * FROM Citoyens";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["CIN"] . "</td>";
+                echo "<td>" . $row["Nom"] . "</td>";
+                echo "<td>" . $row["Prenom"] . "</td>";
+                echo "<td>" . $row["Email"] . "</td>";
+                echo "<td>" . $row["Tel"] . "</td>";
+                echo "<td>" . $row["Date_Inscription"] . "</td>";
+                echo "<td>" . $row["Mot_de_Passe"] . "</td>";
+                echo "<td>";
+                echo "<button onclick=\"location.href='Admin_Setting.php?action=modifier&id=" . $row["CIN"] . "'\">Modifier</button>";
+                echo "<button onclick=\"location.href='Admin_Setting.php?action=supprimer&id=" . $row["CIN"] . "'\">Supprimer</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "aucun resultat";
+        }
+        $conn->close();
+        ?>
+    </table>
+
+    <h2>List des Admins</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>ADRESSE</th>
+            <th>Email</th>
+            <th>Tel</th>
+            <th>GitHub</th>
+            <th>Mot de Passe</th>
+            <th>Actions</th>
+        </tr>
+
+        <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "0689102695mohamedaboualinedimaraja";
+        $database = "gestdechcomloc";
+        $conn = new mysqli($servername, $username, $password, $database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "SELECT * FROM Adminstration";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["Id_Administration"] . "</td>";
+                echo "<td>" . $row["Nom"] . "</td>";
+                echo "<td>" . $row["Adresse"] . "</td>";
+                echo "<td>" . $row["Email"] . "</td>";
+                echo "<td>" . $row["Tel"] . "</td>";
+                echo "<td>" . $row["GitHubURL"] . "</td>";
+                echo "<td>" . $row["Mot_de_Passe"] . "</td>";
+                echo "<td>";
+                $id_encoded = urlencode($row['Id_Administration']);
+                echo "<button onclick=\"location.href='Admin_Setting.php?action=modifier&id=$id_encoded#admininfs'\">Modifier</button>";
+                echo "<button onclick=\"location.href='Admin_Setting.php?action=supprimer&id=$id_encoded#admininfs'\">Supprimer</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "aucun resultat";
+        }
+        $conn->close();
+        ?>
+    </table>
+
 <footer>
         <div class="footdivs fdwl">
             <div>

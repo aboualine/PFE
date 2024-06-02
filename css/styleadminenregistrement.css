@@ -583,7 +583,7 @@ footer{
     width: 100%;
     overflow-x: hidden;
     position: absolute;
-    bottom: -2400px;
+    bottom: -6400px;
     z-index: -1;
     display: flex;
     justify-content: space-evenly;

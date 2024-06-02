@@ -130,3 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateCounter);
     });
 });
+
+// smouth scroling to the div wher i have the form
+/* 
+.
+.
+.
+.
+*/
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.hash) {
+        var element = document.querySelector(window.location.hash);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
