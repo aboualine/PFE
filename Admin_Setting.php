@@ -13,13 +13,13 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styleadmin.css">
+    <link rel="stylesheet" href="css/styleadminsetting.css">
 </head>
 <body>
     <!-- Navbar -->
 
 
-    <!-- <nav id="navbar">
+    <nav id="navbar">
         <ul class="navbar-items flexbox-col">
             <li class="navbar-logo flexbox-left">
             <a class="navbar-item-inner flexbox">
@@ -83,10 +83,10 @@
             </a>
             </li>
         </ul>
-    </nav> -->
+    </nav>
 
 
-
+    <h6>Ajouter une deppartement : </h6>
     <fieldset>
         <legend>Departement</legend>
         <form action="" method="post">
@@ -103,6 +103,7 @@
             $resd = mysqli_query($conn,$sqld);
         }
     ?>
+    <h6>Ajouter un post : </h6>
 
     <form action="" method="post">
         <fieldset>
@@ -123,6 +124,7 @@
             $resp = mysqli_query($conn,$sqlp);
         }
     ?>
+    <h6>Ajouter une agent : </h6>
 
     <fieldset>
         <legend>Ajouter Agent</legend>
@@ -182,6 +184,7 @@
                 }
         }
     ?>
+    <h6>creer un emploi : </h6>
 
     <fieldset>
         <legend>gestion des horaires</legend>
@@ -237,6 +240,7 @@
             }
         }
     ?>
+    <h6>Ajouter les vacances : </h6>
 
     <fieldset>
         <legend>Ajouter des vacances </legend>
@@ -274,6 +278,7 @@
             }
         }
     ?>
+    <h6>Ajouter les fêtes : </h6>
 
     <fieldset>
         <legend>Ajouter des Fêtes </legend>
@@ -298,6 +303,7 @@
             $resFete = mysqli_query($conn, $sqlFete);
         }
     ?>
+    <h6>Ajouter les equipements : </h6>
 
     <fieldset>
         <legend>Ajouter des Equipements </legend>
@@ -318,6 +324,7 @@
             $resAjoutEquip = mysqli_query($conn, $sqlAjoutEquip);
         }
     ?>
+    <h6>Ajouter les ramaceurs : </h6>
 
     <fieldset>
         <legend>Ajoutes les ramaceurs a des equipment </legend>
@@ -376,6 +383,7 @@
             }
         }
     ?>
+    <h6>Ajouter les véhicules : </h6>
 
     <fieldset>
         <legend>véhicules</legend>
@@ -415,6 +423,7 @@
             }
         }
     ?>
+    <h6>Ajouter les trajectoires : </h6>
 
     <fieldset>
     <legend>Ajouter Trajectoire</legend>
@@ -447,6 +456,7 @@
             }
         }
     ?>
+    <h6>Ajouter les points de collecte : </h6>
 
     <fieldset>
     <legend>Ajouter Point de Collecte</legend>
@@ -487,6 +497,7 @@
             }
         }
     ?>
+    <h6>Ajouter les calendries de travail : </h6>
 
     <fieldset>
         <legend>Ajouter Calendrier de Travail</legend>
@@ -590,6 +601,7 @@
             }
         }
     ?>
+    <h6>Ajouter les reponses au reclamations : </h6>
 
     <fieldset>
         <legend>reclamation reponse</legend>
@@ -732,6 +744,177 @@
         <!-- ********************** -->
         <!-- ********************** -->
     <!-- creation d'image pour l'annonce -->
+    <footer>
+        <div class="footdivs fdwl">
+            <div>
+                <div class="foottitle">Title</div>
+                <div class="horizline"></div>
+            </div>
+            <div class="footdivcont">
+                <div>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum fugiat eos dicta, odit eveniet quisquam!
+                </div>
+                <div>
+                    <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                    <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                    <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footdivs fdwl">
+            <div>
+                <div class="foottitle">Latest News</div>
+                <div class="horizline"></div>
+            </div>
+            <div class="footdivcont">
+                <div class="footevent">
+                    <?php
+                        $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                                        FROM 
+                                            Annonce
+                                        JOIN 
+                                            Agent ON Annonce.Id_Agent = Agent.Id_Agent
+                                        WHERE 
+                                            Annonce.Date_de_Publication = (SELECT MAX(Date_de_Publication) FROM Annonce)";
+                        $resannonce = mysqli_query($conn,$sqlannonce);
+                        if(mysqli_num_rows($resannonce)){
+                            $rowannonce = mysqli_fetch_assoc($resannonce);
+                        }
+                    
+                    echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
+                    echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
+                echo "</div>";
+                ?>
+                <div class="footevent">
+                    <?php
+                            $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                                            FROM 
+                                                Annonce
+                                            JOIN 
+                                                Agent ON Annonce.Id_Agent = Agent.Id_Agent
+                                            WHERE 
+                                                Annonce.Date_de_Publication = (SELECT MAX(Date_de_Publication) FROM Annonce)";
+                            $resannonce = mysqli_query($conn,$sqlannonce);
+                            if(mysqli_num_rows($resannonce)){
+                                $rowannonce = mysqli_fetch_assoc($resannonce);
+                            }
+                        
+                        echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
+                        echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
+                    echo "</div>";
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="footdivs fdwl">
+            <div>
+                <div class="foottitle">Quick Links</div>
+                <div class="horizline"></div> 
+            </div>
+            <!-- <div class="footdivcont"> -->
+                <ul class="footdivcont">
+                    <li>
+                    <a href="Administration_dashboard copy 2.php" >
+                        <div>
+                        Home 
+                        </div>
+                    </a>
+                    </li>
+                    <li>
+                    <a href="Admin_Enregistrements.php">
+                        <div>
+                        Enregistrements
+                        </div>
+                    </a>
+                    </li>
+                    <li>
+                    <a href="Admin_Statisics.php">
+                        <div>
+                        Statistics
+                        </div>
+                    </a>
+                    </li>
+                    <li >
+                    <a href="Admin_Team.php">
+                        <div>
+                        Team
+                        </div>
+                    </a>
+                    </li>
+                    <li>
+                    <a href="Admin_Contact.php">
+                        <div>
+                        Contact
+                        </div>
+                    </a>
+                    </li>
+                    <li>
+                    <a href="Admin_Setting.php">
+                        <div>
+                        Settings
+                        </div>
+                    </a>
+                    </li>
+                </ul>
+            <!-- </div> -->
+        </div>
+        <div class="footdivs fdwl">
+            <div>
+                <div class="foottitle">Have a Questions?</div>
+                <div class="horizline"></div>
+            </div>
+            <div class="footdivcont">
+                    <?php
+                        $sqladmin = "SELECT * FROM Adminstration 
+                                     WHERE Id_Administration = '{$_SESSION['user_id']}' ";
+                        $resadmin = mysqli_query($conn,$sqladmin);
+                        if(mysqli_num_rows($resadmin)){
+                            $rowadmin = mysqli_fetch_assoc($resadmin);
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div><a href='#'>".$rowadmin['Email']."</a></div>";
+                            echo "</div>";
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div><a href='#'>".$rowadmin['Tel']."</a></div>";
+                            echo "</div>";
+                            echo "<div class='footcontact'>";
+                                echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                echo "<div>".$rowadmin['Adresse']."</div>";                            
+                            echo "</div>";
+                        }
+                    ?>
+            </div>
+        </div>
+        <div id="footcopyright">
+            <div id="footcopyline"></div>
+            <div>
+                &copy;Copyright <?php 
+                    $sql = 'SELECT Nom FROM Adminstration';
+                    $res = mysqli_query($conn, $sql);
+                    $names = [];                                                              
+                    while($row = mysqli_fetch_assoc($res)){
+                        $names[] = $row['Nom'];
+                    }
+                    
+                    $namesCount = count($names);
+                    $namesList = '';
+                    
+                    foreach ($names as $index => $name) {
+                        $namesList .= "<span class='textbold'>{$name}</span>";
+                        if ($index < $namesCount - 2) {
+                            $namesList .= ', ';
+                        } elseif ($index == $namesCount - 2) {
+                            $namesList .= ' and ';
+                        }
+                    }
+
+                    echo "<span class='textbold'>".date("Y")."</span> All rights reserved | This website is made by {$namesList}";
+                ?>
+            </div>
+
+        </div>
+    </footer>
 
     <script>
         $(document).ready(function(){
