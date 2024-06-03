@@ -571,26 +571,29 @@
             <div id="footcopyline"></div>
             <div>
                 &copy;Copyright <?php 
-                    $sql = 'SELECT Nom FROM Adminstration';
+                    $sql = 'SELECT Nom, GitHubURL FROM Adminstration';
                     $res = mysqli_query($conn, $sql);
                     $names = [];                                                              
-                    while($row = mysqli_fetch_assoc($res)){
-                        $names[] = $row['Nom'];
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $names[] = [
+                            'name' => $row['Nom'],
+                            'url' => $row['GitHubURL']
+                        ];
                     }
-                    
+            
                     $namesCount = count($names);
                     $namesList = '';
                     
-                    foreach ($names as $index => $name) {
-                        $namesList .= "<span class='textbold'>{$name}</span>";
+                    foreach ($names as $index => $person) {
+                        $namesList .= "<a href='{$person['url']}' class='textbold' target='_blank'>{$person['name']}</a>";
                         if ($index < $namesCount - 2) {
                             $namesList .= ', ';
                         } elseif ($index == $namesCount - 2) {
                             $namesList .= ' and ';
                         }
                     }
-
-                    echo "<span class='textbold'>".date("Y")."</span> All rights reserved | This website is made by {$namesList}";
+            
+                    echo "<span class='textbold'>" . date("Y") . "</span> All rights reserved | This website is made by {$namesList}";
                 ?>
             </div>
 

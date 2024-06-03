@@ -1,4 +1,6 @@
 <?php
+    session_name("admin");
+    session_start();
     $servername = "localhost";
     $username = "root";
     $password = "0689102695mohamedaboualinedimaraja";
@@ -343,7 +345,6 @@
         } else {
             echo "aucun resultat";
         }
-        $conn->close();
         ?>
     </table>
 
@@ -383,7 +384,7 @@
                 echo "<td>" . $row["Mot_de_Passe"] . "</td>";
                 echo "<td>";
                 $id_encoded = urlencode($row['Id_Administration']);
-                echo "<button onclick=\"location.href='Admin_Setting.php?action=modifier&id=$id_encoded#admininfs'\">Modifier</button>";
+                echo "<button onclick=\"location.href='Admin_modifications.php?action=modifier&id=$id_encoded#admininfs'\">Modifier</button>";
                 echo "<button onclick=\"location.href='Admin_Setting.php?action=supprimer&id=$id_encoded#admininfs'\">Supprimer</button>";
                 echo "</td>";
                 echo "</tr>";
@@ -391,11 +392,10 @@
         } else {
             echo "aucun resultat";
         }
-        $conn->close();
         ?>
     </table>
 
-<footer>
+    <footer>
         <div class="footdivs fdwl">
             <div>
                 <div class="foottitle">Title</div>
@@ -541,26 +541,29 @@
             <div id="footcopyline"></div>
             <div>
                 &copy;Copyright <?php 
-                    $sql = 'SELECT Nom FROM Adminstration';
+                    $sql = 'SELECT Nom, GitHubURL FROM Adminstration';
                     $res = mysqli_query($conn, $sql);
                     $names = [];                                                              
-                    while($row = mysqli_fetch_assoc($res)){
-                        $names[] = $row['Nom'];
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $names[] = [
+                            'name' => $row['Nom'],
+                            'url' => $row['GitHubURL']
+                        ];
                     }
-                    
+            
                     $namesCount = count($names);
                     $namesList = '';
                     
-                    foreach ($names as $index => $name) {
-                        $namesList .= "<span class='textbold'>{$name}</span>";
+                    foreach ($names as $index => $person) {
+                        $namesList .= "<a href='{$person['url']}' class='textbold' target='_blank'>{$person['name']}</a>";
                         if ($index < $namesCount - 2) {
                             $namesList .= ', ';
                         } elseif ($index == $namesCount - 2) {
                             $namesList .= ' and ';
                         }
                     }
-
-                    echo "<span class='textbold'>".date("Y")."</span> All rights reserved | This website is made by {$namesList}";
+            
+                    echo "<span class='textbold'>" . date("Y") . "</span> All rights reserved | This website is made by {$namesList}";
                 ?>
             </div>
 
