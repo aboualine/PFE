@@ -74,7 +74,7 @@
         <input type="email" id="email" name="email" placeholder="entrer votr email..." required><br><br>
         <label for="password">Mot de Passe:</label>
         <input type="password" id="password" name="password"  placeholder="entrer votr mot de passe..." required><br><br>
-        <input type="submit" name="submit" value="Se connecter">
+        <input type="submit" id="sbt" name="submit" value="Se connecter">
     </form>
     <?php
         if (isset($_GET['error']) && $_GET['error'] == 'invalid_credentials') {

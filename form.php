@@ -9,31 +9,13 @@ $conn = new mysqli($servername, $username, $password, $database);
 <html>
 <head>
     <title>formulaire citoyens</title>
-    <style>
-        h2{
-            position: relative;
-            top:20px;
-            left:150px;
-        }
-        form{
-            display: block;
-            position:absolute;
-            left:37%;
-            top:15%;
-        }
-        input{
-            height:5vh;
-            width:50vh;
-            font-size:x-large;
-        }
-        #but{
-            position:relative;
-            top:20px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/signincitoyen.css">
 </head>
 <body>
-    <h2>Citoyens</h2>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
     <form action="" method="post">
         <label for="cin">CIN:</label><br>
         <input type="text" id="cin" name="cin"  required><br>
@@ -49,9 +31,6 @@ $conn = new mysqli($servername, $username, $password, $database);
 
         <label for="tel">Tel:</label><br>
         <input type="text" id="tel" name="tel" required><br>
-
-        <!-- <label for="date_inscription">Date Inscription:</label><br>
-        <input type="date" id="date_inscription" name="date_inscription"><br> -->
 
         <label for="mot_de_passe">Mot de Passe:</label><br>
         <input type="password" id="mot_de_passe" name="mot_de_passe" required><br>
