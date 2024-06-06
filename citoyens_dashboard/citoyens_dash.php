@@ -40,7 +40,10 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/templatemo-first-portfolio-style.css" rel="stylesheet">
+        <link href="css/templatemo-first-portfolio-style.css?v=1.0" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
+
         
 <!--
 *
@@ -117,26 +120,19 @@
 
                         <div class="col-lg-7 col-12">
                             <div class="hero-text">
-                                <div class="hero-title-wrap d-flex align-items-center mb-4">
-                                    <!-- <img src="images/happy-bearded-young-man.jpg" class="avatar-image avatar-image-large img-fluid" alt=""> -->
-
-                                    <h1 class="hero-title ms-3 mb-0">Hello friend!</h1>
-                                </div>
-
-                                <h2 class="mb-4">I’m available for freelance work.</h2>
-                                <p class="mb-4"><a class="custom-btn btn custom-link" href="#section_2">Let's begin</a></p>
+                                <div class="mb-4" id="texthome">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus suscipit id repellat omnis deleniti aliquam excepturi deserunt Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat eaque esse odit impedit veniam quidem iusto delectus et iste nihil.suscipit id repellat omnis deleniti aliquam excepturi deserunt dolorum autem ex voluptatum aliquid nostrum corrupti voluptates, ipsam perferendis ullam quod explicabo accusamus quidem. Id enim commodi voluptates porro, voluptas quisquam doloribus reiciendis minus, voluptate sint, eius accusamus dolore amet voluptatem veniam? Odit nesciunt ipsum velit provident quam mollitia officia atque temporibus eos, cupiditate vitae, voluptatum nemo aliquid minima aperiam corporis quas, exercitationem quidem quod quis? Ratione voluptatem id hic repellendus mollitia a aspernatur, aperiam vero fugit voluptatibus! Aliquam sapiente beatae ab esse! Enim id voluptatibus earum unde provident quidem accusamus praesentium</div>
+                                <p class="mb-4"><a class="custom-btn btn custom-link" href="#section_2">Allez</a></p>
                             </div>
                         </div>
 
                         <div class="col-lg-5 col-12 position-relative">
-                            <!-- <div class="hero-image-wrap"></div> -->
-                            <!-- <img src="images/portrait-happy-excited-man-holding-laptop-computer.png" class="hero-image img-fluid" alt=""> -->
+                            <img src="../images/MK.jpeg" id="image1" alt="">
+                            <img src="../images/logo4.jpg" id="image2" alt="">
                         </div>
 
                     </div>
                 </div>
 
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#535da1" fill-opacity="1" d="M0,160L24,160C48,160,96,160,144,138.7C192,117,240,75,288,64C336,53,384,75,432,106.7C480,139,528,181,576,208C624,235,672,245,720,240C768,235,816,213,864,186.7C912,160,960,128,1008,133.3C1056,139,1104,181,1152,202.7C1200,224,1248,224,1296,197.3C1344,171,1392,117,1416,90.7L1440,64L1440,0L1416,0C1392,0,1344,0,1296,0C1248,0,1200,0,1152,0C1104,0,1056,0,1008,0C960,0,912,0,864,0C816,0,768,0,720,0C672,0,624,0,576,0C528,0,480,0,432,0C384,0,336,0,288,0C240,0,192,0,144,0C96,0,48,0,24,0L0,0Z"></path></svg> -->
             </section>
 
 
@@ -145,29 +141,101 @@
                     <div class="row">
 
                         <div class="col-lg-6 col-12">
-                            <img src="images/couple-working-from-home-together-sofa.jpg" class="about-image img-fluid" alt="">
+                            <img src="images/children-cleaning-the-environment-from-garbage-cartoon-vector.jpg" class="about-image img-fluid" alt="">
                         </div>
 
                         <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                             <div class="about-thumb">
 
                                 <div class="section-title-wrap d-flex justify-content-end align-items-center mb-4">
-                                    <h2 class="text-white me-4 mb-0">My Story</h2>
-
-                                    <img src="images/happy-bearded-young-man.jpg" class="avatar-image img-fluid" alt="">
+                                    <h2 class="text-white me-4 mb-0">About Us</h2>
                                 </div>
 
-                                <h3 class="pt-2 mb-3">a little bit about Joshua</h3>
+                                <h3 class="pt-2 mb-3">Pourqoui MedNiss ?</h3>
 
-                                <p>This one-page HTML portfolio is provided by <a href="https://templatemo.com" target="_blank">TemplateMo</a>. This layout is based on Bootstrap v5.1.3 CSS and JS libraries. Image credits go to <a href="https://unsplash.com" target="_blank">Unsplash</a> and <a href="https://freepik.com" target="_blank">FreePik</a> for images used in this page.</p>
+                                <p>C'est une plateforme pratique et collaborative creer par <a href="https://github.com/aboualine">ABOUALINE MOHAMED</a> et <a href="https://github.com/Nissrineelghammouri">EL GHAMMOURI NISSRINE</a>. pour améliorer la gestion des déchets au niveau local. En combinant des fonctionnalités informatives, participatives et éducatives, ce site aspire à encourager des pratiques durables au sein de la communauté. </p>
 
-                                <p>You are allowed to use this template for your websites. You are not allowed to redistribute the template ZIP file on any other website. Please <a href="https://templatemo.com/contact" target="_blank">contact us</a> for more info.</p>
+                                <p>Si vous rencontrez des problèmes lors de l'utilisation du site web MedNiss, veuillez nous <a href="https://templatemo.com/contact" target="_blank">contacter</a> pour plus d'informations.</p>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </section>
+
+            <section class="content">
+            <h3 class="pt-2 mb-3">Rencontrez notre équipe</h3>
+            <div class="cards">
+              <div class="card">
+                <div class="card__side card__side--front card__side--front-1">
+                  <div class="card__description">
+                    <p><img class="img-fluid" src="../images/photo.jpg" alt=""></p>
+                    <h4 class="card-title">Aboualine Mohamed</h4>
+                    <p class="card-text">Developpeur web</p>
+                  </div>
+                </div>
+                <div class="card__side card__side--back card__side--back-1">
+                    <div class="card__description">
+                        <div class="card-body text-center mt-4">
+                            <h4 class="card-title">Aboualine Mohamed</h4>
+                            <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                            <ul class="list-inline text-center">
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" href="https://github.com/aboualine">
+                                        <i class="fa-brands fa-github"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" href="mailto:mohamedaboualine@gmail.com">
+                                        <i class="fa fa-google"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" href="https://www.instagram.com/aboualinemohamed/">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__side card__side--front card__side--front-2">
+                  <div class="card__description">
+                    <p><img class="img-fluid" src="../images/photo2.jpg" alt=""></p>
+                    <h4 class="card-title">El Ghammouri Nissrine</h4>
+                    <p class="card-text">Developpeur web</p>
+                  </div>
+                </div>
+                <div class="card__side card__side--back card__side--back-2">
+                  <div class="card__description">
+                    <div class="card-body text-center mt-4">
+                        <h4 class="card-title">El Ghammouri Nissrine</h4>
+                        <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a class="social-icon text-xs-center" href="https://github.com/aboualine">
+                                    <i class="fa-brands fa-github"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="social-icon text-xs-center" href="mailto:mohamedaboualine@gmail.com">
+                                    <i class="fa fa-google"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="social-icon text-xs-center" href="https://www.instagram.com/aboualinemohamed/">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
             <section class="featured section-padding">
                 <div class="container">
@@ -176,28 +244,28 @@
                         <div class="col-lg-6 col-12">
                             <div class="profile-thumb">
                                 <div class="profile-title">
-                                    <h4 class="mb-0">Information</h4>
+                                    <h4 class="mb-0">Informations</h4>
                                 </div>
 
                                 <div class="profile-body">
                                     <p>
-                                        <span class="profile-small-title">Name</span> 
-                                        <span>Joshua Morgan</span>
+                                        <span class="profile-small-title">Nom</span> 
+                                        <span>MedNiss</span>
                                     </p>
 
                                     <p>
-                                        <span class="profile-small-title">Birthday</span> 
-                                        <span>Aug 12, 1986</span>
+                                        <span class="profile-small-title">Adresse</span> 
+                                        <span>Chichaoua, Marrakech-Safi , 40000 ,Maroc</span>
                                     </p>
 
                                     <p>
-                                        <span class="profile-small-title">Phone</span> 
-                                         <span><a href="tel: 305-240-9671">120-240-9600</a></span>
+                                        <span class="profile-small-title">Tele</span> 
+                                         <span><a href="tel: 305-240-9671">+212 628-579626</a></span>
                                     </p>
 
                                     <p>
                                         <span class="profile-small-title">Email</span> 
-                                        <span><a href="mailto:hello@josh.design">hello@josh.design</a></span>
+                                        <span><a href="mailto:hello@josh.design">mohamedaboualine@gmail.com</a></span>
                                     </p>
                                 </div>
                             </div>
@@ -207,27 +275,70 @@
                             <div class="about-thumb">
                                 <div class="row">
                                     <div class="col-lg-6 col-6 featured-border-bottom py-2">
-                                        <strong class="featured-numbers">20+</strong>
-
-                                        <p class="featured-text">Years of Experiences</p>
+                                        <?php
+                                            $sqlpc = "SELECT count(Id_PointCollecte) AS totalpc FROM PointCollecte";
+                                            $respc = mysqli_query($conn,$sqlpc);
+                                            if(mysqli_num_rows($respc)){
+                                                $rowpc = mysqli_fetch_assoc($respc);
+                                            }
+                                            echo"<strong class='featured-numbers'>".$rowpc['totalpc']."+</strong>";
+                                            echo "<p class='featured-text'>Points de collect</p>";
+                                            // echo "<div class='counter'>";
+                                            //     echo "<h1 class='count' data-target='".$rowpc['totalpc']."'></h1>";
+                                            //     echo "<p>Points de collect</p>";
+                                            // echo "</div>";
+                                        ?>
                                     </div>
 
                                     <div class="col-lg-6 col-6 featured-border-start featured-border-bottom ps-5 py-2">
-                                        <strong class="featured-numbers">245</strong>
+                                        <?php
+                                            $sqltra = "SELECT count(Id_Trajectoire) AS totaltra FROM Trajectoire";
+                                            $restra = mysqli_query($conn,$sqltra);
+                                            if(mysqli_num_rows($restra)){
+                                                $rowtra = mysqli_fetch_assoc($restra);
+                                            }
+                                            echo"<strong class='featured-numbers'>".$rowtra['totaltra']."+</strong>";
+                                            echo"<p class='featured-text'>Trajectoires</p>";
+                                            // echo "<div class='counter'>";
+                                            //     echo "<h1 class='count' data-target='".$rowtra['totaltra']."'></h1>";
+                                            //     echo "<p>Trajectoires</p>";
+                                            // echo "</div>";
+                                        ?>
 
-                                        <p class="featured-text">Happy Customers</p>
                                     </div>
 
                                     <div class="col-lg-6 col-6 pt-4">
-                                        <strong class="featured-numbers">640</strong>
-
-                                        <p class="featured-text">Project Finished</p>
+                                        <?php
+                                            $sqlram = "SELECT count(Id_Agent) AS totalram FROM Agent WHERE Poste = 'Agent de nettoyage'";
+                                            $resram = mysqli_query($conn,$sqlram);
+                                            if(mysqli_num_rows($resram)){
+                                                $rowram = mysqli_fetch_assoc($resram);
+                                            }
+                                            echo"<strong class='featured-numbers'>".$rowram['totalram']."+</strong>";
+                                            echo"<p class='featured-text'>Ramaceurs</p>";
+                                            // echo "<div class='counter'>";
+                                            //     echo "<h1 class='count' data-target='".$rowram['totalram']."'></h1>";
+                                            //     echo "<p>Ramaceurs</p>";
+                                            // echo "</div>";
+                                        ?>
+                                        
                                     </div>
 
                                     <div class="col-lg-6 col-6 featured-border-start ps-5 pt-4">
-                                        <strong class="featured-numbers">72+</strong>
-
-                                        <p class="featured-text">Digital Awards</p>
+                                        <?php
+                                            $sqlveh = "SELECT count(Id_Vehicule) AS totalveh FROM Vehicule ";
+                                            $resveh = mysqli_query($conn,$sqlveh);
+                                            if(mysqli_num_rows($resveh)){
+                                                $rowveh = mysqli_fetch_assoc($resveh);
+                                            }
+                                            echo"<strong class='featured-numbers'>".$rowveh['totalveh']."+</strong>";
+                                            echo"<p class='featured-text'>Véhicules</p>";
+                                            // echo "<div class='counter'>";
+                                            //     echo "<h1 class='count' data-target='".$rowveh['totalveh']."'></h1>";
+                                            //     echo "<p>Véhicules</p>";
+                                            // echo "</div>";
+                                        ?>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -243,27 +354,27 @@
                     <div class="row align-items-center">
 
                         <div class="col-lg-12 col-12">
-                            <h3 class="text-center mb-5">Companies I've had worked</h3>
+                            <h3 class="text-center mb-5">Institutions Affiliées</h3>
                         </div>
 
                         <div class="col-lg-2 col-4 ms-auto clients-item-height">
-                            <img src="images/clients/cachet.svg" class="clients-image img-fluid" alt="">
+                            <img src="images/clients/Ministere-De-LEducation-Maroc-2022-Logo-Vector.svg-.png" class="clients-image img-fluid" alt="">
                         </div>
 
                         <div class="col-lg-2 col-4 clients-item-height">
-                            <img src="images/clients/guitar-center.svg" class="clients-image img-fluid" alt="">
+                            <img src="images/clients/bts.png" class="clients-image img-fluid" alt="">
                         </div>
 
                         <div class="col-lg-2 col-4 clients-item-height">
-                            <img src="images/clients/tokico.svg" class="clients-image img-fluid" alt="">
+                            <img src="images/clients/ltc.jpeg" class="clients-image img-fluid" alt="">
                         </div>
 
                         <div class="col-lg-2 col-4 clients-item-height">
-                            <img src="images/clients/shopify.svg" class="clients-image img-fluid" alt="">
+                            <img src="images/clients/province-chichaoua-ministère-de-lintérieur-logo.png" class="clients-image img-fluid" alt="">
                         </div>
 
                         <div class="col-lg-2 col-4 me-auto clients-item-height">
-                            <img src="images/clients/profil-rejser.svg" class="clients-image img-fluid" alt="">
+                            <img src="images/clients/chichaoua.png" class="clients-image img-fluid" alt="">
                         </div>
 
                     </div>
