@@ -40,7 +40,7 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/templatemo-first-portfolio-style.css?v=1.0" rel="stylesheet">
+        <link href="css/templatemo-first-portfolio-style.css" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
 
@@ -388,12 +388,10 @@
 
                         <div class="col-lg-10 col-12 mx-auto">
                             <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
-                                <img src="images/handshake-man-woman-after-signing-business-contract-closeup.jpg" class="avatar-image img-fluid" alt="">
-
-                                <h2 class="text-white ms-4 mb-0">Services</h2>
+                                <h2 class="text-white ms-4 mb-0">Evenements</h2>
                             </div>
 
-                            <div class="row pt-lg-5">
+                            <!-- <div class="row pt-lg-5">
                                 <div class="col-lg-6 col-12">
                                     <div class="services-thumb">
                                         <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
@@ -477,8 +475,46 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                        </div>
+                        <div class="seclanding">
+                            <div id="seclanimgs">
+                                <div id="imgplace1" class="imgplace"></div>
+                                <div id="imgplace2" class="imgplace"></div>
+                                <div id="imgplace3" class="imgplace"></div>
+                                <div id="backcolor"></div>
+                            </div>
+                            <div id="seclantext">
+                                <div id="texteventchanging"></div>
+                                <button class="form-control" id="btneventvue">voir</button>
                             </div>
                         </div>
+
+                        <!-- liste des fetes -->
+
+                        <div class="col-lg-6 col-12" id="tablefetes">
+                            <div class="profile-thumb" id="profile-thumb">
+                                <div class="profile-title">
+                                    <h4 class="mb-0">Liste des fetes </h4>
+                                </div>
+                                <div class="profile-body">
+                                <?php
+                                    $sqlFete = "SELECT NomFete, DATEDIFF(DateFin, DateDebut) + 1 AS NombreJours FROM gestdechcomloc.Fetes";
+                                    $resultFete = mysqli_query($conn, $sqlFete);
+                                    if (mysqli_num_rows($resultFete) > 0) {
+                                        while ($rowFete = mysqli_fetch_assoc($resultFete)) {
+                                            echo "<p>";
+                                            echo "<span class='profile-small-title'>" . $rowFete["NomFete"] . "</span>";
+                                            echo "<span>" . $rowFete["NombreJours"] . "</span>";
+                                            echo "</p>";
+                                        }
+                                    }
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </section>
@@ -490,15 +526,13 @@
 
                         <div class="col-lg-8 col-md-8 col-12 ms-auto">
                             <div class="section-title-wrap d-flex justify-content-center align-items-center mb-4">
-                                <img src="images/white-desk-work-study-aesthetics.jpg" class="avatar-image img-fluid" alt="">
-
-                                <h2 class="text-white ms-4 mb-0">Projects</h2>
+                                <h2 class="text-white ms-4 mb-0">Service</h2>
                             </div>
                         </div>
 
                         <div class="clearfix"></div>
 
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <!-- <div class="col-lg-4 col-md-6 col-12">
                             <div class="projects-thumb">
                                 <div class="projects-info">
                                     <small class="projects-tag">Branding</small>
@@ -538,7 +572,54 @@
                                     <img src="images/projects/true-agency-9Bjog5FZ-oc-unsplash.jpg" class="projects-image img-fluid" alt="">
                                 </a>
                             </div>
+                        </div> -->
+
+                        <div class="col-lg-12 col-12">
+                            <h3 class="text-center mb-5">Calendrier de Travail</h3>
                         </div>
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- <div class="profile-thumb">
+                                <div class="profile-body"> -->
+                                    
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Equipement</th>
+                                                <th>Véhicule</th>
+                                                <th>Trajectoire</th>
+                                                <th>Quart de travail</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, c.Quart_de_travail, c.Date_debut
+                                                                FROM CalendrieDeTravail c
+                                                                INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire";
+                                                $result_calendrier = mysqli_query($conn, $sql_calendrier);
+
+                                                if (mysqli_num_rows($result_calendrier) > 0) {
+                                                    while ($row_calendrier = mysqli_fetch_assoc($result_calendrier)) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row_calendrier['Equipement_Nom'] . "</td>";
+                                                        echo "<td>" . $row_calendrier['Vehicule_Marque'] . " " . $row_calendrier['Vehicule_Modele'] . "</td>";
+                                                        echo "<td>" . $row_calendrier['Trajectoire_Debut'] . " - " . $row_calendrier['Trajectoire_Fin'] . "</td>";
+                                                        echo "<td>" . $row_calendrier['Quart_de_travail'] . "</td>";
+                                                        echo "</tr>";
+                                                    }
+                                                } else {
+                                                    echo "<tr><td colspan='4'>Aucune donnée disponible</td></tr>";
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                <!-- </div>
+                            </div> -->
+                        </div>
+                        <div>
+                            
+                        </div>
+
 
                     </div>
                 </div>
@@ -729,6 +810,7 @@
         <script src="js/magnific-popup-options.js"></script>
         <script src="js/custom.js"></script>
         <script src="js/main.js"></script>
-
+        <!-- <script src="js/script.js"></script> -->
+        <!-- <script src="script.js"></script> -->
     </body>
 </html>

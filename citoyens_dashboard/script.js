@@ -1,31 +1,45 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const signInButton = document.getElementById('signInButton');
-    const logInButton = document.getElementById('logInButton');
-    const buttonContainer = document.getElementById('div');
+// search overlay
+/* 
+.
+.
+.
+.
+*/
+document.getElementById('search-item').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('search-overlay').classList.toggle('active');
+});
 
-    signInButton.addEventListener('click', function() {
-        buttonContainer.classList.add('active');
-        signInButton.classList.add('active');
-        logInButton.classList.remove('active');
-    });
-
-    logInButton.addEventListener('click', function() {
-        buttonContainer.classList.remove('active');
-        logInButton.classList.add('active');
-        signInButton.classList.remove('active');
-    });
-
-    // Initialize the active button state
-    if (buttonContainer.classList.contains('active')) {
-        signInButton.classList.add('active');
-        logInButton.classList.remove('active');
-    } else {
-        logInButton.classList.add('active');
-        signInButton.classList.remove('active');
+// Optional: Close the overlay when clicking outside the input box
+document.getElementById('search-overlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.remove('active');
     }
 });
 
-/* images and text animation in the first section
+// links color event change color
+/* 
+.
+.
+.
+.
+*/
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#navbar .navbar-item-inner');
+    const originalColor = 'hsla(var(--quite-gray), 1)'; // Define the original color here
+    const newColor = 'hsla(var(--primary), 1)'; // Define the new color here
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(link => {
+                link.style.color = originalColor; // Reset all links to original color
+            });
+            this.style.color = newColor; // Set clicked link to new color
+        });
+    });
+});
+// images and text animation in the first section
+/* 
 .
 .
 .
@@ -81,4 +95,54 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(swapImages, 4000); // Adjust the timing as needed
 
     updateImages(); // Initial load
+});
+
+// website statistics bar in the first section again
+/* 
+.
+.
+.
+.
+*/
+
+document.addEventListener('DOMContentLoaded', () => {
+    const counts = document.querySelectorAll('.count');
+    const duration = 2000; // Duration of the animation in milliseconds
+
+    counts.forEach((counter) => {
+        const target = +counter.getAttribute('data-target');
+        let startTime = null;
+
+        function updateCounter(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const current = Math.min(progress / duration * target, target);
+
+            counter.innerText = Math.floor(current);
+
+            if (current < target) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.innerText = target;
+            }
+        }
+
+        requestAnimationFrame(updateCounter);
+    });
+});
+
+// smouth scroling to the div wher i have the form
+/* 
+.
+.
+.
+.
+*/
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.hash) {
+        var element = document.querySelector(window.location.hash);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 });
