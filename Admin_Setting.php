@@ -465,6 +465,12 @@
         <form action="" method="post">
             <label for="emplacement">Emplacement :</label><br>
             <input type="text" id="emplacement" name="emplacement" required><br>
+
+            <label for="longitude">longitude :</label><br>
+            <input type="text" id="longitude" name="longitude" required><br>
+
+            <label for="latitude">latitude :</label><br>
+            <input type="text" id="latitude" name="latitude" required><br>
             
             <label for="typepoint">Type :</label><br>
             <select name="typepoint" id="typepoint">
@@ -486,12 +492,14 @@
     <?php
         if(isset($_POST['ajouter_point_collecte'])) {
             $emplacement = $_POST['emplacement'];
+            $longitude = $_POST['longitude'];
+            $latitude = $_POST['latitude'];
             $type = $_POST['typepoint'];
             $capacite = $_POST['capacite'];
             $id_trajectoire = $_POST['id_trajectoire'];
         
-            $sqlpoint = "INSERT INTO PointCollecte (Emplacement, Typee, Capacite, Id_Trajectoire) 
-                    VALUES ('$emplacement', '$type', '$capacite', '$id_trajectoire')";
+            $sqlpoint = "INSERT INTO PointCollecte (Emplacement, Typee, Capacite, Id_Trajectoire, latitude, longitude) 
+                    VALUES ('$emplacement', '$type', '$capacite', '$id_trajectoire' ,'$latitude' , '$longitude')";
         
             $respoint = mysqli_query($conn ,$sqlpoint);
             if ($respoint) {

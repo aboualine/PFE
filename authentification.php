@@ -23,7 +23,7 @@
                 session_start();
                 $_SESSION['role'] = 'citoyen';
                 $_SESSION['user_id'] = $userC['CIN'];
-                header('Location:GestDechComLoc.php');
+                header('Location:citoyens_dashboard/citoyens_dash.php');
                 exit();
             }
             else{

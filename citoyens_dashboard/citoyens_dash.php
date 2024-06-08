@@ -28,11 +28,16 @@
         <title>First Portfolio Bootstrap 5 Theme</title>
 
         <!-- CSS FILES -->
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -40,7 +45,7 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/templatemo-first-portfolio-style.css" rel="stylesheet">
+        <link href="css/templatemo-first-portfolio-style.css?v=1.0" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
 
@@ -70,7 +75,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <a href="index.html" class="navbar-brand mx-auto mx-lg-0"><img src="../images/logofinal.png" alt="" id="navlogo"></a>
+                <a href="#section_2" class="navbar-brand mx-auto mx-lg-0"><img src="../images/logofinal.png" alt="" id="navlogo"></a>
 
                 <div class="d-flex align-items-center d-lg-none">
                     <i class="navbar-icon bi-telephone-plus me-3"></i>
@@ -90,23 +95,49 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_3">Services</a>
+                            <a class="nav-link click-scroll" href="#section_3">Evenments</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_4">Projects</a>
+                            <a class="nav-link click-scroll" href="#section_4">Services</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_5">Contact</a>
+                            <a class="nav-link click-scroll" href="#section_5">Ressources éducatives</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_6">Contact</a>
                         </li>
                     </ul>
+                    <?php
+                    // Check if user is authenticated as a citizen
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'citoyen') {
+                        // Fetch citizen's name from the database
+                        $userId = $_SESSION['user_id'];
+                        $query = "SELECT Nom FROM Citoyens WHERE CIN = '$userId'";
+                        $result = mysqli_query($conn, $query);
+                        if ($result && mysqli_num_rows($result) > 0) {
+                            $citoyen = mysqli_fetch_assoc($result);
+                            $citoyenName = $citoyen['Nom'];
+                            echo "<div class='d-lg-flex align-items-center d-none ms-auto' id='div'>";
+                            echo $citoyenName;
+                            echo "</div>";
+                        }
+                    } else{
+                        echo '<div class="d-lg-flex align-items-center d-none ms-auto" id="div">';
+                        echo '    <button onclick="setTimeout(() => { window.location.href=\'../form.php\'; }, 400)" id="signInButton">Sign in</button>';
+                        echo '    <button onclick="setTimeout(() => { window.location.href=\'../authentification.php\'; }, 400)" id="logInButton">Loge in</button>';
+                        echo '    <div id="buttonBackground"></div>';
+                        echo '</div>';
 
-                    <div class="d-lg-flex align-items-center d-none ms-auto" id="div">
+                    }
+                    ?>
+                    <!-- <div class="d-lg-flex align-items-center d-none ms-auto" id="div">
                         <button onclick="setTimeout(() => { window.location.href='../form.php'; }, 400)" id="signInButton">Sign in</button>
                         <button onclick="setTimeout(() => { window.location.href='../authentification.php'; }, 400)" id="logInButton">Loge in</button>
                         <div id="buttonBackground"></div>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -578,7 +609,7 @@
                             <h3 class="text-center mb-5">Calendrier de Travail</h3>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-12" id="CalendrierdeTravail">
                             <!-- <div class="profile-thumb">
                                 <div class="profile-body"> -->
                                     
@@ -616,8 +647,51 @@
                                 <!-- </div>
                             </div> -->
                         </div>
-                        <div>
+                        <pre></pre>
+                        <pre></pre>
+                        <pre></pre>
+                        <pre></pre>
+                        <div class="col-lg-12 col-12">
+                            <h3 class="text-center mb-5">Map des points de collects et trajectoires available</h3>
+                        </div>
+                        <pre></pre>
+                        <pre></pre>
+                        <div id="contmap">
+                        <div id="divmap">
+                            <?php
                             
+                                // Fetch points
+                                $sql_points = "SELECT Emplacement, Typee, latitude, longitude FROM PointCollecte";
+                                $result_points = $conn->query($sql_points);
+
+                                // Fetch trajectories
+                                $sql_trajectories = "SELECT pc.latitude as start_lat, pc.longitude as start_lng, pc2.latitude as end_lat, pc2.longitude as end_lng
+                                                    FROM Trajectoire t
+                                                    JOIN PointCollecte pc ON t.Id_Trajectoire = pc.Id_Trajectoire
+                                                    JOIN PointCollecte pc2 ON t.Id_Trajectoire = pc2.Id_Trajectoire
+                                                    WHERE pc.Id_PointCollecte < pc2.Id_PointCollecte";
+                                $result_trajectories = $conn->query($sql_trajectories);
+
+                                $points = array();
+                                $trajectories = array();
+
+                                if ($result_points->num_rows > 0) {
+                                    while ($row = $result_points->fetch_assoc()) {
+                                        $points[] = $row;
+                                    }
+                                }
+
+                                if ($result_trajectories->num_rows > 0) {
+                                    while ($row = $result_trajectories->fetch_assoc()) {
+                                        $trajectories[] = $row;
+                                    }
+                                }
+
+                            
+                            ?>
+
+                            <div id="map"></div>
+                        </div>
                         </div>
 
 
@@ -625,15 +699,180 @@
                 </div>
             </section>
 
-            <section class="contact section-padding" id="section_5">
+            <section class="services section-padding" id="section_5">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                                <h2 class="text-white ms-4 mb-0">Ressources éducatives</h2>
+                            </div>
+
+                            <div class="row pt-lg-5">
+                                <div class="col-lg-6 col-12">
+                                    <div class="services-thumb">
+                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                                            <h3 class="mb-0">Guide du Recyclage</h3>
+                                        </div>
+
+                                        <p>Apprenez les bases du recyclage, y compris les matériaux recyclables, comment trier vos recyclables et pourquoi le recyclage est important pour l'environnement.</p>
+
+                                        <a href="https://www.ecoconso.be/" class="custom-btn custom-border-btn btn mt-3">Découvrir Plus</a>
+
+                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                                            <i class="services-icon bi-recycle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-12">
+                                    <div class="services-thumb services-thumb-up">
+                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                                            <h3 class="mb-0">le Compostage</h3>
+                                        </div>
+
+                                        <p>Découvrez comment composter les déchets organiques à la maison, quels matériaux peuvent être compostés et les avantages du compostage pour votre jardin et l'environnement.</p>
+
+                                        <a href="https://www.ademe.fr/" class="custom-btn custom-border-btn btn mt-3">Découvrir Plus</a>
+
+                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                                            <i class="services-icon bi-tree"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-12">
+                                    <div class="services-thumb">
+                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                                            <h3 class="mb-0">Réduction des Déchets</h3>
+                                        </div>
+
+                                        <p>Apprenez des conseils pratiques pour réduire les déchets dans votre vie quotidienne, y compris comment éviter les plastiques à usage unique, acheter en vrac et d'autres stratégies de réduction des déchets.</p>
+
+                                        <a href="https://www.citeo.com/" class="custom-btn custom-border-btn btn mt-3">Découvrir Plus</a>
+
+                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                                            <i class="services-icon bi-bag-check"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-12">
+                                    <div class="services-thumb services-thumb-up">
+                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                                            <h3 class="mb-0">Élimination des Déchets Dangereux</h3>
+                                        </div>
+
+                                        <p>Comprenez comment éliminer correctement les déchets dangereux tels que les piles, les appareils électroniques et les produits chimiques pour protéger l'environnement et la santé humaine.</p>
+
+                                        <a href="https://www.geodair.fr/" class="custom-btn custom-border-btn btn mt-3">Découvrir Plus</a>
+
+                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                                            <i class="services-icon bi-exclamation-triangle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="clients section-padding">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-12 col-12">
+                            <h3 class="text-center mb-5">Mellieur Commentaires</h3>
+                        </div>
+
+                    </div>
+                    <div class="wrapper">
+                            <div class="carousel">
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">ayoublgtifi</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">whale</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">dolphin</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">fish</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">tropical fish</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">blowfish</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">shark</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">octopus</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                                <div class="carousel__item">
+                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
+                                    <div class="carousel__item-body">
+                                        <p class="title">spiral shell</p>
+                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <p class="Unicode">Unicode: U+1F433</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+            <section class="contact section-padding" id="section_6">
                     <div class="container">
                         <div class="row">
 
                             <div class="col-lg-6 col-md-8 col-12">
                                 <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
-                                    <img src="images/aerial-view-man-using-computer-laptop-wooden-table.jpg" class="avatar-image img-fluid" alt="">
-
-                                    <h2 class="text-white ms-4 mb-0">Say Hi</h2>
+                                    <h2 class="text-white ms-4 mb-0">Nous contacter</h2>
                                 </div>
                             </div>
 
@@ -644,16 +883,12 @@
                                     <strong class="site-footer-title d-block mb-3">Services</strong>
 
                                     <ul class="footer-menu">
-                                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Websites</a></li>
+                                        <li class="footer-menu-item"><a href="#CalendrierdeTravail" class="footer-menu-link">Calendrier de Travail</a></li>
 
-                                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Branding</a></li>
-
-                                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Ecommerce</a></li>
-
-                                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">SEO</a></li>
+                                        <li class="footer-menu-item"><a href="#map" class="footer-menu-link">Map</a></li>
                                     </ul>
 
-                                    <strong class="site-footer-title d-block mt-4 mb-3">Stay connected</strong>
+                                    <strong class="site-footer-title d-block mt-4 mb-3">Suivez-nous</strong>
 
                                     <ul class="social-icon">
                                         <li class="social-icon-item"><a href="https://twitter.com/minthu" class="social-icon-link bi-twitter"></a></li>
@@ -665,9 +900,9 @@
                                         <li class="social-icon-item"><a href="https://www.youtube.com/templatemo" class="social-icon-link bi-youtube"></a></li>
                                     </ul>
 
-                                    <strong class="site-footer-title d-block mt-4 mb-3">Start a project</strong>
+                                    <strong class="site-footer-title d-block mt-4 mb-3">Sauvez votre environnement</strong>
 
-                                    <p class="mb-0">I’m available for freelance projects</p>
+                                    <p class="mb-0">Chaque geste compte pour préserver notre ville. Recyclez, réduisez les déchets et utilisez des produits durables.</p>
                                 </div>
                             </div>
 
@@ -676,22 +911,22 @@
                                     <strong class="site-footer-title d-block mb-3">About</strong>
 
                                     <p class="mb-2">
-                                        Joshua is a professional web developer. Feel free to get in touch with me.
-                              </p>
+                                        plateforme pratique et collaborative creer par ABOUALINE MOHAMED et EL GHAMMOURI NISSRINE. pour améliorer la gestion des déchets au niveau local.
+                                    </p>
 
                                     <strong class="site-footer-title d-block mt-4 mb-3">Email</strong>
 
                                     <p>
-                                        <a href="mailto:hello@josh.design">
-                                            hello@josh.design
+                                        <a href="mailto:mohamedaboualine@gmail.com">
+                                            mohamedaboualine@gmail.com
                                         </a>
                                     </p>
 
-                                    <strong class="site-footer-title d-block mt-4 mb-3">Call</strong>
+                                    <strong class="site-footer-title d-block mt-4 mb-3">Appel</strong>
 
                                     <p class="mb-0">
-                                        <a href="tel: 120-240-9600">
-                                            120-240-9600
+                                        <a href="tel: +212 628-579626">
+                                            +212 628-579626
                                         </a>
                                     </p>
                                 </div>
@@ -704,7 +939,15 @@
                                             <div class="form-floating">
                                                 <input type="text" name="name" id="name" class="form-control" placeholder="Name" required="">
                                                 
-                                                <label for="floatingInput">Name</label>
+                                                <label for="floatingInput">Nom</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-floating">
+                                                <input type="text" name="cin" id="cin" class="form-control" placeholder="CIN" required="">
+                                                
+                                                <label for="floatingInput">CIN</label>
                                             </div>
                                         </div>
 
@@ -712,50 +955,60 @@
                                             <div class="form-floating">
                                                 <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required="">
                                                 
-                                                <label for="floatingInput">Email address</label>
+                                                <label for="floatingInput">Email</label>
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="form-floating">
+                                                <input type="text" name="titre" id="titre" class="form-control" placeholder="Titre" required="">
+                                                
+                                                <label for="floatingInput">Titre</label>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="col-lg-3 col-md-6 col-6">
                                             <div class="form-check form-check-inline">
-                                                <input name="website" type="checkbox" class="form-check-input" id="inlineCheckbox1" value="1">
+                                                <input name="Reclamation" type="checkbox" class="form-check-input" id="inlineCheckbox1" value="Reclamation">
 
                                                 <label class="form-check-label" for="inlineCheckbox1">
                                                     <i class="bi-globe form-check-icon"></i>
-                                                    <span class="form-check-label-text">Websites</span>
+                                                    <span class="form-check-label-text">Reclamation</span>
                                                 </label>
                                           </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-6">
                                             <div class="form-check form-check-inline">
-                                                <input name="branding" type="checkbox" class="form-check-input" id="inlineCheckbox2" value="1">
+                                                <input name="Commentaire" type="checkbox" class="form-check-input" id="inlineCheckbox2" value="Commentaire">
 
                                                 <label class="form-check-label" for="inlineCheckbox2">
                                                     <i class="bi-lightbulb form-check-icon"></i>
-                                                    <span class="form-check-label-text">Branding</span>
+                                                    <span class="form-check-label-text">Commentaire</span>
                                                 </label>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-6">
                                             <div class="form-check form-check-inline">
-                                                <input name="ecommerce" type="checkbox" class="form-check-input" id="inlineCheckbox3" value="1">
+                                                <input name="Question" type="checkbox" class="form-check-input" id="inlineCheckbox3" value="Question">
 
                                                 <label class="form-check-label" for="inlineCheckbox3">
                                                     <i class="bi-phone form-check-icon"></i>
-                                                    <span class="form-check-label-text">Ecommerce</span>
+                                                    <span class="form-check-label-text">Question</span>
                                                 </label>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-md-6 col-6">
                                             <div class="form-check form-check-inline me-0">
-                                                <input name="seo" type="checkbox" class="form-check-input" id="inlineCheckbox4" value="1">
+                                                <input name="Suggestion" type="checkbox" class="form-check-input" id="inlineCheckbox4" value="Suggestion">
 
                                                 <label class="form-check-label" for="inlineCheckbox4">
                                                     <i class="bi-google form-check-icon"></i>
-                                                    <span class="form-check-label-text">SEO</span>
+                                                    <span class="form-check-label-text">Suggestion</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -764,16 +1017,36 @@
                                             <div class="form-floating">
                                                 <textarea class="form-control" id="message" name="message" placeholder="Tell me about the project"></textarea>
                                                 
-                                                <label for="floatingTextarea">Tell me about the project</label>
+                                                <label for="floatingTextarea">Parlez-nous de ce à quoi vous pensez</label>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 col-12 ms-auto">
-                                            <button type="submit" class="form-control">Send</button>
+                                            <button type="submit" name="subrec" class="form-control">Envoier</button>
                                         </div>
 
                                     </div>
                                 </form>
+                                <?php
+                                    if(isset($_GET['subrec'])) {
+                                        // Retrieve form data
+                                        $name = $_GET['name'];
+                                        $cin = $_GET['cin'];
+                                        $email = $_GET['email'];
+                                        $titre = $_GET['titre'];
+                                        $message = $_GET['message'];
+                                        
+                                        // Concatenate selected reclamation types into a comma-separated string
+                                        $reclamationTypes = isset($_GET['Reclamation']) ? $_GET['Reclamation'] : array();
+                                        $reclamationTypeStr = implode(',', $reclamationTypes);
+                                        
+                                        // Automatically generate Id_Reclamation (auto-incremented) and Date_de_Publication (current date)
+                                        $sql = "INSERT INTO Reclamation (Titre, Descriptionn, CIN, Type_Reclamation)
+                                                VALUES ('$titre', '$message', '$cin', '$reclamationTypeStr')";
+                                        $res = mysqli_query($conn,$sql);
+                                        
+                                    }
+                                ?>
                             </div>
 
                         </div>
@@ -784,21 +1057,183 @@
         </main>
 
         <footer class="site-footer">
-            <div class="container">
-                <div class="row">
+            <!-- <div class="container">
+                <div class="row"> -->
 
-                    <div class="col-lg-12 col-12">
-                        <div class="copyright-text-wrap">
-                            <p class="mb-0">
-                                <span class="copyright-text">Copyright © 2036 <a href="#">First Portfolio</a> Company. All rights reserved.</span>
-                                Design: 
-                                <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
-                            </p>
+                    <div class="footdivs fdwl">
+                        <div>
+                            <div class="foottitle">Title</div>
+                            <div class="horizline"></div>
+                        </div>
+                        <div class="footdivcont">
+                            <div>
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum fugiat eos dicta, odit eveniet quisquam!
+                            </div>
+                            <div>
+                                <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                                <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                                <a href="authentification.php"><i class="fa-solid fa-user"></i></a>
+                            </div>
                         </div>
                     </div>
+                    <div class="footdivs fdwl">
+                        <div>
+                            <div class="foottitle">Latest News</div>
+                            <div class="horizline"></div>
+                        </div>
+                        <div class="footdivcont">
+                            <div class="footevent">
+                                <?php
+                                    $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                                                    FROM 
+                                                        Annonce
+                                                    JOIN 
+                                                        Agent ON Annonce.Id_Agent = Agent.Id_Agent
+                                                    WHERE 
+                                                        Annonce.Date_de_Publication = (SELECT MAX(Date_de_Publication) FROM Annonce)";
+                                    $resannonce = mysqli_query($conn,$sqlannonce);
+                                    if(mysqli_num_rows($resannonce)){
+                                        $rowannonce = mysqli_fetch_assoc($resannonce);
+                                    }
+                                
+                                echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
+                                echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
+                            echo "</div>";
+                            ?>
+                            <div class="footevent">
+                                <?php
+                                        $sqlannonce = "SELECT Annonce.Titre, Annonce.Date_de_Publication, CONCAT(Agent.Nom, ' ', Agent.Prenom) AS Full_name
+                                                        FROM 
+                                                            Annonce
+                                                        JOIN 
+                                                            Agent ON Annonce.Id_Agent = Agent.Id_Agent
+                                                        WHERE 
+                                                            Annonce.Date_de_Publication = (SELECT MAX(Date_de_Publication) FROM Annonce)";
+                                        $resannonce = mysqli_query($conn,$sqlannonce);
+                                        if(mysqli_num_rows($resannonce)){
+                                            $rowannonce = mysqli_fetch_assoc($resannonce);
+                                        }
+                                    
+                                    echo "<div class='footeventtext'>".$rowannonce['Titre']."</div>";
+                                    echo "<div class='footeventdate'>".$rowannonce['Date_de_Publication']." de ".$rowannonce['Full_name']."</div>";
+                                echo "</div>";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footdivs fdwl">
+                        <div>
+                            <div class="foottitle">Quick Links</div>
+                            <div class="horizline"></div> 
+                        </div>
+                        <!-- <div class="footdivcont"> -->
+                            <ul class="footdivcont">
+                                <li>
+                                <a href="#section_1" >
+                                    <div>
+                                    Home 
+                                    </div>
+                                </a>
+                                </li>
+                                <li>
+                                <a href="#section_2">
+                                    <div>
+                                    About
+                                    </div>
+                                </a>
+                                </li>
+                                <li>
+                                <a href="#section_3">
+                                    <div>
+                                    Evenements
+                                    </div>
+                                </a>
+                                </li>
+                                <li >
+                                <a href="#section_4">
+                                    <div>
+                                    Services
+                                    </div>
+                                </a>
+                                </li>
+                                <li>
+                                <a href="#section_5">
+                                    <div>
+                                    Ressources educatives
+                                    </div>
+                                </a>
+                                </li>
+                                <li>
+                                <a href="#section_6">
+                                    <div>
+                                    Contacte
+                                    </div>
+                                </a>
+                                </li>
+                            </ul>
+                        <!-- </div> -->
+                    </div>
+                    <div class="footdivs fdwl">
+                        <div>
+                            <div class="foottitle">Have a Questions?</div>
+                            <div class="horizline"></div>
+                        </div>
+                        <div class="footdivcont">
+                                <?php
+                                    $sqladmin = "SELECT * FROM Adminstration";
+                                    $resadmin = mysqli_query($conn,$sqladmin);
+                                    if(mysqli_num_rows($resadmin)){
+                                        $rowadmin = mysqli_fetch_assoc($resadmin);
+                                        echo "<div class='footcontact'>";
+                                            echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                            echo "<div><a href='#'>".$rowadmin['Email']."</a></div>";
+                                        echo "</div>";
+                                        echo "<div class='footcontact'>";
+                                            echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                            echo "<div><a href='#'>".$rowadmin['Tel']."</a></div>";
+                                        echo "</div>";
+                                        echo "<div class='footcontact'>";
+                                            echo "<i class='fa-solid fa-magnifying-glass'></i>";
+                                            echo "<div>".$rowadmin['Adresse']."</div>";                            
+                                        echo "</div>";
+                                    }
+                                ?>
+                        </div>
+                    </div>
+                    <div id="footcopyright">
+                        <div id="footcopyline"></div>
+                        <div>
+                            &copy;Copyright <?php 
+                                $sql = 'SELECT Nom, GitHubURL FROM Adminstration';
+                                $res = mysqli_query($conn, $sql);
+                                $names = [];                                                              
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $names[] = [
+                                        'name' => $row['Nom'],
+                                        'url' => $row['GitHubURL']
+                                    ];
+                                }
+                        
+                                $namesCount = count($names);
+                                $namesList = '';
+                                
+                                foreach ($names as $index => $person) {
+                                    $namesList .= "<a href='{$person['url']}' class='textbold' target='_blank'>{$person['name']}</a>";
+                                    if ($index < $namesCount - 2) {
+                                        $namesList .= ', ';
+                                    } elseif ($index == $namesCount - 2) {
+                                        $namesList .= ' and ';
+                                    }
+                                }
+                        
+                                echo "<span class='textbold'>" . date("Y") . "</span> All rights reserved | This website is made by {$namesList}";
+                            ?>
+                        </div>
 
-                </div>
-            </div>
+                    </div>
+
+                <!-- </div>
+            </div> -->
         </footer>
 
         <!-- JAVASCRIPT FICHIERS -->
@@ -810,6 +1245,33 @@
         <script src="js/magnific-popup-options.js"></script>
         <script src="js/custom.js"></script>
         <script src="js/main.js"></script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            // Data from PHP
+            var points = <?php echo json_encode($points); ?>;
+            var trajectories = <?php echo json_encode($trajectories); ?>;
+
+            // Initialize map
+            var map = L.map('map').setView([0, 0], 2);
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            // Add points to map
+            points.forEach(function(point) {
+                L.marker([point.latitude, point.longitude]).addTo(map)
+                    .bindPopup(point.Emplacement + " (" + point.Typee + ")");
+            });
+
+            // Add trajectories to map
+            trajectories.forEach(function(traj) {
+                var start = [traj.start_lat, traj.start_lng];
+                var end = [traj.end_lat, traj.end_lng];
+                L.polyline([start, end], {color: 'blue'}).addTo(map);
+            });
+        </script>
         <!-- <script src="js/script.js"></script> -->
         <!-- <script src="script.js"></script> -->
     </body>
