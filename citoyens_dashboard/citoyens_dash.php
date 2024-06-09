@@ -112,10 +112,10 @@
                     </ul>
                     <?php
                     // Check if user is authenticated as a citizen
-                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'citoyen') {
+                    if (isset($_SESSION['role']) && $_SESSION['role'] = 'citoyen') {
+                        session_name("citoyen");
                         // Fetch citizen's name from the database
-                        $userId = $_SESSION['user_id'];
-                        $query = "SELECT Nom FROM Citoyens WHERE CIN = '$userId'";
+                        $query = "SELECT Nom FROM Citoyens WHERE CIN = '{$_SESSION['user_id']}'";
                         $result = mysqli_query($conn, $query);
                         if ($result && mysqli_num_rows($result) > 0) {
                             $citoyen = mysqli_fetch_assoc($result);
@@ -1028,24 +1028,33 @@
                                     </div>
                                 </form>
                                 <?php
-                                    if(isset($_GET['subrec'])) {
-                                        // Retrieve form data
-                                        $name = $_GET['name'];
-                                        $cin = $_GET['cin'];
-                                        $email = $_GET['email'];
-                                        $titre = $_GET['titre'];
-                                        $message = $_GET['message'];
-                                        
-                                        // Concatenate selected reclamation types into a comma-separated string
-                                        $reclamationTypes = isset($_GET['Reclamation']) ? $_GET['Reclamation'] : array();
-                                        $reclamationTypeStr = implode(',', $reclamationTypes);
-                                        
-                                        // Automatically generate Id_Reclamation (auto-incremented) and Date_de_Publication (current date)
-                                        $sql = "INSERT INTO Reclamation (Titre, Descriptionn, CIN, Type_Reclamation)
-                                                VALUES ('$titre', '$message', '$cin', '$reclamationTypeStr')";
-                                        $res = mysqli_query($conn,$sql);
-                                        
-                                    }
+                                            if(isset($_GET['subrec'])) {
+                                                $sqlexist = "SELECT * FROM Citoyens WHERE CIN = '{$_SESSION['user_id']}'";
+                                                $resexist = mysqli_query($conn,$sqlexist);
+                                                if(mysqli_num_rows($resexist)){
+                                                    // Retrieve form data
+                                                    $name = $_GET['name'];
+                                                    $cin = $_GET['cin'];
+                                                    $email = $_GET['email'];
+                                                    $titre = $_GET['titre'];
+                                                    $message = $_GET['message'];
+                                                    
+                                                    // Concatenate selected reclamation types into a comma-separated string
+                                                    $reclamationTypes = isset($_GET['Reclamation']) ? $_GET['Reclamation'] : array();
+                                                    $reclamationTypeStr = implode(',', $reclamationTypes);
+                                                    
+                                                    // Automatically generate Id_Reclamation (auto-incremented) and Date_de_Publication (current date)
+                                                    $sql = "INSERT INTO Reclamation (Titre, Descriptionn, CIN, Type_Reclamation)
+                                                            VALUES ('$titre', '$message', '$cin', '$reclamationTypeStr')";
+                                                    $res = mysqli_query($conn,$sql);
+                                                }
+                                            } else{
+                                                echo "error ,you don't have accont yet !";
+                                                // echo '<script type="text/javascript">
+                                                //             alert("Vous devez vous connecter d\'abord !");
+                                                //             window.location.href = "../form.php";
+                                                //     </script>';
+                                            }
                                 ?>
                             </div>
 
