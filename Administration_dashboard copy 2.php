@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration dashboard</title> 
+    <link rel="shortcut icon" type="x-icon" href="images/logofinal.png">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styleadmin.css?v=1.0">

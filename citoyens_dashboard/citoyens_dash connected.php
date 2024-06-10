@@ -1,4 +1,5 @@
 <?php
+    session_name("citoyen");
     session_start();
     $servername = "localhost";
     $username = "root";
@@ -25,9 +26,9 @@
         <meta name="description" content="">
         <meta name="author" content="TemplateMo">
 
-        <title>First Portfolio Bootstrap 5 Theme</title>
-
         <link rel="shortcut icon" type="x-icon" href="images/logofinal.png">
+
+        <title>First Portfolio Bootstrap 5 Theme</title>
 
         <!-- CSS FILES -->
 
@@ -120,7 +121,7 @@
                         if ($result && mysqli_num_rows($result) > 0) {
                             $citoyen = mysqli_fetch_assoc($result);
                             $citoyenName = $citoyen['Nom'];
-                            echo "<div class='d-lg-flex align-items-center d-none ms-auto' id='div'>";
+                            echo "<div class='d-lg-flex align-items-center d-none ms-auto'>";
                             echo $citoyenName;
                             echo " <a href='logout.php' class='btn btn-danger ms-2'>Deconnect</a>";
                             echo "</div>";

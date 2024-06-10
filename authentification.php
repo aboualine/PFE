@@ -23,7 +23,7 @@
                 session_start();
                 $_SESSION['role'] = 'citoyen';
                 $_SESSION['user_id'] = $userC['CIN'];
-                header('Location:citoyens_dashboard/citoyens_dash.php');
+                header('Location:citoyens_dashboard/citoyens_dash connected.php');
                 exit();
             }
             else{
@@ -62,7 +62,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
-    <link rel="stylesheet" href="css/authentstyle.css">
+    <link rel="shortcut icon" type="x-icon" href="images/logofinal.png">
+    <link rel="stylesheet" href="css/authentstyle.css?v=1.0">
 </head>
 <body>
     <div class="background">
@@ -75,7 +76,9 @@
         <label for="password">Mot de Passe:</label>
         <input type="password" id="password" name="password"  placeholder="entrer votr mot de passe..." required><br><br>
         <input type="submit" id="sbt" name="submit" value="Se connecter">
+        <div>Pas encore de compte ! <span id="signlien"><a href="form.php">Sign in</a></span></div>
     </form>
+
     <?php
         if (isset($_GET['error']) && $_GET['error'] == 'invalid_credentials') {
             echo '<p style="color:red;">Invalid email or password. Please try again.</p>';

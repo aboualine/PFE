@@ -131,10 +131,14 @@
     <fieldset>
         <legend>Ajouter Agent</legend>
         <form action="" method="post" id="departmentForm">
+
             <label for="nom">Nom:</label><br>
             <input type="text" id="nom" name="nom" required><br>
+
             <label for="prenom">Prenom:</label><br>
             <input type="text" id="prenom" name="prenom" required><br>
+
+
             <label for="depa">Departement:</label><br>
             <select name = "depa" id="depaSelect" >
                 <option value="">Selectionner une departement</option>
@@ -148,18 +152,25 @@
                     }
                 ?>
                 </select><br>
+            
             <label for="posta">Post:</label><br>
             <select name = "posta" id="postaSelect">
+
             </select><br>
+
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email" required><br>
+
             <label for="tel">Tel:</label><br>
             <input type="text" id="tel" name="tel" required><br>
+
             <label for="mot_de_passe">Mot de Passe:</label><br>
             <input type="password" id="mot_de_passe" name="mot_de_passe" required><br>
+
             <input type="submit" name="submitA" id="but" value="Submit">
         </form>
     </fieldset>
+    
     <?php
         //autre ajout
         if(isset($_POST['submitA'])){
