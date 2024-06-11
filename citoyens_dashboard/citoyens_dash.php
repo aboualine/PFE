@@ -779,13 +779,37 @@
                     <div class="row align-items-center">
 
                         <div class="col-lg-12 col-12">
-                            <h3 class="text-center mb-5">Mellieur Commentaires</h3>
+                            <h3 class="text-center mb-5">Mellieurs Commentaires</h3>
                         </div>
 
                     </div>
                     <div class="wrapper">
                             <div class="carousel">
-                                <div class="carousel__item">
+                                <?php
+                                    $query = "
+                                    SELECT R.Titre, R.Descriptionn, C.Nom 
+                                    FROM Reclamation R
+                                    JOIN Citoyens C ON R.CIN = C.CIN
+                                ";
+                                $result = mysqli_query($conn, $query);
+                                $reclamations = [];
+                                if ($result) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $reclamations[] = $row;
+                                        foreach ($reclamations as $index => $reclamation) {
+                                            echo '<div class="carousel__item">';
+                                            echo '    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>';
+                                            echo '    <div class="carousel__item-body">';
+                                            echo '        <p class="title">' . htmlspecialchars($reclamation['Titre']) . '</p>';
+                                            echo '        <p class="lorem">' . htmlspecialchars($reclamation['Descriptionn']) . '</p>';
+                                            echo '        <p class="Unicode">' . htmlspecialchars($reclamation['Nom']) . '</p>';
+                                            echo '    </div>';
+                                            echo '</div>';
+                                        }
+                                    }
+                                }
+                                ?>
+                                <!-- <div class="carousel__item">
                                     <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
                                     <div class="carousel__item-body">
                                         <p class="title">ayoublgtifi</p>
@@ -856,7 +880,7 @@
                                         <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
                                         <p class="Unicode">Unicode: U+1F433</p>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                 </div>

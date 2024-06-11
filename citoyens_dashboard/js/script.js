@@ -10,7 +10,7 @@ document.getElementById('search-item').addEventListener('click', function(e) {
     document.getElementById('search-overlay').classList.toggle('active');
 });
 
-// Optional: Close the overlay when clicking outside the input box
+// Close the overlay when clicking outside the input box
 document.getElementById('search-overlay').addEventListener('click', function(e) {
     if (e.target === this) {
         this.classList.remove('active');

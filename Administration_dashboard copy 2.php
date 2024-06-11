@@ -68,12 +68,33 @@
                 <span class="link-text">Team</span>
             </a>
             </li>
+            <?php
+                if (isset($_GET['view_reclamation'])) {
+                    // Mark notifications as viewed
+                    $query_update = "UPDATE Reclamation SET viewed = TRUE WHERE viewed = FALSE";
+                    mysqli_query($conn, $query_update);
+                }
+                
+                // Count the number of new comments
+                $query = "SELECT COUNT(*) as new_comments FROM Reclamation WHERE viewed = FALSE";
+                $result = mysqli_query($conn, $query);
+                $new_comments = 0;
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $new_comments = $row['new_comments'];
+                }
+            ?>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Contact.php" class="navbar-item-inner flexbox-left">
+            <a href="Admin_Contact.php?view_reclamation=true" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-comments"></i>
                 </div>
                 <span class="link-text">Contact</span>
+                <div class="notification">
+                    <span class="badge">
+                        <?php echo $new_comments; ?>
+                    </span>
+                </div>
             </a>
             </li>
             <li class="navbar-item flexbox-left">

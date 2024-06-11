@@ -1217,6 +1217,39 @@ tbody tr:hover {
 .carousel__item:nth-child(9) {
   animation-delay: calc(27s / 9 * 8);
 }
+.carousel__item:nth-child(10) { 
+  animation-delay: calc(27s / 10 * 9); 
+}
+.carousel__item:nth-child(11) { 
+  animation-delay: calc(27s / 11 * 9); 
+}
+.carousel__item:nth-child(12) { 
+  animation-delay: calc(27s / 12 * 9); 
+}
+.carousel__item:nth-child(13) { 
+  animation-delay: calc(27s / 13 * 9); 
+}
+.carousel__item:nth-child(14) { 
+  animation-delay: calc(27s / 14 * 9); 
+}
+.carousel__item:nth-child(15) { 
+  animation-delay: calc(27s / 15 * 9); 
+}
+.carousel__item:nth-child(16) { 
+  animation-delay: calc(27s / 16 * 9); 
+}
+.carousel__item:nth-child(17) { 
+  animation-delay: calc(27s / 17 * 9); 
+}
+.carousel__item:nth-child(18) { 
+  animation-delay: calc(27s / 18 * 9); 
+}
+.carousel__item:nth-child(19) { 
+  animation-delay: calc(27s / 19 * 9); 
+}
+.carousel__item:nth-child(20) { 
+  animation-delay: calc(27s / 20 * 9); 
+}
 
 .carousel__item-head {
   border-radius: 50%;
