@@ -22,10 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="description" content="">
-        <meta name="author" content="TemplateMo">
-
-        <title>First Portfolio Bootstrap 5 Theme</title>
+        <title>MedNiss</title>
 
         <link rel="shortcut icon" type="x-icon" href="images/logofinal.png">
 
@@ -47,7 +44,7 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/templatemo-first-portfolio-style.css?v=1.0" rel="stylesheet">
+        <link href="css/style.css?v=1.0" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
 
@@ -81,8 +78,8 @@
 
                 <div class="d-flex align-items-center d-lg-none">
                     <i class="navbar-icon bi-telephone-plus me-3"></i>
-                    <a class="custom-btn btn" href="#section_5">
-                        120-240-9600
+                    <a class="custom-btn btn" href="#section_6">
+                        +212 628-579626
                     </a>
                 </div>
 
@@ -147,14 +144,18 @@
 
                         <div class="col-lg-7 col-12">
                             <div class="hero-text">
-                                <div class="mb-4" id="texthome">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus suscipit id repellat omnis deleniti aliquam excepturi deserunt Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat eaque esse odit impedit veniam quidem iusto delectus et iste nihil.suscipit id repellat omnis deleniti aliquam excepturi deserunt dolorum autem ex voluptatum aliquid nostrum corrupti voluptates, ipsam perferendis ullam quod explicabo accusamus quidem. Id enim commodi voluptates porro, voluptas quisquam doloribus reiciendis minus, voluptate sint, eius accusamus dolore amet voluptatem veniam? Odit nesciunt ipsum velit provident quam mollitia officia atque temporibus eos, cupiditate vitae, voluptatum nemo aliquid minima aperiam corporis quas, exercitationem quidem quod quis? Ratione voluptatem id hic repellendus mollitia a aspernatur, aperiam vero fugit voluptatibus! Aliquam sapiente beatae ab esse! Enim id voluptatibus earum unde provident quidem accusamus praesentium</div>
+                                <div class="mb-4" id="texthome">
+                                Bienvenue sur notre plateforme de gestion des déchets, une initiative collaborative de Mohamed Aboualine et Nissrine El Ghammouri. Notre mission est d'améliorer la gestion des déchets au niveau local grâce à un site web engageant et éducatif. Vous y trouverez un tableau de bord communautaire pour rester informé des statistiques et des annonces importantes sur la gestion des déchets, un calendrier de collecte pour suivre et planifier les jours de collecte, et un système de suivi des déchets pour surveiller les types, quantités et destinations de vos déchets.
+                                L'espace communautaire permet de partager des conseils et des idées dans notre forum de discussion, tandis que les ressources éducatives offrent des informations sur le tri des déchets et les pratiques durables. En vous inscrivant, vous pouvez créer des profils personnalisés pour participer activement. Recevez des notifications en temps réel pour les jours de collecte et les événements communautaires, et utilisez notre carte interactive pour localiser les points de collecte et les installations de recyclage. Notre guide interactif vous aide à trier correctement les déchets et vous pouvez gagner des badges écologiques virtuels pour vos actions positives.
+                                Rejoignez-nous pour promouvoir une approche responsable et durable de la gestion des déchets dans notre communauté.
+                                </div>
                                 <p class="mb-4"><a class="custom-btn btn custom-link" href="#section_2">Allez</a></p>
                             </div>
                         </div>
 
                         <div class="col-lg-5 col-12 position-relative">
                             <img src="../images/MK.jpeg" id="image1" alt="">
-                            <img src="../images/logo4.jpg" id="image2" alt="">
+                            <img src="../images/logo7.jpg" id="image2" alt="">
                         </div>
 
                     </div>
@@ -182,7 +183,7 @@
 
                                 <p>C'est une plateforme pratique et collaborative creer par <a href="https://github.com/aboualine">ABOUALINE MOHAMED</a> et <a href="https://github.com/Nissrineelghammouri">EL GHAMMOURI NISSRINE</a>. pour améliorer la gestion des déchets au niveau local. En combinant des fonctionnalités informatives, participatives et éducatives, ce site aspire à encourager des pratiques durables au sein de la communauté. </p>
 
-                                <p>Si vous rencontrez des problèmes lors de l'utilisation du site web MedNiss, veuillez nous <a href="https://templatemo.com/contact" target="_blank">contacter</a> pour plus d'informations.</p>
+                                <p>Si vous rencontrez des problèmes lors de l'utilisation du site web MedNiss, veuillez nous <a href="#section_6">contacter</a> pour plus d'informations.</p>
                             </div>
                         </div>
 
@@ -205,7 +206,7 @@
                     <div class="card__description">
                         <div class="card-body text-center mt-4">
                             <h4 class="card-title">Aboualine Mohamed</h4>
-                            <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                            <p class="card-text">Je suis le développeur backend. Nous avons voulu rendre cette plateforme simple et utile.</p>
                             <ul class="list-inline text-center">
                                 <li class="list-inline-item">
                                     <a class="social-icon text-xs-center" href="https://github.com/aboualine">
@@ -231,7 +232,7 @@
                 <div class="card__side card__side--front card__side--front-2">
                   <div class="card__description">
                     <p><img class="img-fluid" src="../images/photo2.jpg" alt=""></p>
-                    <h4 class="card-title">El Ghammouri Nissrine</h4>
+                    <h4 class="card-title">ElGhammouri Nissrine</h4>
                     <p class="card-text">Developpeur web</p>
                   </div>
                 </div>
@@ -239,20 +240,20 @@
                   <div class="card__description">
                     <div class="card-body text-center mt-4">
                         <h4 class="card-title">El Ghammouri Nissrine</h4>
-                        <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                        <p class="card-text">Je suis le développeur frontend. Nous avons voulu rendre cette plateforme unique et magnifique.</p>
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a class="social-icon text-xs-center" href="https://github.com/aboualine">
+                                <a class="social-icon text-xs-center" href="https://github.com/Nissrineelghammouri">
                                     <i class="fa-brands fa-github"></i>
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="social-icon text-xs-center" href="mailto:mohamedaboualine@gmail.com">
+                                <a class="social-icon text-xs-center" href="mailto:elghammourinissrin@gmail.com">
                                     <i class="fa fa-google"></i>
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="social-icon text-xs-center" href="https://www.instagram.com/aboualinemohamed/">
+                                <a class="social-icon text-xs-center" href="https://www.instagram.com/ma_reina_prv/">
                                     <i class="fa-brands fa-instagram"></i>
                                 </a>
                             </li>
@@ -310,10 +311,6 @@
                                             }
                                             echo"<strong class='featured-numbers'>".$rowpc['totalpc']."+</strong>";
                                             echo "<p class='featured-text'>Points de collect</p>";
-                                            // echo "<div class='counter'>";
-                                            //     echo "<h1 class='count' data-target='".$rowpc['totalpc']."'></h1>";
-                                            //     echo "<p>Points de collect</p>";
-                                            // echo "</div>";
                                         ?>
                                     </div>
 
@@ -326,10 +323,6 @@
                                             }
                                             echo"<strong class='featured-numbers'>".$rowtra['totaltra']."+</strong>";
                                             echo"<p class='featured-text'>Trajectoires</p>";
-                                            // echo "<div class='counter'>";
-                                            //     echo "<h1 class='count' data-target='".$rowtra['totaltra']."'></h1>";
-                                            //     echo "<p>Trajectoires</p>";
-                                            // echo "</div>";
                                         ?>
 
                                     </div>
@@ -343,10 +336,6 @@
                                             }
                                             echo"<strong class='featured-numbers'>".$rowram['totalram']."+</strong>";
                                             echo"<p class='featured-text'>Ramaceurs</p>";
-                                            // echo "<div class='counter'>";
-                                            //     echo "<h1 class='count' data-target='".$rowram['totalram']."'></h1>";
-                                            //     echo "<p>Ramaceurs</p>";
-                                            // echo "</div>";
                                         ?>
                                         
                                     </div>
@@ -360,10 +349,6 @@
                                             }
                                             echo"<strong class='featured-numbers'>".$rowveh['totalveh']."+</strong>";
                                             echo"<p class='featured-text'>Véhicules</p>";
-                                            // echo "<div class='counter'>";
-                                            //     echo "<h1 class='count' data-target='".$rowveh['totalveh']."'></h1>";
-                                            //     echo "<p>Véhicules</p>";
-                                            // echo "</div>";
                                         ?>
                                         
                                     </div>
@@ -418,91 +403,6 @@
                                 <h2 class="text-white ms-4 mb-0">Evenements</h2>
                             </div>
 
-                            <!-- <div class="row pt-lg-5">
-                                <div class="col-lg-6 col-12">
-                                    <div class="services-thumb">
-                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
-                                            <h3 class="mb-0">Websites</h3>
-
-                                            <div class="services-price-wrap ms-auto">
-                                                <p class="services-price-text mb-0">$2,400</p>
-                                                <div class="services-price-overlay"></div>
-                                            </div>
-                                        </div>
-
-                                        <p>You may want to explore Too CSS for great collection of free HTML CSS templates.</p>
-
-                                        <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
-
-                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
-                                            <i class="services-icon bi-globe"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-12">
-                                    <div class="services-thumb services-thumb-up">
-                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
-                                            <h3 class="mb-0">Branding</h3>
-
-                                            <div class="services-price-wrap ms-auto">
-                                                <p class="services-price-text mb-0">$1,200</p>
-                                                <div class="services-price-overlay"></div>
-                                            </div>
-                                        </div>
-
-                                        <p>You can explore more CSS templates on TemplateMo website by browsing through different tags.</p>
-
-                                        <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
-
-                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
-                                            <i class="services-icon bi-lightbulb"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-12">
-                                    <div class="services-thumb">
-                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
-                                            <h3 class="mb-0">Ecommerce</h3>
-
-                                            <div class="services-price-wrap ms-auto">
-                                                <p class="services-price-text mb-0">$3,600</p>
-                                                <div class="services-price-overlay"></div>
-                                            </div>
-                                        </div>
-
-                                        <p>If you need a customized ecommerce website for your business, feel free to discuss with me.</p>
-
-                                        <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
-
-                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
-                                            <i class="services-icon bi-phone"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-12">
-                                    <div class="services-thumb services-thumb-up">
-                                        <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
-                                            <h3 class="mb-0">SEO</h3>
-
-                                            <div class="services-price-wrap ms-auto">
-                                                <p class="services-price-text mb-0">$1,450</p>
-                                                <div class="services-price-overlay"></div>
-                                            </div>
-                                        </div>
-
-                                        <p>To list your website first on any search engine, we will work together. First Portfolio is one-page CSS Template for free download.</p>
-
-                                        <a href="#" class="custom-btn custom-border-btn btn mt-3">Discover More</a>
-
-                                        <div class="services-icon-wrap d-flex justify-content-center align-items-center">
-                                            <i class="services-icon bi-google"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="seclanding">
                             <div id="seclanimgs">
@@ -559,56 +459,11 @@
 
                         <div class="clearfix"></div>
 
-                        <!-- <div class="col-lg-4 col-md-6 col-12">
-                            <div class="projects-thumb">
-                                <div class="projects-info">
-                                    <small class="projects-tag">Branding</small>
-
-                                    <h3 class="projects-title">Zoik agency</h3>
-                                </div>
-
-                                <a href="images/projects/nikhil-KO4io-eCAXA-unsplash.jpg" class="popup-image">
-                                    <img src="images/projects/nikhil-KO4io-eCAXA-unsplash.jpg" class="projects-image img-fluid" alt="">
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="projects-thumb">
-                                <div class="projects-info">
-                                    <small class="projects-tag">Photography</small>
-
-                                    <h3 class="projects-title">The Watch</h3>
-                                </div>
-
-                                <a href="images/projects/the-5th-IQYR7N67dhM-unsplash.jpg" class="popup-image">
-                                    <img src="images/projects/the-5th-IQYR7N67dhM-unsplash.jpg" class="projects-image img-fluid" alt="">
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="projects-thumb">
-                                <div class="projects-info">
-                                    <small class="projects-tag">Website</small>
-
-                                    <h3 class="projects-title">Polo</h3>
-                                </div>
-
-                                <a href="images/projects/true-agency-9Bjog5FZ-oc-unsplash.jpg" class="popup-image">
-                                    <img src="images/projects/true-agency-9Bjog5FZ-oc-unsplash.jpg" class="projects-image img-fluid" alt="">
-                                </a>
-                            </div>
-                        </div> -->
-
                         <div class="col-lg-12 col-12">
                             <h3 class="text-center mb-5">Calendrier de Travail</h3>
                         </div>
 
                         <div class="col-lg-4 col-md-6 col-12" id="CalendrierdeTravail">
-                            <!-- <div class="profile-thumb">
-                                <div class="profile-body"> -->
-                                    
                                     <table>
                                         <thead>
                                             <tr>
@@ -809,78 +664,6 @@
                                     }
                                 }
                                 ?>
-                                <!-- <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">ayoublgtifi</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">whale</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">dolphin</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">fish</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">tropical fish</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">blowfish</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">shark</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">octopus</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div>
-                                <div class="carousel__item">
-                                    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>
-                                    <div class="carousel__item-body">
-                                        <p class="title">spiral shell</p>
-                                        <p class="lorem">Lorem ipsum dolor sit amet consectetur.</p>
-                                        <p class="Unicode">Unicode: U+1F433</p>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                 </div>
@@ -911,13 +694,13 @@
                                     <strong class="site-footer-title d-block mt-4 mb-3">Suivez-nous</strong>
 
                                     <ul class="social-icon">
-                                        <li class="social-icon-item"><a href="https://twitter.com/minthu" class="social-icon-link bi-twitter"></a></li>
+                                        <li class="social-icon-item"><a href="#" class="social-icon-link bi-twitter"></a></li>
 
                                         <li class="social-icon-item"><a href="#" class="social-icon-link bi-instagram"></a></li>
 
                                         <li class="social-icon-item"><a href="#" class="social-icon-link bi-pinterest"></a></li>
 
-                                        <li class="social-icon-item"><a href="https://www.youtube.com/templatemo" class="social-icon-link bi-youtube"></a></li>
+                                        <li class="social-icon-item"><a href="#" class="social-icon-link bi-youtube"></a></li>
                                     </ul>
 
                                     <strong class="site-footer-title d-block mt-4 mb-3">Sauvez votre environnement</strong>
@@ -1089,8 +872,6 @@ if (isset($_GET['subrec'])) {
         </main>
 
         <footer class="site-footer">
-            <!-- <div class="container">
-                <div class="row"> -->
 
                     <div class="footdivs fdwl">
                         <div>

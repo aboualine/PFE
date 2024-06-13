@@ -1,5 +1,5 @@
 <?php
-        session_name("admin");
+        session_name("agent");
         session_start();
         $servername = "localhost";
         $username = "root";
@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration dashboard</title> 
+    <title>Agent dashboard</title> 
     <link rel="shortcut icon" type="x-icon" href="images/logofinal.png">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
             </a>
             </li>
             <li class="navbar-item flexbox-left">
-            <a href="Administration_dashboard copy 2.php" class="navbar-item-inner flexbox-left">
+            <a href="agent_dashboard2.php" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-house"></i>
                 </div>
@@ -45,7 +45,7 @@
             </a>
             </li>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Enregistrements.php" class="navbar-item-inner flexbox-left">
+            <a href="Agent_Enregistrements.php" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-folder-open"></i>
                 </div>
@@ -53,7 +53,7 @@
             </a>
             </li>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Statisics.php" class="navbar-item-inner flexbox-left">
+            <a href="Agent_Statisics.php" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-chart-simple"></i>
                 </div>
@@ -61,7 +61,7 @@
             </a>
             </li>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Team.php" class="navbar-item-inner flexbox-left">
+            <a href="Agent_Team.php" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-user"></i>
                 </div>
@@ -85,7 +85,7 @@
                 }
             ?>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Contact.php?view_reclamation=true" class="navbar-item-inner flexbox-left">
+            <a href="Agent_Contact.php?view_reclamation=true" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-comments"></i>
                 </div>
@@ -98,7 +98,7 @@
             </a>
             </li>
             <li class="navbar-item flexbox-left">
-            <a href="Admin_Setting.php" class="navbar-item-inner flexbox-left">
+            <a href="Agent_Setting.php" class="navbar-item-inner flexbox-left">
                 <div class="navbar-item-inner-icon-wrapper flexbox">
                 <i class="fa-solid fa-gear"></i>
                 </div>
@@ -116,14 +116,14 @@
     
     <?php
         if(isset($_SESSION['user_id'])){
-            $sqlname = "SELECT Nom FROM Adminstration
-                        WHERE Id_Administration = '{$_SESSION['user_id']}'";
+            $sqlname = "SELECT Nom FROM Agent
+                        WHERE Id_Agent = '{$_SESSION['user_id']}'";
             $resname = mysqli_query($conn, $sqlname);
             $row = mysqli_fetch_assoc($resname);
             if ($row) {
-                $_SESSION['role'] = 'Adminstration';
-                $adminName = $row['Nom'];
-                echo "<h1>Bonjour $adminName</h1>";
+                $_SESSION['role'] = 'Agent';
+                $agentName = $row['Nom'];
+                echo "<h1>Bonjour $agentName</h1>";
             } else {
                 header("Location: authentification.php");
             }

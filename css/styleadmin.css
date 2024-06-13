@@ -945,15 +945,15 @@ ul, ol {
   
   .wrapper {
     position: relative;
-    top: 400px;
+    top: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
   .carousel {
-    position: relative;
-    left: 80px;
+    /* position: relative;
+    left: 80px; */
     width: 500px;
     height: 500px;
     max-width: 500px;
@@ -963,14 +963,16 @@ ul, ol {
   }
   
   .carousel h1{
-    position: relative;
-    top: -100px;
+    text-align: center;
+    /* position: relative;
+    left: 300px; */
   }
 
   .carousel__item {
     display: flex;
     align-items: center;
     position: absolute;
+    top: 100px;
     width: 400px;
     height: 400px; 
     padding: 0 12px;

@@ -42,6 +42,8 @@ $conn = new mysqli($servername, $username, $password, $database);
 <?php
     // error_reporting(0);
     // ini_set('display_errors', 0);
+    session_name("citoyen");
+    session_start();
         if(isset($_POST['submit'])){
             $cin = $_POST['cin'];
             $nom = $_POST['nom'];
@@ -52,8 +54,19 @@ $conn = new mysqli($servername, $username, $password, $database);
             $sql = "INSERT INTO Citoyens (CIN, Nom, Prenom, Email, Tel, Date_Inscription, Mot_de_Passe) 
                     VALUES ('$cin', '$nom', '$prenom', '$email', '$tel', now(), '$mot_de_passe')";
             $res = mysqli_query($conn,$sql);
-            
-         
-
+            $_SESSION['role'] = 'citoyen';
+            $_SESSION['user_id'] = $cin ;
+            header('Location:citoyens_dashboard/citoyens_dash connected.php');
+            exit();
         }
 ?>
+
+<!-- $sqlname = "SELECT * FROM Citoyens WHERE CIN = '$cin'";
+            $resname = mysqli_query($conn,$sqlname);
+            $userC = mysqli_fetch_assoc($resname);
+            session_name("citoyen");
+            session_start();
+            $_SESSION['role'] = 'citoyen';
+            $_SESSION['user_id'] = $userC['CIN'];
+            header('Location:citoyens_dashboard/citoyens_dash connected.php');
+            exit(); -->

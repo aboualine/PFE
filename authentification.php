@@ -46,7 +46,7 @@
                     session_start();
                     $_SESSION['role'] = 'Agent';
                     $_SESSION['user_id'] = $userJ['Id_Agent'];
-                    header('Location: Agent_dashboard.php');
+                    header('Location: Agent_dashboard2.php');
                     exit();
                 }
         } else {
