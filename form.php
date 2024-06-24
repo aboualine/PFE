@@ -9,7 +9,7 @@ $conn = new mysqli($servername, $username, $password, $database);
 <html>
 <head>
     <title>formulaire citoyens</title>
-    <link rel="stylesheet" href="css/signincitoyen.css">
+    <link rel="stylesheet" href="css/signincitoyen.css?v=1.0">
 </head>
 <body>
     <div class="background">
@@ -32,6 +32,9 @@ $conn = new mysqli($servername, $username, $password, $database);
         <label for="tel">Tel:</label><br>
         <input type="text" id="tel" name="tel" required><br>
 
+        <label for="adresse">Adresse:</label><br>
+        <input type="text" id="adresse" name="adresse" required><br>
+
         <label for="mot_de_passe">Mot de Passe:</label><br>
         <input type="password" id="mot_de_passe" name="mot_de_passe" required><br>
 
@@ -50,9 +53,10 @@ $conn = new mysqli($servername, $username, $password, $database);
             $prenom = $_POST['prenom'];
             $email = $_POST['email'];
             $tel = $_POST['tel'];
+            $adresse = $_POST['adresse'];
             $mot_de_passe = $_POST['mot_de_passe'];
-            $sql = "INSERT INTO Citoyens (CIN, Nom, Prenom, Email, Tel, Date_Inscription, Mot_de_Passe) 
-                    VALUES ('$cin', '$nom', '$prenom', '$email', '$tel', now(), '$mot_de_passe')";
+            $sql = "INSERT INTO Citoyens (CIN, Nom, Prenom, Email, Tel, adresse, Date_Inscription, Mot_de_Passe) 
+                    VALUES ('$cin', '$nom', '$prenom', '$email', '$tel', '$adresse', now(), '$mot_de_passe')";
             $res = mysqli_query($conn,$sql);
             $_SESSION['role'] = 'citoyen';
             $_SESSION['user_id'] = $cin ;

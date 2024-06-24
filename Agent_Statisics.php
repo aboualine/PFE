@@ -90,6 +90,10 @@
         </div>
     </div>
 
+    <?php
+        $user_id = $_SESSION['user_id'];
+    ?>
+
     <h2>Calendrier de Travail</h2>
     <table>
         <tr>
@@ -100,9 +104,12 @@
             <th>Date de début</th>
         </tr>
         <?php
-            $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, c.Quart_de_travail, c.Date_debut
-                            FROM CalendrieDeTravail c
-                            INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire";
+            $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, 
+                                t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, 
+                                c.Quart_de_travail, c.Date_debut
+                        FROM CalendrieDeTravail c
+                        INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire
+                        WHERE c.Date_debut >= CURDATE()";
             $result_calendrier = mysqli_query($conn, $sql_calendrier);
 
             if (mysqli_num_rows($result_calendrier) > 0) {
@@ -116,7 +123,7 @@
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='5'>Aucune donnée disponible</td></tr>";
+                echo "<tr><td colspan='5'>Aucune donnée disponible pour les dates à venir</td></tr>";
             }
         ?>
     </table>

@@ -45,7 +45,7 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/style.css?v=1.0" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
 
@@ -477,9 +477,16 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, c.Quart_de_travail, c.Date_debut
-                                                                FROM CalendrieDeTravail c
-                                                                INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire";
+                                                $current_date = date('Y-m-d');
+                                                $next_day = date('Y-m-d', strtotime($current_date . ' +1 day'));
+                                            
+                                                $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, 
+                                                                          t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, 
+                                                                          c.Quart_de_travail, c.Date_debut
+                                                                   FROM CalendrieDeTravail c
+                                                                   INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire
+                                                                   WHERE c.Date_debut = '$next_day'";
+                                            
                                                 $result_calendrier = mysqli_query($conn, $sql_calendrier);
 
                                                 if (mysqli_num_rows($result_calendrier) > 0) {
@@ -509,44 +516,60 @@
                         </div>
                         <pre></pre>
                         <pre></pre>
-                        <div id="contmap">
-                        <div id="divmap">
-                            <?php
-                            
-                                // Fetch points
-                                $sql_points = "SELECT Emplacement, Typee, latitude, longitude FROM PointCollecte";
-                                $result_points = $conn->query($sql_points);
-
-                                // Fetch trajectories
-                                $sql_trajectories = "SELECT pc.latitude as start_lat, pc.longitude as start_lng, pc2.latitude as end_lat, pc2.longitude as end_lng
-                                                    FROM Trajectoire t
-                                                    JOIN PointCollecte pc ON t.Id_Trajectoire = pc.Id_Trajectoire
-                                                    JOIN PointCollecte pc2 ON t.Id_Trajectoire = pc2.Id_Trajectoire
-                                                    WHERE pc.Id_PointCollecte < pc2.Id_PointCollecte";
-                                $result_trajectories = $conn->query($sql_trajectories);
-
-                                $points = array();
-                                $trajectories = array();
-
-                                if ($result_points->num_rows > 0) {
-                                    while ($row = $result_points->fetch_assoc()) {
-                                        $points[] = $row;
-                                    }
+                        <?php
+                            $sql_points = "SELECT Emplacement, Typee, latitude, longitude FROM PointCollecte";
+                            $result_points = $conn->query($sql_points);
+                    
+                            $points = array();
+                            if ($result_points->num_rows > 0) {
+                                while ($row = $result_points->fetch_assoc()) {
+                                    $points[] = $row;
                                 }
+                            }
+                            $citoyen_cin = $_SESSION['user_id']; 
 
-                                if ($result_trajectories->num_rows > 0) {
-                                    while ($row = $result_trajectories->fetch_assoc()) {
-                                        $trajectories[] = $row;
-                                    }
-                                }
-
+                            $sql = "SELECT Adresse FROM Citoyens WHERE CIN = '$citoyen_cin'";
+                            $result = $conn->query($sql);
                             
-                            ?>
-
-                            <div id="map"></div>
-                        </div>
-                        </div>
-
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $adresse = $row['Adresse'];
+                            
+                                $image_path = "images/chichaoua trajectoires.png"; 
+                            
+                                switch ($adresse) {
+                                    case 'Hay El Amal':
+                                        $image_path = "images/traj3.png";
+                                        break;
+                                    case 'Hay El Farah':
+                                        $image_path = "images/traj1.png";
+                                        break;
+                                    case 'Hay El Hassani':
+                                        $image_path = "images/traj2.png";
+                                        break;
+                                    case 'Hay El Massira':
+                                    case 'Hay El Ezzahra':
+                                    case 'Hay El Nasr':
+                                    case 'Oulad Ibrahim':
+                                    case 'Hay El Mouhamadi':
+                                        $image_path = "images/traj4.png";
+                                        break;
+                                    default:
+                                        $image_path = "images/chichaoua trajectoires.png"; 
+                                        break;
+                                }
+                            
+                                echo '<div id="contmap">
+                                        <div id="divmap">
+                                            <div id="map">
+                                                <img src="' . $image_path . '" alt="Map Image" id="map-image">
+                                            </div>
+                                        </div>
+                                    </div>';
+                            } else {
+                                echo "No address found for the citoyen.";
+                            }
+                        ?>
 
                     </div>
                 </div>
@@ -833,36 +856,36 @@
                                     </div>
                                 </form>
                                 <?php
-if (isset($_GET['subrec'])) {
-    if (isset($_SESSION['user_id'])) {
-        // Retrieve form data
-        $name = $_GET['name'];
-        $cin = $_GET['cin'];
-        $email = $_GET['email'];
-        $titre = $_GET['titre'];
-        $message = $_GET['message'];
-        
-        // Concatenate selected reclamation types into a comma-separated string
-        $reclamationTypes = array();
-        if (isset($_GET['Reclamation'])) $reclamationTypes[] = $_GET['Reclamation'];
-        if (isset($_GET['Commentaire'])) $reclamationTypes[] = $_GET['Commentaire'];
-        if (isset($_GET['Question'])) $reclamationTypes[] = $_GET['Question'];
-        if (isset($_GET['Suggestion'])) $reclamationTypes[] = $_GET['Suggestion'];
-        $reclamationTypeStr = implode(',', $reclamationTypes);
-        
-        // Automatically generate Id_Reclamation (auto-incremented) and Date_de_Publication (current date)
-        $sql = "INSERT INTO Reclamation (Titre, Descriptionn, CIN, Type_Reclamation)
-                VALUES ('$titre', '$message', '$cin', '$reclamationTypeStr')";
-        $res = mysqli_query($conn, $sql);
-        if ($res) {
-            echo "Le message a été envoyé avec succès, merci pour votre coopération.";
-        } else {
-            echo "Erreur lors de l'envoi du message.";
-        }
-    } else {
-        echo "Vous devez vous connecter d'abord ! cliquez <a href='../authentification.php'>ici</a> pour connecter";
-    }
-}
+                                    if (isset($_GET['subrec'])) {
+                                        if (isset($_SESSION['user_id'])) {
+                                            // Retrieve form data
+                                            $name = $_GET['name'];
+                                            $cin = $_GET['cin'];
+                                            $email = $_GET['email'];
+                                            $titre = $_GET['titre'];
+                                            $message = $_GET['message'];
+                                            
+                                            // Concatenate selected reclamation types into a comma-separated string
+                                            $reclamationTypes = array();
+                                            if (isset($_GET['Reclamation'])) $reclamationTypes[] = $_GET['Reclamation'];
+                                            if (isset($_GET['Commentaire'])) $reclamationTypes[] = $_GET['Commentaire'];
+                                            if (isset($_GET['Question'])) $reclamationTypes[] = $_GET['Question'];
+                                            if (isset($_GET['Suggestion'])) $reclamationTypes[] = $_GET['Suggestion'];
+                                            $reclamationTypeStr = implode(',', $reclamationTypes);
+                                            
+                                            // Automatically generate Id_Reclamation (auto-incremented) and Date_de_Publication (current date)
+                                            $sql = "INSERT INTO Reclamation (Titre, Descriptionn, CIN, Type_Reclamation)
+                                                    VALUES ('$titre', '$message', '$cin', '$reclamationTypeStr')";
+                                            $res = mysqli_query($conn, $sql);
+                                            if ($res) {
+                                                echo "Le message a été envoyé avec succès, merci pour votre coopération.";
+                                            } else {
+                                                echo "Erreur lors de l'envoi du message.";
+                                            }
+                                        } else {
+                                            echo "Vous devez vous connecter d'abord ! cliquez <a href='../authentification.php'>ici</a> pour connecter";
+                                        }
+                                    }
                                 ?>
                             </div>
 
@@ -1064,29 +1087,41 @@ if (isset($_GET['subrec'])) {
         <script src="js/main.js"></script>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script>
-            // Data from PHP
-            var points = <?php echo json_encode($points); ?>;
-            var trajectories = <?php echo json_encode($trajectories); ?>;
+            // JavaScript to place the pointers on the map
+            document.addEventListener("DOMContentLoaded", function() {
+                var points = <?php echo json_encode($points); ?>;
+                var mapImage = document.getElementById('map-image');
 
-            // Initialize map
-            var map = L.map('map').setView([0, 0], 2);
+                // Define the geographic bounds of your map image
+                var lat_min = 31.5460; // replace with your map's min latitude
+                var lng_min = -8.7800; // replace with your map's min longitude
+                var lat_max = 31.5500; // replace with your map's max latitude
+                var lng_max = -8.7400; // replace with your map's max longitude
 
-            // Add OpenStreetMap tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19
-            }).addTo(map);
+                mapImage.onload = function() {
+                    var mapWidth = mapImage.offsetWidth;
+                    var mapHeight = mapImage.offsetHeight;
 
-            // Add points to map
-            points.forEach(function(point) {
-                L.marker([point.latitude, point.longitude]).addTo(map)
-                    .bindPopup(point.Emplacement + " (" + point.Typee + ")");
-            });
+                    points.forEach(function(point) {
+                        var pixelX = (point.longitude - lng_min) / (lng_max - lng_min) * mapWidth;
+                        var pixelY = (point.latitude - lat_min) / (lat_max - lat_min) * mapHeight;
 
-            // Add trajectories to map
-            trajectories.forEach(function(traj) {
-                var start = [traj.start_lat, traj.start_lng];
-                var end = [traj.end_lat, traj.end_lng];
-                L.polyline([start, end], {color: 'blue'}).addTo(map);
+                        var pointer = document.createElement('div');
+                        pointer.className = 'pointer';
+                        pointer.style.top = pixelY + 'px';
+                        pointer.style.left = pixelX + 'px';
+                        pointer.title = point.Emplacement;
+
+                        var pointerImage = document.createElement('img');
+                        pointerImage.src = 'images/green-pointer.png';
+                        pointerImage.alt = 'Pointer';
+                        pointerImage.style.width = '20px';
+                        pointerImage.style.height = '20px';
+
+                        pointer.appendChild(pointerImage);
+                        document.getElementById('map').appendChild(pointer);
+                    });
+                };
             });
         </script>
         <!-- <script src="js/script.js"></script> -->

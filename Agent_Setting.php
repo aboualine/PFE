@@ -1,5 +1,5 @@
 <?php
-    session_name("admin");
+    session_name("agent");
     session_start();
     $servername = "localhost";
     $username = "root";
@@ -103,47 +103,95 @@
         </form>
     </fieldset>
 
+    <?php
+        $user_id = $_SESSION['user_id'];
+    ?>
 
-    <h6>Ajouter les vacances : </h6>
+    <h6>Ajouter les Problèmes : </h6>
 
     <fieldset>
-        <legend>Ajouter des vacances </legend>
+    <legend>Signaler un Problème</legend>
         <form action="" method="post">
-            <label for="holiday_name">Nom de la vacance:</label>
-            <input type="text" id="holiday_name" name="holiday_name" required><br>
-            <label for="holiday_debut">Date debut de la vacance:</label>
-            <input type="date" id="holiday_debut" name="holiday_debut" required><br>
-            <label for="holiday_fin">Date fin de la vacance:</label>
-            <input type="date" id="holiday_fin" name="holiday_fin" required><br>
-            <label for="agent_id">ID de l'agent (optionnel):</label>
-            <input type="number" id="agent_id" name="agent_id"><br>
-            <button type="submit" name="subvacance">Ajouter</button>
+            <label for="equipement">Équipement :</label><br>
+            <select id="equipement" name="equipement" required>
+                <?php
+                $sql_equipement = "SELECT e.Id_equipement, e.Nom 
+                               FROM Equipement e
+                               INNER JOIN Agent_Equipement ae ON e.Id_equipement = ae.Id_Equipement
+                               WHERE ae.Id_Agent = $user_id";
+                $result_equipement = mysqli_query($conn, $sql_equipement);
+
+                if ($result_equipement && mysqli_num_rows($result_equipement) > 0) {
+                    while ($row_equipement = mysqli_fetch_assoc($result_equipement)) {
+                        echo "<option value='" . $row_equipement['Id_equipement'] . "'>" . $row_equipement['Nom'] . "</option>";
+                    }
+                } else {
+                    echo "<option disabled selected>Aucun équipement disponible</option>";
+                }
+                ?>
+            </select><br>
+
+            <label for="description">Description du Problème :</label><br>
+            <textarea id="description" name="description" rows="4" required></textarea><br>
+
+            <label for="date_signal">Date de Signalement :</label><br>
+            <input type="date" id="date_signal" name="date_signal" required><br>
+
+            <input type="submit" name="signaler_probleme" value="Signaler">
         </form>
     </fieldset>
     <?php
-        if (isset($_POST['subvacance'])) {
-            $holidayName = $_POST['holiday_name'];
-            $holidayStartDate = $_POST['holiday_debut'];
-            $holidayEndDate = $_POST['holiday_fin'];
-            $agentId = isset($_POST['agent_id']) ? $_POST['agent_id'] : null;
-            $startDate = strtotime($holidayStartDate);
-            $endDate = strtotime($holidayEndDate);
-            $duration = ($endDate - $startDate) / (60 * 60 * 24);
-            if ($duration >= 1 && $duration <= 3) {
-                $sqlvacance = "INSERT INTO Vacances (NomVacance, DateDebutVacance, DateFinVacance, Id_Agent)
-                               VALUES ('$holidayName', '$holidayStartDate', '$holidayEndDate', '$agentId')";
-                $resvacance = mysqli_query($conn,$sqlvacance);
-                if ($resvacance) {
-                    echo "La vacance a été ajoutée avec succès.";
-                }
-            }
-            else {
-                echo "La durée des vacances doit être entre 1 et 3 jours.";
+        if(isset($_POST['signaler_probleme'])) {
+            $equipement_id = $_POST['equipement'];
+            $description = $_POST['description'];
+            $date_signal = $_POST['date_signal'];
+        
+            // Inserting the reported problem into the database
+            $sql_insert_problem = "INSERT INTO Probleme (Descriptionn, Date_de_Signal, Statut, Id_Equipement) 
+                                   VALUES ('$description', '$date_signal', 0, '$equipement_id')";
+            
+            if (mysqli_query($conn, $sql_insert_problem)) {
+                echo "Le problème a été signalé avec succès.";
+            } else {
+                echo "Erreur lors du signalement du problème : " . mysqli_error($conn);
             }
         }
     ?>
     
+    <?php
+    $user_id = $_SESSION['user_id'];
 
+    if(isset($_POST['submit_demande'])) {
+        $type_document = $_POST['type_document'];
+        $description = $_POST['description'];
+        $date_demande = date('Y-m-d'); // Current date
+        $id_administration = 1; // Replace with the appropriate administration ID handling requests
+    
+        // Inserting the document request into the database
+        $sql_insert_demande = "INSERT INTO DemandeDocument (Id_Agent, Type_Document, Date_Demande, Statut, Description, Id_Administration) 
+                               VALUES ('$user_id', '$type_document', '$date_demande', 'En attente', '$description', '$id_administration')";
+        
+        if (mysqli_query($conn, $sql_insert_demande)) {
+            echo "La demande de document a été soumise avec succès.";
+        } else {
+            echo "Erreur lors de la soumission de la demande de document : " . mysqli_error($conn);
+        }
+    }
+    ?>
+    <h6>Demander des documents : </h6>
+
+    <fieldset>
+        <legend>Document</legend>
+        <form action="" method="post">
+            <label for="type_document">Type de Document :</label><br>
+            <input type="text" id="type_document" name="type_document" required><br>
+    
+            <label for="description">Description de la demande :</label><br>
+            <textarea id="description" name="description" rows="4" required></textarea><br>
+    
+            <input type="submit" name="submit_demande" value="Soumettre la Demande">
+        </form>
+    </fieldset>
     
     <footer>
         <div class="footdivs fdwl">

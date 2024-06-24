@@ -1,5 +1,5 @@
 <?php
-    session_name("admin");
+    session_name("agent");
     session_start();
     $servername = "localhost";
     $username = "root";
@@ -84,6 +84,10 @@
         </ul>
     </nav>
 
+    <?php
+        $user_id = $_SESSION['user_id'];
+    ?>
+
     <h2>Liste des Problèmes Signalés</h2>
     <table>
         <tr>
@@ -93,8 +97,11 @@
             <td>Statut</td>
         </tr>
         <?php
-            $sql_problemes = "SELECT Id_Probleme, Descriptionn, Date_de_Signal, Statut
-            FROM Probleme";
+            $sql_problemes = "SELECT p.Id_Probleme, p.Descriptionn, p.Date_de_Signal, p.Statut
+                      FROM Probleme p
+                      INNER JOIN Agent_Equipement ae ON ae.Id_Equipement = p.Id_Probleme
+                      INNER JOIN Agent a ON a.Id_Agent = ae.Id_Agent
+                      WHERE a.Id_Agent = $user_id";
 
             $result_problemes = mysqli_query($conn, $sql_problemes);
 
@@ -108,36 +115,46 @@
                     echo "</tr>";
                 }
             } else {
-            echo "Aucun Probleme Signaler.";
-            }
+                echo "<tr><td colspan='4'>Aucun problème signalé d'apès vouz.</td></tr>";            }
         ?>
     </table>
 
-    <h2> Liste de reclamations </h2>
-    <?php
-        $sql_complaints = "SELECT * FROM Reclamation";
-        $result_complaints = mysqli_query($conn, $sql_complaints);
+    <h2>Liste des Problèmes Signalés</h2>
 
-        if (mysqli_num_rows($result_complaints) ) {
-            echo "<table>
-                        <tr>
-                            <th>ID Reclamation</th>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Date de Publication</th>
-                        </tr>";
-                while ($row = mysqli_fetch_assoc($result_complaints)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['Id_Reclamation'] . "</td>";
-                    echo "<td>" . $row['Titre'] . "</td>";
-                    echo "<td>" . $row['Descriptionn'] . "</td>";
-                    echo "<td>" . $row['Date_de_Publication'] . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-        } else {
-                echo "Aucune réclamation n'a été signalée.";
+    <?php
+    $user_id = $_SESSION['user_id'];
+
+    // Query to fetch document requests made by the logged-in agent
+    $sql_demandes = "SELECT Id_Demande, Type_Document, Date_Demande, Statut, Description
+                     FROM DemandeDocument
+                     WHERE Id_Agent = '$user_id'";
+    
+    $result_demandes = mysqli_query($conn, $sql_demandes);
+    
+    if ($result_demandes && mysqli_num_rows($result_demandes) > 0) {
+        echo "<h2>Liste des Demandes de Document</h2>";
+        echo "<table border='1'>
+                <tr>
+                    <th>ID Demande</th>
+                    <th>Type de Document</th>
+                    <th>Date de Demande</th>
+                    <th>Statut</th>
+                    <th>Description</th>
+                </tr>";
+    
+        while ($row = mysqli_fetch_assoc($result_demandes)) {
+            echo "<tr>";
+            echo "<td>" . $row['Id_Demande'] . "</td>";
+            echo "<td>" . $row['Type_Document'] . "</td>";
+            echo "<td>" . $row['Date_Demande'] . "</td>";
+            echo "<td>" . $row['Statut'] . "</td>";
+            echo "<td>" . $row['Description'] . "</td>";
+            echo "</tr>";
         }
+        echo "</table>";
+    } else {
+        echo "Aucune demande de document trouvée pour cet agent.";
+    }
     ?>
 
 <footer>

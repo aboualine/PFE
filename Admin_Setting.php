@@ -15,7 +15,7 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styleadminsetting.css">
+    <link rel="stylesheet" href="css/styleadminsetting.css?v=1.0">
 </head>
 <body>
     <!-- Navbar -->
@@ -626,7 +626,7 @@
 
     <fieldset>
         <legend>reclamation reponse</legend>
-        <form action="" method="post">
+        <form action="creationimage.php" method="post">
             <label for="titrereponse">Titre :</label><br>
             <input type="text" name="titrereponse">
             <label for="admin_response">Description :</label><br>
@@ -637,18 +637,18 @@
         </form>
     </fieldset>
     <?php
-        if(isset($_POST['submit_response'])) {
-            $titre = $_POST['titrereponse'];
-            $response = $_POST['admin_response'];
-            $annonce_date = date('Y-m-d');
-            $agent_id = "5";
-            $sqlreprec = "INSERT INTO Annonce (Titre, Descriptionn, Date_de_Publication, Id_Agent) 
-                          VALUES ('$titre', '$response', '$annonce_date', $agent_id)";
-            $resreprec = mysqli_query($conn, $sqlreprec);
-            if($resreprec) {
-                echo "Response added successfully.";
-            }
-        }
+        // if(isset($_POST['submit_response'])) {
+        //     $titre = $_POST['titrereponse'];
+        //     $response = $_POST['admin_response'];
+        //     $annonce_date = date('Y-m-d');
+        //     $agent_id = "5";
+        //     $sqlreprec = "INSERT INTO Annonce (Titre, Descriptionn, Date_de_Publication, Id_Agent) 
+        //                   VALUES ('$titre', '$response', '$annonce_date', $agent_id)";
+        //     $resreprec = mysqli_query($conn, $sqlreprec);
+        //     if($resreprec) {
+        //         echo "Response added successfully.";
+        //     }
+        // }
     ?>
 
     <!-- jhhvhghgvhgvgvghvgvv -->
@@ -699,121 +699,6 @@
                 $res = mysqli_query($conn,$sql);
             }
     ?>
-
-    <!-- creation d'image pour l'annonce -->
-        <!-- ********************** -->
-        <!-- ********************** -->
-        <!-- ********************** -->
-        <!-- ********************** -->
-        <?php
-
-            // require '../vendor/autoload.php';
-            require __DIR__ . '/../vendor/autoload.php';
-            // require __DIR__ . '/../vendor/autoload.php';
-
-
-            use Intervention\Image\ImageManagerStatic as Image;
-
-            $sqlannance = "SELECT 
-                                COALESCE(a.Nom, adm.Nom) AS Nom,
-                                COALESCE(a.Email, adm.Email) AS Email,
-                                an.Titre AS Titre_Annonce,
-                                an.Descriptionn AS Description_Annonce,
-                                an.Date_de_Publication,
-                                r.Id_Reclamation
-                            FROM 
-                                Annonce an
-                            LEFT JOIN 
-                                Agent a ON an.Id_Agent = a.Id_Agent
-                            LEFT JOIN 
-                                Adminstration adm ON an.Id_Administration = adm.Id_Administration
-                            LEFT JOIN 
-                                Reclamation r ON r.Id_Reclamation = an.Id_Annonce";
-            $resannonce = mysqli_query($conn,$sqlannance);
-            if(mysqli_num_rows($resannonce)){
-                $rowannonce = mysqli_fetch_assoc($resannonce);
-            
-            
-                $companyLogo = 'images/logofinal.png';
-                $backgroundImage = 'images/background-annonce.png';
-                $companyName = 'MedNiss';
-                $companyAddress = 'Chichaoua, Maroc';
-                $writerName = $rowannonce['Nom'];
-                $writerEmail = $rowannonce['Email'];
-                $complaintReference = $rowannonce['Id_Reclamation'];
-                $responseDate = $rowannonce['Date_de_Publication'];
-                $responseText = $rowannonce['Description_Annonce'];
-                $thankYouText = 'Merci pour votre patience et votre plainte.';
-
-                // Create an image instance from the background
-                $img = Image::make($backgroundImage)->resize(800, 600);
-
-                // Insert company logo
-                $logo = Image::make($companyLogo)->resize(150, 150);
-                $img->insert($logo, 'top-left', 10, 10);
-
-                // Add company information
-                $img->text($companyName, 200, 20, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(24);
-                    $font->color('#FFFFFF');
-                });
-                $img->text($companyAddress, 200, 60, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-
-                // Add admin response information
-                $img->text("Admin: $writerName", 20, 200, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-                $img->text("Date: $responseDate", 20, 240, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-                $img->text("Reference: $complaintReference", 20, 280, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-
-                // Add the response text
-                $img->text("Response:", 20, 320, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-                $img->text($responseText, 20, 360, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(16);
-                    $font->color('#FFFFFF');
-                    $font->align('left');
-                    $font->valign('top');
-                    $font->wrapWidth(760);
-                });
-
-                // Add thank you text
-                $img->text($thankYouText, 20, 540, function($font) {
-                    $font->file('path/to/font.ttf');
-                    $font->size(18);
-                    $font->color('#FFFFFF');
-                });
-
-                // Save the final image
-                $img->save('images/annonce'.now().'.jpg');
-
-                echo "Image created successfully!";
-            }
-        ?>
-        <!-- ********************** -->
-        <!-- ********************** -->
-        <!-- ********************** -->
-        <!-- ********************** -->
-    <!-- creation d'image pour l'annonce -->
 
     <footer>
         <div class="footdivs fdwl">

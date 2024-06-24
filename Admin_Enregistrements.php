@@ -310,6 +310,7 @@
             <th>Prenom</th>
             <th>Email</th>
             <th>Tel</th>
+            <th>Adresse</th>
             <th>Date Inscription</th>
             <th>Mot de Passe</th>
             <th>Actions</th>
@@ -334,6 +335,7 @@
                 echo "<td>" . $row["Prenom"] . "</td>";
                 echo "<td>" . $row["Email"] . "</td>";
                 echo "<td>" . $row["Tel"] . "</td>";
+                echo "<td>" . $row["Adresse"] . "</td>";
                 echo "<td>" . $row["Date_Inscription"] . "</td>";
                 echo "<td>" . $row["Mot_de_Passe"] . "</td>";
                 echo "<td>";

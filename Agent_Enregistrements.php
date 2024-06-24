@@ -1,5 +1,5 @@
 <?php
-    session_name("admin");
+    session_name("agent");
     session_start();
     $servername = "localhost";
     $username = "root";
@@ -90,7 +90,19 @@
             <input type="text" placeholder="Search...">
         </div>
     </div>
-    
+    <?php
+        // Fetching logged-in agent's information
+        $user_id = $_SESSION['user_id'];
+
+        // Query to fetch the work schedules for the logged-in agent
+        $sqltime = "SELECT ht.Id_Horaire, ht.Id_Equipement, ht.Quart_de_travail, ht.Heure_travail, ht.Pausee
+                    FROM HorairesTravail ht
+                    INNER JOIN Agent_Equipement ae ON ht.Id_Equipement = ae.Id_Equipement
+                    WHERE ae.Id_Agent = $user_id";
+
+        $sqltimeres = mysqli_query($conn, $sqltime);
+
+    ?>
     <h2>Liste des horaires de travail :</h2>
     <table>
         <tr>
@@ -101,9 +113,7 @@
             <td>Pause</td>
         </tr>
             <?php
-                $sqltime = "SELECT * FROM HorairesTravail";
-                $sqltimeres = mysqli_query($conn, $sqltime);
-                if (mysqli_num_rows($sqltimeres)) {
+                if (mysqli_num_rows($sqltimeres) > 0) {
                     while ($lignetime = mysqli_fetch_assoc($sqltimeres)) {
                         echo "<tr>";
                         echo "<td>" . $lignetime["Id_Horaire"] . "</td>";
@@ -113,21 +123,24 @@
                         echo "<td>" . $lignetime["Pausee"] . "</td>";
                         echo "</tr>";
                     }
+                } else {
+                    echo "<tr><td colspan='5'>Aucun horaire trouvé pour cet agent.</td></tr>";
                 }
             ?>
     </table>
 
+    <?php
+        $user_id = $_SESSION['user_id'];
+    ?>
     <h2>Liste des vacances :</h2>
     <table>
         <tr>
             <td>Id Vacance</td>
             <td>Vacance</td>
             <td>Duree de la vacance</td>
-            <td>Id Agent</td>
-            <td>Action</td>
         </tr>
         <?php
-            $sqlvacance = "SELECT * FROM Vacances";
+            $sqlvacance = "SELECT * FROM Vacances WHERE Id_Agent = $user_id";
             $resultvacance = mysqli_query($conn,$sqlvacance);
             if(mysqli_num_rows($resultvacance)){
                 while($lignevacance = mysqli_fetch_assoc($resultvacance)){
@@ -138,42 +151,30 @@
                     echo "<td>" . $lignevacance["Id_Vacance"] . "</td>";
                     echo "<td>" . $lignevacance["NomVacance"] . "</td>";
                     echo "<td>" . $duration . " jours</td>"; 
-                    echo "<td>" . $lignevacance["Id_Agent"] . "</td>";
                     echo "<td>";
-                    echo "<form method='post' action=''>";
-                    echo "<input type='hidden' name='idvacancehidd' value='" . $lignevacance["Id_Vacance"] . "'>";
-                    echo "<button type='submit' name='deletevacance'>Supprimer</button>";
-                    echo "<button type='submit' name='updatvacance'>Modifier</button>";
-                    echo "</form>";
-                    echo "</td>";
                     echo "</tr>";
                 }
-            }
-            if (isset($_POST['deletevacance'])) {
-                if (isset($_POST['idvacancehidd']) && !empty($_POST['idvacancehidd'])) {
-                    $idvacancedelet = mysqli_real_escape_string($conn, $_POST['idvacancehidd']);                    
-                    $sqlvacancedelet = "DELETE * FROM Vacances WHERE Id_Vacance = '$idvacancedelet'";
-                    if (mysqli_query($conn, $sqlvacancedelet)) {
-                        echo "Record deleted successfully";
-                    }
-                }
+            } else {
+                echo "<tr><td colspan='4'>Aucune vacance trouvée pour cet agent.</td></tr>";
             }
         ?>
     </table>
 
     <h2>Liste des Fetes :</h2>
     <?php
-        $sqlFete = "SELECT NomFete, DATEDIFF(DateFin, DateDebut) + 1 AS NombreJours FROM gestdechcomloc.Fetes";
+        $sqlFete = "SELECT NomFete, DATEDIFF(DateFin, DateDebut) + 1 AS NombreJours, DateDebut FROM gestdechcomloc.Fetes";
         $resultFete = mysqli_query($conn, $sqlFete);
         if (mysqli_num_rows($resultFete) > 0) {
             echo "<table>
                     <tr>
                         <th>Fête</th>
+                        <th>Date debut</th>
                         <th>Nombre des jours</th>
                     </tr>";
             while ($rowFete = mysqli_fetch_assoc($resultFete)) {
                 echo "<tr>";
                 echo "<td>" . $rowFete["NomFete"] . "</td>";
+                echo "<td>" . $rowFete["DateDebut"] . "</td>";
                 echo "<td>" . $rowFete["NombreJours"] . "</td>";
                 echo "</tr>";
             }

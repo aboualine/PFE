@@ -44,7 +44,7 @@
 
         <link href="css/magnific-popup.css" rel="stylesheet">
 
-        <link href="css/style.css?v=1.0" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/9963be157d.js" crossorigin="anonymous"></script>
 
@@ -475,9 +475,16 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, c.Quart_de_travail, c.Date_debut
-                                                                FROM CalendrieDeTravail c
-                                                                INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire";
+                                                $current_date = date('Y-m-d');
+                                                $next_day = date('Y-m-d', strtotime($current_date . ' +1 day'));
+                                            
+                                                $sql_calendrier = "SELECT c.Equipement_Nom, c.Vehicule_Marque, c.Vehicule_Modele, 
+                                                                          t.Debut AS Trajectoire_Debut, t.Fin AS Trajectoire_Fin, 
+                                                                          c.Quart_de_travail, c.Date_debut
+                                                                   FROM CalendrieDeTravail c
+                                                                   INNER JOIN Trajectoire t ON c.Id_Trajectoire = t.Id_Trajectoire
+                                                                   WHERE c.Date_debut = '$next_day'";
+                                            
                                                 $result_calendrier = mysqli_query($conn, $sql_calendrier);
 
                                                 if (mysqli_num_rows($result_calendrier) > 0) {
@@ -510,38 +517,39 @@
                         <div id="contmap">
                         <div id="divmap">
                             <?php
-                            
-                                // Fetch points
                                 $sql_points = "SELECT Emplacement, Typee, latitude, longitude FROM PointCollecte";
                                 $result_points = $conn->query($sql_points);
-
-                                // Fetch trajectories
-                                $sql_trajectories = "SELECT pc.latitude as start_lat, pc.longitude as start_lng, pc2.latitude as end_lat, pc2.longitude as end_lng
-                                                    FROM Trajectoire t
-                                                    JOIN PointCollecte pc ON t.Id_Trajectoire = pc.Id_Trajectoire
-                                                    JOIN PointCollecte pc2 ON t.Id_Trajectoire = pc2.Id_Trajectoire
-                                                    WHERE pc.Id_PointCollecte < pc2.Id_PointCollecte";
-                                $result_trajectories = $conn->query($sql_trajectories);
-
+                        
                                 $points = array();
-                                $trajectories = array();
-
                                 if ($result_points->num_rows > 0) {
                                     while ($row = $result_points->fetch_assoc()) {
                                         $points[] = $row;
                                     }
                                 }
-
-                                if ($result_trajectories->num_rows > 0) {
-                                    while ($row = $result_trajectories->fetch_assoc()) {
-                                        $trajectories[] = $row;
-                                    }
-                                }
-
-                            
                             ?>
 
-                            <div id="map"></div>
+                            <div id="map">
+                                <img src="images/chichaoua trajectoires.png" alt="map image" id="map-image">
+                                <?php
+                                    // foreach ($points as $point) {
+                                    //     $scaled_coords = scaleCoordinates($point['latitude'], $point['longitude'], $min_lat, $max_lat, $min_lng, $max_lng);
+                                    //     $top = $scaled_coords['lat'];
+                                    //     $left = $scaled_coords['lng'];
+                                    //     echo '<div class="pointer" style="top: ' . $top . '%; left: ' . $left . '%;" title="' . $point['Emplacement'] . '">';
+                                    //     echo '<img src="images/green-pointer.png" alt="Pointer">';
+                                    //     echo '</div>';
+                                    // }
+
+                                    // foreach ($points as $point) {
+                                        
+                                    //     $top = $point['latitude'];  
+                                    //     $left = $point['longitude']; 
+                                    //     echo '<div class="pointer" style="top: ' . $top . '%; left: ' . $left . '%;" title="' . $point['Emplacement'] . '">';
+                                    //     echo '<img src="images/green-pointer.png" alt="Pointer" id="pointer">';
+                                    //     echo '</div>';
+                                    // }
+                                ?>
+                            </div>
                         </div>
                         </div>
 
@@ -1060,31 +1068,59 @@ if (isset($_GET['subrec'])) {
         <script src="js/main.js"></script>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script>
-            // Data from PHP
-            var points = <?php echo json_encode($points); ?>;
-            var trajectories = <?php echo json_encode($trajectories); ?>;
+            // JavaScript to place the pointers on the map
+            document.addEventListener("DOMContentLoaded", function() {
+                var points = <?php echo json_encode($points); ?>;
+                var mapImage = document.getElementById('map-image');
 
-            // Initialize map
+                // Define the geographic bounds of your map image
+                var lat_min = 31.5460; // replace with your map's min latitude
+                var lng_min = -8.7800; // replace with your map's min longitude
+                var lat_max = 31.5500; // replace with your map's max latitude
+                var lng_max = -8.7400; // replace with your map's max longitude
+
+                mapImage.onload = function() {
+                    var mapWidth = mapImage.offsetWidth;
+                    var mapHeight = mapImage.offsetHeight;
+
+                    points.forEach(function(point) {
+                        var pixelX = (point.longitude - lng_min) / (lng_max - lng_min) * mapWidth;
+                        var pixelY = (point.latitude - lat_min) / (lat_max - lat_min) * mapHeight;
+
+                        var pointer = document.createElement('div');
+                        pointer.className = 'pointer';
+                        pointer.style.top = pixelY + 'px';
+                        pointer.style.left = pixelX + 'px';
+                        pointer.title = point.Emplacement;
+
+                        var pointerImage = document.createElement('img');
+                        pointerImage.src = 'images/green-pointer.png';
+                        pointerImage.alt = 'Pointer';
+                        pointerImage.style.width = '20px';
+                        pointerImage.style.height = '20px';
+
+                        pointer.appendChild(pointerImage);
+                        document.getElementById('map').appendChild(pointer);
+                    });
+                };
+            });
+        </script>
+        <!-- <script>
+            var points = <?php 
+            // echo json_encode($points); 
+            ?>;
+
             var map = L.map('map').setView([0, 0], 2);
 
-            // Add OpenStreetMap tile layer
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19
             }).addTo(map);
 
-            // Add points to map
             points.forEach(function(point) {
                 L.marker([point.latitude, point.longitude]).addTo(map)
                     .bindPopup(point.Emplacement + " (" + point.Typee + ")");
             });
-
-            // Add trajectories to map
-            trajectories.forEach(function(traj) {
-                var start = [traj.start_lat, traj.start_lng];
-                var end = [traj.end_lat, traj.end_lng];
-                L.polyline([start, end], {color: 'blue'}).addTo(map);
-            });
-        </script>
+        </script> -->
         <!-- <script src="js/script.js"></script> -->
         <!-- <script src="script.js"></script> -->
     </body>
