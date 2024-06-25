@@ -1,5 +1,5 @@
 <?php
-    session_name("admin");
+    session_name("agent");
     session_start();
     $servername = "localhost";
     $username = "root";

@@ -119,13 +119,25 @@
         ?>
     </table>
 
-    <h2>Liste des Problèmes Signalés</h2>
-
     <?php
     $user_id = $_SESSION['user_id'];
+    ?>
+
+    <h2>Liste des Documents Demander</h2>
+
+    <table>
+        <tr>
+            <th>ID Demande</th>
+            <th>Type de Document</th>
+            <th>Date de Demande</th>
+            <th>Statut</th>
+            <th>Description</th>
+        </tr>
+        
+    <?php
 
     // Query to fetch document requests made by the logged-in agent
-    $sql_demandes = "SELECT Id_Demande, Type_Document, Date_Demande, Statut, Description
+    $sql_demandes = "SELECT Id_Demande, Type_Document, Date_Demande, Statut, Descriptionn Description
                      FROM DemandeDocument
                      WHERE Id_Agent = '$user_id'";
     
@@ -133,14 +145,7 @@
     
     if ($result_demandes && mysqli_num_rows($result_demandes) > 0) {
         echo "<h2>Liste des Demandes de Document</h2>";
-        echo "<table border='1'>
-                <tr>
-                    <th>ID Demande</th>
-                    <th>Type de Document</th>
-                    <th>Date de Demande</th>
-                    <th>Statut</th>
-                    <th>Description</th>
-                </tr>";
+        echo "";
     
         while ($row = mysqli_fetch_assoc($result_demandes)) {
             echo "<tr>";
@@ -153,7 +158,7 @@
         }
         echo "</table>";
     } else {
-        echo "Aucune demande de document trouvée pour cet agent.";
+        echo "<tr><td colspan='5'>Aucune demande de document trouvée pour cet agent.</td></tr>";
     }
     ?>
 

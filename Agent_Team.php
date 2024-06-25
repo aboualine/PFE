@@ -1,5 +1,5 @@
 <?php
-    session_name("admin");
+    session_name("agent");
     session_start();
     $servername = "localhost";
     $username = "root";
@@ -84,129 +84,97 @@
         </ul>
     </nav>
 
-    <h2>Agents</h2>
-    <table>
+    <?php
+    $user_id = $_SESSION['user_id'];
+    ?>
+
+    <h3>Calendriers de Travail pour votre Équipement :</h3>
+        <table>
         <tr>
-            <td>Id Post</td>
-            <td>Nom</td>
-            <td>Prenom</td>
-            <!-- <th>Departement</th> -->
-            <td>Post</td>
-            <td>Email</td>
-            <td>Tel</td>
-            <td>Mot de Passe</td>
-            <td>Action</td>
+            <th>Équipement</th>
+            <th>Véhicule</th>
+            <th>Trajectoire</th>
+            <th>Quart de Travail</th>
+            <th>Date de Début</th>
+            <th>Date de Fin</th>
         </tr>
-        <?php
-            $sqlpost = "SELECT * FROM gestdechcomloc.agent";
-            $resultpost = mysqli_query($conn,$sqlpost);
-            if (mysqli_num_rows($resultpost)) {
+        
+
+    <?php
+
+    // Query to fetch calendriers de travail for the equipment associated with the logged-in agent
+    $sql_calendriers = "SELECT cd.Equipement_Nom, CONCAT(v.Marque, ' ', v.Modele) AS Vehicule, cd.Id_Trajectoire, cd.Quart_de_travail, cd.Date_debut, cd.Date_fin
+                        FROM CalendrieDeTravail cd
+                        INNER JOIN Equipement e ON cd.Id_Equipement = e.Id_equipement
+                        INNER JOIN Vehicule v ON cd.Id_Vehicule = v.Id_Vehicule
+                        WHERE e.Id_equipement IN (
+                            SELECT a.Id_equipement
+                            FROM Agent a
+                            WHERE a.Id_Agent = '$user_id'
+                        )";
+    
+    $result_calendriers = $conn->query($sql_calendriers);
+    
+    if ($result_calendriers->num_rows > 0) {
+        while ($row = $result_calendriers->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["Equipement_Nom"] . "</td>";
+            echo "<td>" . $row["Vehicule"] . "</td>";
+            echo "<td>" . $row["Id_Trajectoire"] . "</td>";
+            echo "<td>" . $row["Quart_de_travail"] . "</td>";
+            echo "<td>" . $row["Date_debut"] . "</td>";
+            echo "<td>" . $row["Date_fin"] . "</td>";
+            echo "</tr>";
+        }
+        
+        echo "</table>";
+    } else {
+        echo "<table>";
+        echo "<tr><th>Équipement</th><th>Véhicule</th><th>Trajectoire</th><th>Quart de Travail</th><th>Date de Début</th><th>Date de Fin</th></tr>";
+        echo "<tr><td colspan='6'>Aucun calendrier de travail trouvé pour votre équipement.</td></tr>";
+        echo "</table>";
+    }    
+    ?>
+
+    <h2>Notre Equipe</h2>
+    <?php
+        $user_id = $_SESSION['user_id'];
+    ?>
+    <table>
+    <tr>
+        <td>Id Post</td>
+        <td>Nom</td>
+        <td>Prenom</td>
+        <td>Post</td>
+    </tr>
+    <?php
+        $sql_get_equipement = "SELECT Id_equipement FROM Agent WHERE Id_Agent = '$user_id'";
+        $result_get_equipement = mysqli_query($conn, $sql_get_equipement);
+
+        if ($result_get_equipement && mysqli_num_rows($result_get_equipement) > 0) {
+            $row_equipement = mysqli_fetch_assoc($result_get_equipement);
+            $logged_in_equipement_id = $row_equipement['Id_equipement'];
+
+            $sqlpost = "SELECT * FROM Agent WHERE Id_equipement = '$logged_in_equipement_id'";
+            $resultpost = mysqli_query($conn, $sqlpost);
+
+            if ($resultpost && mysqli_num_rows($resultpost) > 0) {
                 while($rowa = mysqli_fetch_assoc($resultpost)) {
                     echo "<tr>";
                     echo "<td>" . $rowa["Id_Agent"] . "</td>";
                     echo "<td>" . $rowa["Nom"] . "</td>";
                     echo "<td>" . $rowa["Prenom"] . "</td>";
-                    // echo "<td>" . $rowa["Departement"] . "</td>";
                     echo "<td>" . $rowa["Poste"] . "</td>";
-                    echo "<td>" . $rowa["Email"] . "</td>";
-                    echo "<td>" . $rowa["Tel"] . "</td>";
-                    echo "<td>" . $rowa["Mot_de_Passe"] . "</td>";
-                    echo "<td>";
-                    echo "<form method='post' action=''>";
-                    echo "<input type='hidden' name='idagenthidd' value='" . $rowa["Id_Agent"] . "'>";
-                    echo "<button type='submit' name='deleteagent'>Supprimer</button>";
-                    echo "<button type='submit' name='updatagent'>Modifier</button>";
-                    echo "</form>";
-                    echo "</td>";
                     echo "</tr>";
                 }
             } else {
-                echo "aucun resultat";
+                echo "<tr><td colspan='4'>Vous n'êtes pas dans un équipement pour le moment.</td></tr>";
             }
-            if (isset($_POST['deleteagent'])) {
-                if (isset($_POST['idagenthidd']) && !empty($_POST['idagenthidd'])) {
-                    $idagentdelet = mysqli_real_escape_string($conn, $_POST['idagenthidd']);                    
-                    $sqlagentdelet = "DELETE FROM Agent WHERE Id_Agent = '$idagentdelet'";
-                    if (mysqli_query($conn, $sqlagentdelet)) {
-                        echo "Record deleted successfully";
-                    }
-                }
-            }
-        ?>
-    </table>
 
-    <h2>Liste des Equipements :</h2>
-    <?php
-        $sqlfetchequip = "SELECT Id_equipement, Nom , Descriptionn FROM Equipement";
-        $resultfetchequip = mysqli_query($conn, $sqlfetchequip);
-        if (mysqli_num_rows($resultfetchequip)) {
-            echo "<table>
-                    <tr>
-                        <th>Id equipement</th>
-                        <th>Nom d'equipement</th>
-                        <th>Description</th>
-                    </tr>";
-            while ($rowfetchequip = mysqli_fetch_assoc($resultfetchequip)) {
-                echo "<tr>";
-                echo "<td>" . $rowfetchequip["Id_equipement"] . "</td>";
-                echo "<td>" . $rowfetchequip["Nom"] . "</td>";
-                echo "<td>" . $rowfetchequip["Descriptionn"] . "</td>";
-                echo "</tr>";
-            }
             echo "</table>";
-        }
+        } 
     ?>
 
-    <h2>Liste des Agents existe sur les equipements :</h2>
-    <?php
-        $sqlfetchequipmentsagents = "SELECT Equipement.Nom AS Equipement_Nom, Agent_Equipement.Agent_Name 
-                                     FROM Equipement 
-                                     INNER JOIN Agent_Equipement ON Equipement.Id_equipement = Agent_Equipement.Id_Equipement";
-        $resultfetchequipmentsagents = mysqli_query($conn, $sqlfetchequipmentsagents);
-        $rowspanCounts = array();
-        $prevEquipementNom = null;
-        if (mysqli_num_rows($resultfetchequipmentsagents)) {
-            echo "<table>";
-            while ($rowfetchresultfetchequipmentsagents = mysqli_fetch_assoc($resultfetchequipmentsagents)) {
-                if ($rowfetchresultfetchequipmentsagents["Equipement_Nom"] != $prevEquipementNom) {
-                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] = 1;
-                    $prevEquipementNom = $rowfetchresultfetchequipmentsagents["Equipement_Nom"];
-                } else {
-                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]]++;
-                }
-                echo "<tr>";
-                if ($rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] > 0) {
-                    echo "<td rowspan='" . $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] . "'>" . $rowfetchresultfetchequipmentsagents["Equipement_Nom"] . "</td>";
-                    $rowspanCounts[$rowfetchresultfetchequipmentsagents["Equipement_Nom"]] = 0;
-                }
-                echo "<td>" . $rowfetchresultfetchequipmentsagents["Agent_Name"] . "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-        }
-    ?>
-
-    <h2>Liste des véhicules</h2>
-    <?php
-        $sqlListeVehicules = "SELECT * FROM Vehicule";
-        $resultatListeVehicules = mysqli_query($conn, $sqlListeVehicules);
-        if (mysqli_num_rows($resultatListeVehicules) > 0) {
-            echo "<table>";
-            echo "<tr><th>ID Véhicule</th><th>Marque</th><th>Modèle</th><th>Année</th><th>Statut</th></tr>";
-            while ($ligne = mysqli_fetch_assoc($resultatListeVehicules)) {
-                echo "<tr>";
-                echo "<td>" . $ligne["Id_Vehicule"] . "</td>";
-                echo "<td>" . $ligne["Marque"] . "</td>";
-                echo "<td>" . $ligne["Modele"] . "</td>";
-                echo "<td>" . $ligne["Annee"] . "</td>";
-                echo "<td>" . ($ligne["Statut"] ? "Actif" : "Inactif") . "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "Aucun véhicule trouvé.";
-        }
-    ?>
 
 <footer>
         <div class="footdivs fdwl">
