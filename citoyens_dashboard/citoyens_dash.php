@@ -111,7 +111,6 @@
                     </ul>
                     <?php
                     if (isset($_SESSION['role']) && $_SESSION['role'] == 'citoyen') {
-                        // Fetch citizen's name from the database
                         $query = "SELECT Nom FROM Citoyens WHERE CIN = '{$_SESSION['user_id']}'";
                         $result = mysqli_query($conn, $query);
                         if ($result && mysqli_num_rows($result) > 0) {
@@ -661,7 +660,7 @@
                                         $reclamations[] = $row;
                                         foreach ($reclamations as $index => $reclamation) {
                                             echo '<div class="carousel__item">';
-                                            echo '    <div class="carousel__item-head"><img src="images/MK.jpeg" alt=""></div>';
+                                            echo '    <div class="carousel__item-head"><img src="images/logo7.jpg" alt=""></div>';
                                             echo '    <div class="carousel__item-body">';
                                             echo '        <p class="title">' . htmlspecialchars($reclamation['Titre']) . '</p>';
                                             echo '        <p class="lorem">' . htmlspecialchars($reclamation['Descriptionn']) . '</p>';
@@ -1065,7 +1064,7 @@ if (isset($_GET['subrec'])) {
         <script src="js/jquery.magnific-popup.min.js"></script>
         <script src="js/magnific-popup-options.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/main.js?v=1.0"></script>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script>
             // JavaScript to place the pointers on the map

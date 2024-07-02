@@ -38,18 +38,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const textEventChanging = document.querySelector("#texteventchanging");
 
     const images = [
-        { src: "images/MK Logo.jpeg", text: "Text for MK Logo noww i'm writing a text from nothing that is nothing because i just need to fill a place in my div" },
-        { src: "images/logo7.jpg", text: "Text for logo7 lorem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj hghjvb jbjhvb jhvhj vjv hjfd gjh hk h hh u kjl;jl j  j jh kjh l " },
-        { src: "images/Tom Walsh Design.jpeg", text: "Text for Tom jhvbsdhkl ;wjbf     Lorem ipsum dolor sit amet consectetur adipidunt dignissimos! Excepturi magni veritatis sint unde.  knkh      " },
-        { src: "images/1.png", text: "Text for somthing else  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quidem amet ipsam incidunt saepe nemo nihil asperiores rem odit repudiandae!        " },
-        { src: "images/50 Minimalist Desktop Wallpapers and Backgrounds (2022 Edition).jpg", text: "Text for slamdunk     Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, laboriosam.        " },
-        { src: "images/558672d1f7df90911ba819d11cbbca29.jpg", text: "Text for kiluia zoldik     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam consectetur commodi minima non voluptate tenetur officia veritatis, porro consequuntur laborum quo, fuga tempora. Quaerat tenetur nesciunt voluptatibus? Inventore, culpa!        " },
-        { src: "images/90717965_marketplace-o-que-e.jpg", text: "Text for ilkay gondugan     Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae repellendus placeat unde ex impedit est adipisci, laborum minus deleniti eveniet dolores tenetur eligendi nihil autem neque enim. Unde, corporis totam!        " },
-        { src: "images/LOGO colored.jpg", text: "Text for gon frex     Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, excepturi aspernatur eligendi voluptatem quam a?        " },
-        { src: "images/map1.png", text: "Text for map1 sum dolor sit amet consectetur adipidunt dignissimos! sum dolor sit amet consectetur adipidunt dignissimos!" },
-        { src: "images/uwp3120159.jpg", text: "Text for songoku orem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj orem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj " },
-        { src: "images/téléchargement.jpeg", text: "Text for cristiano ronaldo ur adipisicing elit. ur adipisicing elit. ur adipisicing elit. " },
-        // Add more image paths and associated text here
+        { src: "images/MedNiss.png", text: "Text for MK Logo noww i'm writing a text from nothing that is nothing because i just need to fill a place in my div" },
+        { src: "images/MedNiss (1).png", text: "Text for logo7 lorem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj hghjvb jbjhvb jhvhj vjv hjfd gjh hk h hh u kjl;jl j  j jh kjh l " },
+        { src: "images/MedNiss (2).png", text: "Text for Tom jhvbsdhkl ;wjbf     Lorem ipsum dolor sit amet consectetur adipidunt dignissimos! Excepturi magni veritatis sint unde.  knkh      " },
+        { src: "images/MedNiss (3).png", text: "Text for somthing else  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quidem amet ipsam incidunt saepe nemo nihil asperiores rem odit repudiandae!        " },
+        { src: "images/MedNiss (4).png", text: "Text for slamdunk     Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, laboriosam.        " },
+        { src: "images/MedNiss (5).png", text: "Text for kiluia zoldik     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam consectetur commodi minima non voluptate tenetur officia veritatis, porro consequuntur laborum quo, fuga tempora. Quaerat tenetur nesciunt voluptatibus? Inventore, culpa!        " },
+        { src: "images/MedNiss (2).png", text: "Text for ilkay gondugan     Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae repellendus placeat unde ex impedit est adipisci, laborum minus deleniti eveniet dolores tenetur eligendi nihil autem neque enim. Unde, corporis totam!        " },
+        { src: "images/MedNiss.png", text: "Text for gon frex     Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, excepturi aspernatur eligendi voluptatem quam a?        " },
+        { src: "images/MedNiss (4).png", text: "Text for map1 sum dolor sit amet consectetur adipidunt dignissimos! sum dolor sit amet consectetur adipidunt dignissimos!" },
+        { src: "images/MedNiss (2).png", text: "Text for songoku orem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj orem kbcvk hgfg kkhj njhjb jnjkghfgv bhjvghj " },
+        { src: "images/MedNiss (5).png", text: "Text for cristiano ronaldo ur adipisicing elit. ur adipisicing elit. ur adipisicing elit. " },
     ];
 
     let currentIndex = 0;
